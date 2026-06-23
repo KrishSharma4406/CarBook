@@ -1,4 +1,27 @@
 <!-- Main Sidebar Container -->
+<style>
+    /* Active tab */
+    .nav-sidebar .nav-link.active {
+        background-color: #007bff !important;
+        color: #fff !important;
+        border-radius: 6px;
+    }
+
+    .nav-sidebar .nav-link.active i,
+    .nav-sidebar .nav-link.active p {
+        color: #fff !important;
+    }
+
+    /* Inactive tabs */
+    .nav-sidebar .nav-link {
+        color: #c2c7d0 !important;
+    }
+
+    .nav-sidebar .nav-link:hover {
+        background-color: #495057;
+        color: #fff !important;
+    }
+</style>
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ asset('UI/admin/index3.html') }}" class="brand-link">
@@ -29,37 +52,39 @@
           </div>
         </div>
       </div>
-<nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-              <li class="nav-item">
-                <a href="{{ route('admin-home') }}" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
-          </li>
 
-          <li class="nav-item menu-open">
-              <li class="nav-item">
-                <a href="{{ route('admin-forms') }}" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Forms</p>
-                </a>
-              </li>
-          </li>
-          <li class="nav-item menu-open">
-              <li class="nav-item">
-                <a href="{{ route('admin-tabels') }}" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Tabels</p>
-                </a>
-              </li>
-          </li>
-        </ul>
-      </nav>
+      <nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column"
+        data-widget="treeview"
+        role="menu"
+        data-accordion="false">
+
+        <li class="nav-item">
+            <a href="{{ route('admin-home') }}"
+               class="nav-link {{ request()->routeIs('admin-home') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Dashboard</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin-forms') }}"
+               class="nav-link {{ request()->routeIs('admin-forms') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Forms</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin-tabels') }}"
+               class="nav-link {{ request()->routeIs('admin-tabels') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Tables</p>
+            </a>
+        </li>
+
+    </ul>
+</nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
