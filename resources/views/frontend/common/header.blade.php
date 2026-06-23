@@ -14,6 +14,19 @@
 	          <li class="nav-item"><a href="{{route('car')}}" class="nav-link">Cars</a></li>
 	          <li class="nav-item"><a href="{{route('blog')}}" class="nav-link">Blog</a></li>
 	          <li class="nav-item"><a href="{{route('contact')}}" class="nav-link">Contact</a></li>
+			  <li>
+			@if (Auth::check())
+			  <form method="POST" action="{{ route('logout') }}">
+    			@csrf
+    			<a href="{{ route('logout') }}" class="text-white nav-link"
+       			onclick="event.preventDefault(); this.closest('form').submit();">
+        			Logout
+    			</a>
+			</form>
+			@else
+				<a href="{{ route('login') }}" class="text-white nav-link">Login</a>
+				@endif
+		</li>
 	        </ul>
 	      </div>
 	    </div>
