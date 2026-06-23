@@ -21,4 +21,40 @@ class HomeController extends Controller
     {
         return view('frontend.webviews.contact');
     }
+    public function blog()
+    {
+        return view('frontend.webviews.blog');
+    }
+    public function service()
+    {
+        return view('frontend.webviews.service');
+    }
+    public function price()
+    {
+        return view('frontend.webviews.price');
+    }
+    public function car()
+    {
+        return view('frontend.webviews.car');
+    }
+    public function carDetails()
+    {
+        return view('frontend.webviews.car-details');
+    }
+    public function blogDetails()
+    {
+        return view('frontend.webviews.blog-details');
+    }
+    public function adminHome()
+    {
+        return view('admin.frontend.webview.home');
+    }
+    public function admintabels()
+    {
+        return view('admin.frontend.webview.tabels');
+    }
+    public function adminforms()
+    {
+        return view('admin.frontend.webview.forms');
+    }
 }
