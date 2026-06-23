@@ -20,7 +20,6 @@
                 </div>
 
                 <div class="card-body">
-@php dd('dd'); @endphp
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             {{ $errors->first() }}
