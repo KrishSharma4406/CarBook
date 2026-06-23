@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UI\HomeController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
+use App\Http\Controllers\Admin\Auth\AdminRegisterController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -49,11 +50,6 @@ Route::get('/admin/home', function () {
     return view('admin.frontend.webview.home');
 })->name('admin.home');
 
-
-Route::get('/admin/register', function () {
-    return view('admin.auth.register');
-})->name('admin.register');
-
 Route::get('/admin/login', [AdminLoginController::class, 'showLogin'])
     ->name('admin.login');
 
@@ -62,5 +58,11 @@ Route::post('/admin/login', [AdminLoginController::class, 'login'])
 
 Route::any('/admin/logout', [AdminLoginController::class, 'logout'])
     ->name('admin.logout');
+
+Route::get('/admin/register', [AdminRegisterController::class, 'create'])
+    ->name('admin.register');
+
+Route::post('/admin/register', [AdminRegisterController::class, 'store'])
+    ->name('admin.register.store');
 
 require __DIR__.'/auth.php';
