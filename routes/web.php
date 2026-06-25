@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UI\HomeController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminRegisterController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -64,5 +65,17 @@ Route::get('/admin/register', [AdminRegisterController::class, 'create'])
 
 Route::post('/admin/register', [AdminRegisterController::class, 'store'])
     ->name('admin.register.store');
+
+Route::get('/admin/users', [UserController::class, 'index'])
+    ->name('admin-users');
+
+Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])
+    ->name('users.edit');
+
+Route::any('/admin/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])
+    ->name('users.toggleStatus');
+
+Route::put('/admin/users/{user}/update', [UserController::class, 'update'])
+    ->name('users.update');
 
 require __DIR__.'/auth.php';
