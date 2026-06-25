@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
             return back()->withErrors([
                 'email' => 'Your account is blocked. Please contact support.',
-            ])
+            ]);
         }
 
         return redirect()->intended(route('dashboard', absolute: false));
