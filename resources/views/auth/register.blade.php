@@ -100,7 +100,7 @@
             {{ $errors->first() }}
         </div>
     @endif
-                <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                <form method="POST" action="{{ route('register.otp') }}" class="space-y-5">
                     @csrf
 
                     <!-- Name -->
@@ -132,12 +132,12 @@
 
                     <!-- Confirm Password -->
                     <div class="mb-3">
-            <label>Confirm Password</label>
-            <input type="password"
-                   name="password_confirmation"
-                   class="form-control"
-                   required>
-        </div>
+                        <label>Confirm Password</label>
+                            <input type="password"
+                            name="password_confirmation"
+                            class="form-control"
+                            required>
+                    </div>
 
                     <div class="flex items-center justify-between text-sm">
 
