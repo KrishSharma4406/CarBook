@@ -6,6 +6,7 @@ use App\Http\Controllers\UI\HomeController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminRegisterController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,9 +26,9 @@ route::get('/blog-details', [App\Http\Controllers\UI\HomeController::class, 'blo
 route::get('/admin-home', [App\Http\Controllers\UI\HomeController::class, 'adminHome'])->name('admin-home');
 route::get('/admin-tabels', [App\Http\Controllers\UI\HomeController::class, 'admintabels'])->name('admin-tabels');
 route::get('/admin-forms', [App\Http\Controllers\UI\HomeController::class, 'adminforms'])->name('admin-forms');
-Route::get('/admin/login', [AdminLoginController::class,'showLogin'])->name('admin.login');
-Route::post('/admin/login', [AdminLoginController::class,'login'])->name('admin.login.submit');
-Route::post('/admin/logout', [AdminLoginController::class,'logout'])->name('admin.logout');
+Route::get('/admin/login', [AdminLoginController::class, 'showLogin'])->name('admin.login');
+Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 // Route::middleware('admin')->group(function () {
@@ -37,10 +38,10 @@ Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController
 //     })->name('admin.home');
 
 // });
- Route::get('/dashboard', function () {
-   
-         return redirect()->route('home');
-    })->name('dashboard');
+Route::get('/dashboard', function () {
+
+    return redirect()->route('home');
+})->name('dashboard');
 
 //  Route::get('/dashboard', function () {
 // // dd(dd);
@@ -78,4 +79,27 @@ Route::any('/admin/users/{user}/toggle-status', [UserController::class, 'toggleS
 Route::put('/admin/users/{user}/update', [UserController::class, 'update'])
     ->name('users.update');
 
-require __DIR__.'/auth.php';
+Route::post('/register/send-otp', [RegisteredUserController::class, 'sendOtp'])->name('register.otp');
+
+Route::get('/verify-otp', function () {
+    return view('auth.verify-otp');
+})->name('verify.otp');
+
+Route::post('/verify-otp', [RegisteredUserController::class, 'verifyOtp'])->name('verify.otp.post');
+
+require __DIR__ . '/auth.php';
+Route::get('/test-mail', function () {
+
+    try {
+
+        Mail::raw('Laravel Test Email', function ($message) {
+            $message->to('sharmasourav320@gmail.com')
+                ->subject('Laravel Test');
+        });
+
+        return 'Mail Sent Successfully';
+    } catch (\Exception $e) {
+
+        return $e->getMessage();
+    }
+});
