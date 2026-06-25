@@ -83,6 +83,14 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{ route('admin-users') }}"
+               class="nav-link {{ request()->routeIs('admin-users') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Users</p>
+            </a>
+        </li>
+
     </ul>
 </nav>
       <!-- /.sidebar-menu -->
