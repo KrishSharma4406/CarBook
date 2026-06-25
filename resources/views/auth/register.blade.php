@@ -152,6 +152,21 @@
                         Register
                     </button>
 
+                    <div class="text-center mt-3">
+
+                        <a href="{{ route('google.login') }}"
+                        class="btn btn-light border shadow-sm w-100 py-2">
+
+                        <img src="https://developers.google.com/identity/images/g-logo.png"
+                        width="22"
+                        class="me-2">
+
+                        Continue with Google
+
+                    </a>
+
+                    </div>
+
                 </form>
 
             </div>

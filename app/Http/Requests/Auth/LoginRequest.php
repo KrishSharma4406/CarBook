@@ -42,13 +42,27 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        $user = \App\Models\User::where('email', $this->email)->first();
 
-            throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
-            ]);
-        }
+if (!$user) {
+    throw ValidationException::withMessages([
+        'email' => trans('auth.failed'),
+    ]);
+}
+
+if (!$user->status) {
+    throw ValidationException::withMessages([
+        'email' => 'Your account has been blocked by the administrator.',
+    ]);
+}
+
+if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+    throw ValidationException::withMessages([
+        'email' => trans('auth.failed'),
+    ]);
+}
+
+$this->session()->regenerate();
 
         RateLimiter::clear($this->throttleKey());
     }
