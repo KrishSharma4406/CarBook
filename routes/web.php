@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\Auth\AdminRegisterController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\GoogleController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -87,7 +88,6 @@ Route::get('/verify-otp', function () {
 
 Route::post('/verify-otp', [RegisteredUserController::class, 'verifyOtp'])->name('verify.otp.post');
 
-require __DIR__ . '/auth.php';
 Route::get('/test-mail', function () {
 
     try {
@@ -103,3 +103,9 @@ Route::get('/test-mail', function () {
         return $e->getMessage();
     }
 });
+
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
+
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+
+require __DIR__ . '/auth.php';
