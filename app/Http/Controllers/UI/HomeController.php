@@ -4,15 +4,17 @@ namespace App\Http\Controllers\UI;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Car;
 
 class HomeController extends Controller
 {
     //
     public function index()
-    {
-// dd("d");
-        return view('frontend.webviews.index');
-    }
+{
+    $cars = Car::with('user')->latest()->get();
+
+    return view('frontend.webviews.index', compact('cars'));
+}
     public function about()
     {
         return view('frontend.webviews.about');

@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\Auth\AdminRegisterController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\Admin\CarController as AdminCarController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -107,5 +109,33 @@ Route::get('/test-mail', function () {
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
 
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+
+Route::get('/profile/car', [CarController::class, 'edit'])->name('car.edit');
+
+Route::post('/profile/car', [CarController::class, 'save'])->name('car.save');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::delete('/profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/profile/car', [CarController::class, 'edit'])->name('car.edit');
+
+    Route::post('/profile/car', [CarController::class, 'save'])->name('car.save');
+
+});
+
+
+    Route::get('/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
+
+    Route::delete('/cars/{car}', [AdminCarController::class, 'destroy'])->name('admin.cars.destroy');
+
+    Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
+
+Route::get('/car/{car}', [CarController::class, 'show'])->name('car.show');
 
 require __DIR__ . '/auth.php';
