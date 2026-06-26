@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->status == 1) {
+        if (Auth::user()->status == 0) {
             Auth::guard('web')->logout();
 
         $request->session()->invalidate();

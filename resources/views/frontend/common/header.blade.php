@@ -27,6 +27,19 @@
 				<a href="{{ route('login') }}" class="text-white nav-link">Login</a>
 				@endif
 		</li>
+
+		@if (Auth::check())
+			  <form method="POST" action="{{ route('profile') }}">
+    			@csrf
+    			<a href="{{ route('profile') }}" class="text-white nav-link">
+        			Profile
+    			</a>
+			</form>
+			@else
+				<div></div>
+				@endif
+		</li>
+
 	        </ul>
 	      </div>
 	    </div>

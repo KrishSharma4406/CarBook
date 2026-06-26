@@ -8,33 +8,49 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Car;
 
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Display the user's profile.
      */
+
+    public function index(){
+        $user = Auth::user();
+        $cars = car::where('user_id', $user->id)->get();
+        return view("frontend.cars.index", compact("user","cars"));
+    }
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user();
+
+        // Get user's car details
+
+        $cars = $user->car;
+        return view('profile.edit', compact('user', 'cars'));
     }
 
     /**
-     * Update the user's profile information.
+     * Update the user's profile.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        $user->fill($request->validated());
+
+        // Update phone number
+        $user->phone = $request->phone;
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect('/')
+    ->with('success', 'Profile updated successfully.');
     }
 
     /**
