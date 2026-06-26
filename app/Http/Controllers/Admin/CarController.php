@@ -9,26 +9,26 @@ class CarController extends Controller
 {
     public function index()
     {
-        $cars = Car::with('user')->latest()->get();
+        $cars = Car::with('user')->latest()->paginate(10);
 
-        return view('frontend.cars.index', compact('cars'));
+        return view('admin.cars.index', compact('cars'));
     }
 
     public function destroy(Car $car)
     {
-        if ($car->image && file_exists(public_path('uploads/cars/'.$car->image))) {
-            unlink(public_path('uploads/cars/'.$car->image));
+        if ($car->image && file_exists(public_path('uploads/cars/' . $car->image))) {
+            unlink(public_path('uploads/cars/' . $car->image));
         }
 
         $car->delete();
 
-        return back()->with('success','Car deleted successfully.');
+        return back()->with('success', 'Car deleted successfully.');
     }
 
     public function show(\App\Models\Car $car)
-{
-    $car->load('user');
+    {
+        $car->load('user');
 
-    return view('frontend.cars.show', compact('car'));
-}
+        return view('admin.cars.show', compact('car'));
+    }
 }
