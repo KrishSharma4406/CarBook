@@ -134,11 +134,11 @@
 
                         @if($cars->image)
                         <img src="{{ asset('uploads/cars/'.$cars->image) }}"
-                            class="class=" img-fluid rounded shadow"
+                            class="img-fluid rounded shadow"
 
                             style="height:220px;
-width:100%;
-object-fit:cover;">
+                                    width:100%;
+                                    object-fit:cover;">
                         @endif
 
                         <h5>{{ $cars->car_name }}</h5>
