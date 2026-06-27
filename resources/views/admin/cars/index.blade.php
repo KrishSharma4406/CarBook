@@ -1,61 +1,68 @@
-@extends('admin.frontend.layout.app')
+@extends('frontend.layout.app')
 @section('content')
 
 <div class="content-wrapper">
 
-    <section class="content-header">
+    <div class="card mb-3">
 
-        <div class="container-fluid">
+        <div class="card-body">
 
-            <div class="row mb-2">
+            <form>
 
-                <div class="col-sm-6">
+                <div class="row">
 
-                    <h1>Cars</h1>
+                    <div class="col-md-6">
+
+                        <div class="input-group">
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Search user by name or email">
+
+                            <div class="input-group-append">
+
+                                <button class="btn btn-primary">
+
+                                    <i class="fas fa-search"></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
+            </form>
 
         </div>
 
-    </section>
+    </div>
 
     <section class="content">
 
         <div class="container-fluid">
 
-            @if(session('success'))
-
-            <div class="alert alert-success">
-
-                {{ session('success') }}
-
-            </div>
-
-            @endif
 
             <div class="card">
 
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header">
+                    <h3 class="card-title"> All User Cars</h3>
+                </div>
 
-                <h3 class="card-title mb-0">All User Cars</h3>
+                <div class="card-body table-responsive">
 
-                <a href="{{ route('car.edit') }}" class="btn btn-primary">
-                    <i class="fa fa-plus"></i> Add Car
-                </a>
+                    <table class="table table-hover table-striped text-center align-middle">
 
-            </div>
-
-                <div class="card-body">
-
-                    <table class="table table-bordered table-striped">
 
                         <thead>
 
                             <tr>
 
-                                <th>#</th>
+                                <th>ID</th>
 
                                 <th>Image</th>
 
@@ -65,13 +72,15 @@
 
                                 <th>Phone</th>
 
-                                <th>Car</th>
+                                <th>Car Name</th>
 
                                 <th>Brand</th>
 
                                 <th>Model</th>
 
                                 <th>Rent/Day</th>
+
+                                <th>Status</th>
 
                                 <th>Action</th>
 
@@ -85,16 +94,16 @@
 
                             <tr>
 
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $car->id }}</td>
 
                                 <td>
 
                                     @if($car->image)
 
                                     <img src="{{ asset('uploads/cars/'.$car->image) }}"
-                                        width="100"
-                                        height="70"
-                                        style="object-fit:cover">
+                                        width="80"
+                                        height="60"
+                                        style="object-fit:cover;border-radius:8px;">
 
                                     @endif
 
@@ -116,21 +125,36 @@
 
                                 <td>
 
-                                    <a href="{{ route('admin.cars.show', $car->id) }}"
+                                    <span class="badge badge-success">
+
+                                        Available
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <a href="{{ route('admin.cars.show',$car->id) }}"
                                         class="btn btn-info btn-sm">
-                                        View
+
+                                        <i class="fas fa-eye"></i>
+
                                     </a>
 
-                                    <form action="{{ route('admin.cars.destroy', $car->id) }}"
+                                    <form action="{{ route('admin.cars.destroy',$car->id) }}"
                                         method="POST"
                                         style="display:inline;">
 
                                         @csrf
                                         @method('DELETE')
 
-                                        <button class="btn btn-danger btn-sm"
+                                        <button
+                                            class="btn btn-danger btn-sm"
                                             onclick="return confirm('Delete this car?')">
-                                            Delete
+
+                                            <i class="fas fa-trash"></i>
+
                                         </button>
 
                                     </form>
@@ -143,7 +167,7 @@
 
                             <tr>
 
-                                <td colspan="10" class="text-center">
+                                <td colspan="11" class="text-center">
 
                                     No Cars Found
 
@@ -159,6 +183,10 @@
 
                 </div>
 
+                <div class="card-footer">
+                    {{ $cars->links() }}
+                </div>
+
             </div>
 
         </div>
@@ -166,5 +194,4 @@
     </section>
 
 </div>
-
 @endsection

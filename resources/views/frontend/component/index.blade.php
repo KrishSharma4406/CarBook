@@ -1,13 +1,13 @@
     <!-- END nav -->
 
-    <div class="hero-wrap ftco-degree-bg" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+    <div class="hero-wrap ftco-degree-bg" style="background-image: url('{{ asset("UI") }}/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
     	<div class="overlay"></div>
     	<div class="container">
     		<div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
     			<div class="col-lg-8 ftco-animate">
     				<div class="text w-100 text-center mb-md-5 pb-md-5">
     					<h1 class="mb-4">Fast &amp; Easy Way To Rent A Car</h1>
-    					<p style="font-size: 18px;">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts</p>
+    					<p style = "font-size: 18px;">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts</p>
     					<a href="https://vimeo.com/45830194" class="icon-wrap popup-vimeo d-flex align-items-center mt-4 justify-content-center">
     						<div class="icon d-flex align-items-center justify-content-center">
     							<span class="ion-ios-play"></span>
@@ -100,7 +100,7 @@
     		<div class="row justify-content-center">
     			<div class="col-md-12 heading-section text-center ftco-animate mb-5">
     				<span class="subheading">What we offer</span>
-    				<h2 class="mb-2">Feeatured Vehicles</h2>
+    				<h2 class="mb-2">Featured Vehicles</h2>
     			</div>
     		</div>
     		<div class="row">
@@ -112,7 +112,7 @@
     						<div class="car-wrap rounded ftco-animate">
 
     							<div class="img rounded d-flex align-items-end"
-    								style="background-image: url('{{ $car->image ? asset('uploads/cars/'.$car->image) : asset('UI/images/car-1.jpg') }}');">
+    								style="background-image: url('{{ $car->image ? asset("uploads/cars/" . $car->image) : asset('UI/images/car-1.jpg') }}');">
     							</div>
 
     							<div class="text">
@@ -178,7 +178,7 @@
     <section class="ftco-section ftco-about">
     	<div class="container">
     		<div class="row no-gutters">
-    			<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url({{ asset('UI') }}/images/about.jpg);">
+    			<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url({{ asset("UI") }}/images/about.jpg);">
     			</div>
     			<div class="col-md-6 wrap-about ftco-animate">
     				<div class="heading-section heading-section-white pl-md-5">
@@ -243,7 +243,7 @@
     	</div>
     </section>
 
-    <section class="ftco-section ftco-intro" style="background-image: url({{ asset('UI') }}/images/bg_3.jpg);">
+    <section class="ftco-section ftco-intro" style="background-image: url({{ asset("UI") }}/images/bg_3.jpg);">
     	<div class="overlay"></div>
     	<div class="container">
     		<div class="row justify-content-end">
@@ -269,7 +269,7 @@
     				<div class="carousel-testimony owl-carousel ftco-owl">
     					<div class="item">
     						<div class="testimony-wrap rounded text-center py-4 pb-5">
-    							<div class="user-img mb-2" style="background-image: url({{ asset('UI') }}/images/person_1.jpg)">
+    							<div class="user-img mb-2" style="background-image: url({{ asset("UI") }}/images/person_1.jpg)">
     							</div>
     							<div class="text pt-4">
     								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>

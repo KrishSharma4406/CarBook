@@ -130,12 +130,14 @@ Route::middleware('auth')->group(function () {
 });
 
 
-    Route::get('/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
+Route::get('/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
 
-    Route::delete('/cars/{car}', [AdminCarController::class, 'destroy'])->name('admin.cars.destroy');
+Route::delete('/cars/{car}', [AdminCarController::class, 'destroy'])->name('admin.cars.destroy');
 
-    Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
+Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
 
 Route::get('/car/{car}', [CarController::class, 'show'])->name('car.show');
+
+Route::get('admin/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
 
 require __DIR__ . '/auth.php';
