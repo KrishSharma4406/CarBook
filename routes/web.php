@@ -116,17 +116,22 @@ Route::post('/profile/car', [CarController::class, 'save'])->name('car.save');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
 
-    Route::patch('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
 
-    Route::delete('/profile/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 
-    Route::get('/profile/car', [CarController::class, 'edit'])->name('car.edit');
+    // Car
+    Route::get('/profile/car', [CarController::class, 'edit'])
+        ->name('car.edit');
 
-    Route::post('/profile/car', [CarController::class, 'save'])->name('car.save');
-
+    Route::post('/profile/car', [CarController::class, 'save'])
+        ->name('car.save');
 });
 
 
