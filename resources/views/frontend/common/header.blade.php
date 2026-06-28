@@ -29,12 +29,9 @@
 		</li>
 
 		@if (Auth::check())
-			  <form method="POST" action="{{ route('profile') }}">
-    			@csrf
-    			<a href="{{ route('profile') }}" class="text-white nav-link">
-        			Profile
-    			</a>
-			</form>
+			  <a href="{{ route('profile.edit') }}" class="text-white nav-link">
+    			Profile
+			</a>
 			@else
 				<div></div>
 				@endif
