@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\Admin\CarController as AdminCarController;
+use App\Http\Controllers\RideController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -132,6 +133,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/profile/car', [CarController::class, 'save'])
         ->name('car.save');
+
+    Route::get('/offer-ride',[RideController::class,'create'])
+        ->name('offer.ride');
+
+    Route::post('/offer-ride',[RideController::class,'store'])
+        ->name('offer.ride.store');
+
+    Route::get('/view-rides',[RideController::class,'index'])
+        ->name('rides.index');
+
+    Route::get('/my-rides',[RideController::class,'myRides'])
+        ->name('rides.my');
 });
 
 
