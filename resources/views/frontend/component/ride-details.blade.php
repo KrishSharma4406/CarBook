@@ -180,17 +180,10 @@
 
                         <hr>
 
-                        <form action="{{ route('rides.book',$ride->id) }}" method="POST">
-                            @csrf
-
-                            <button
-                                class="btn btn-success btn-block">
-
-                                Book This Ride
-
-                            </button>
-
-                        </form>
+                        <a href="{{ route('booking.summary', $ride->id) }}"
+                            class="btn btn-success btn-block btn-lg">
+                            Book This Ride
+                        </a>
 
                     </div>
 

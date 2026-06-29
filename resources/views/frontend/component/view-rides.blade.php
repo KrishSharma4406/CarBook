@@ -177,16 +177,12 @@
 
                         @endif
 
-                        <form action="{{ route('rides.book', $ride->id) }}" method="POST">
-                            @csrf
+                        <a href="{{ route('booking.summary', $ride->id) }}"
+                            class="btn btn-success btn-block">
 
-                            <a href="{{ route('rides.show',$ride->id) }}"
-                                class="btn btn-success btn-block">
+                            Book This Ride
 
-                                View Details
-
-                            </a>
-                        </form>
+                        </a>
 
                     </div>
 

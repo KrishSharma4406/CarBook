@@ -12,6 +12,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\RideBookingController;
+use App\Http\Controllers\BookingController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -147,12 +148,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-rides',[RideController::class,'myRides'])
         ->name('rides.my');
 
+    Route::get('/my-rides/{ride}/edit', [RideController::class, 'edit'])
+        ->name('rides.edit');
+
+    Route::put('/my-rides/{ride}', [RideController::class, 'update'])
+        ->name('rides.update');
+
+    Route::delete('/my-rides/{ride}', [RideController::class, 'destroy'])
+        ->name('rides.destroy');
+
     Route::post('/rides/{ride}/book',
         [RideBookingController::class,'store'])
         ->name('rides.book');
 
     Route::get('/rides/{ride}', [RideController::class, 'show'])
-    ->name('rides.show');
+        ->name('rides.show');
+
+    Route::post('/rides/{ride}/confirm',[BookingController::class,'confirm'])
+        ->name('booking.confirm');
 
     Route::get('/ride-requests',[RideBookingController::class,'requests'])
         ->name('rides.requests');
@@ -166,6 +179,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard',[RideController::class,'dashboard'])
         ->name('dashboard');
 
+           Route::get('/rides/{ride}/booking', [BookingController::class, 'summary'])
+        ->name('booking.summary');
+
+    Route::get('/my-bookings', [BookingController::class, 'myBookings'])
+        ->name('booking.my');
+
+    Route::post('/booking/{booking}/cancel',
+    [BookingController::class,'cancel'])
+    ->name('booking.cancel');
 });
 
 

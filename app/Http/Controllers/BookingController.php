@@ -2,64 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
+use App\Models\Ride;
+use App\Models\RideBooking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Booking Summary Page
      */
-    public function index()
+    public function summary(Ride $ride)
+{
+    if ($ride->user_id == auth()->id()) {
+        return back()->with('error', 'You cannot book your own ride.');
+    }
+
+    if ($ride->available_seats <= 0) {
+        return back()->with('error', 'No seats available.');
+    }
+
+    return view('frontend.webviews.booking-summary', compact('ride'));
+}
+
+    /**
+     * Payment Page
+     */
+
+    /**
+     * Confirm Booking
+     */
+    public function confirm(Request $request, Ride $ride)
+{
+    $request->validate([
+        'seats' => 'required|integer|min:1|max:' . $ride->available_seats,
+    ]);
+
+    $alreadyBooked = RideBooking::where('ride_id', $ride->id)
+        ->where('user_id', auth()->id())
+        ->whereIn('booking_status', ['pending', 'accepted'])
+        ->exists();
+
+    if ($alreadyBooked) {
+        return back()->with('error', 'You have already requested this ride.');
+    }
+
+    RideBooking::create([
+        'ride_id' => $ride->id,
+        'user_id' => auth()->id(),
+        'seats' => $request->seats,
+        'booking_status' => 'pending',
+        'status' => 'pending'
+    ]);
+
+    return redirect()
+        ->route('booking.my')
+        ->with('success', 'Ride request sent successfully. Wait for the driver to approve it.');
+}
+
+    /**
+     * Booking Success
+     */
+
+    /**
+     * My Bookings
+     */
+    public function myBookings()
     {
-        //
+        $bookings = RideBooking::with('ride')
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        return view('frontend.webviews.my-bookings', compact('bookings'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Cancel Booking
      */
-    public function create()
+    public function cancel(RideBooking $booking)
     {
-        //
-    }
+        if ($booking->user_id != Auth::id()) {
+            abort(403);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $booking->update([
+            'booking_status' => 'cancelled'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Booking $booking)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Booking $booking)
-    {
-        //
+        return redirect()->back()->with('success', 'Booking cancelled successfully.');
     }
 }

@@ -68,35 +68,16 @@ class RideBookingController extends Controller
      * Accept Request
      */
     public function accept(RideBooking $booking)
-    {
-        $ride = $booking->ride;
+{
+    $booking->update([
+        'booking_status' => 'accepted',
+        'status' => 'accepted'
+    ]);
 
-        if ($ride->user_id != Auth::id()) {
-            abort(403);
-        }
+    $booking->ride->decrement('available_seats');
 
-        if ($booking->status != 'pending') {
-            return back()->with('error', 'Booking already processed.');
-        }
-
-        if ($ride->available_seats <= 0) {
-            return back()->with('error', 'No seats available.');
-        }
-
-        $booking->update([
-            'status' => 'accepted'
-        ]);
-
-        $ride->decrement('available_seats');
-
-        if ($ride->available_seats == 0) {
-            $ride->update([
-                'status' => 'completed'
-            ]);
-        }
-
-        return back()->with('success', 'Booking accepted.');
-    }
+    return back()->with('success','Booking Accepted');
+}
 
     /**
      * Reject Request

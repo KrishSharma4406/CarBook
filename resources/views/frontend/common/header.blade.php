@@ -64,6 +64,10 @@
     		<span class="ml-2">My Rides</span>
 		</a>
 
+		<a class="dropdown-item" href="{{ route('booking.my') }}">
+			<span class="ml-2">My Bookings</span>
+		</a>
+
 		<a class="dropdown-item" href="{{ route('rides.requests') }}">
     		<span class="ml-2">Ride Requests</span>
 		</a>
