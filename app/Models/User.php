@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Ride;
+use App\Models\RideBooking;
 
 class User extends Authenticatable
 {
@@ -63,5 +64,10 @@ class User extends Authenticatable
     public function rides()
 {
     return $this->hasMany(Ride::class);
+}
+
+public function rideBookings()
+{
+    return $this->hasMany(RideBooking::class);
 }
 }

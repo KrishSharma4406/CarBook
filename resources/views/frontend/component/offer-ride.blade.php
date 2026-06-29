@@ -1,7 +1,3 @@
-@extends('frontend.layout.app')
-
-@section('content')
-
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI/images/bg_3.jpg') }}');">
     <div class="overlay"></div>
     <div class="container">
@@ -166,5 +162,3 @@
     </div>
 
 </section>
-
-@endsection

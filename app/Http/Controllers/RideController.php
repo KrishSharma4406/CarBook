@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ride;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\RideBooking;
 
 class RideController extends Controller
 {
@@ -107,4 +108,112 @@ class RideController extends Controller
 
         return view('frontend.webviews.my-rides',compact('rides'));
     }
+
+    public function dashboard()
+{
+    $user = auth()->user();
+
+    $totalRides = Ride::where('user_id',$user->id)->count();
+
+    $activeRides = Ride::where('user_id',$user->id)
+        ->where('status','active')
+        ->count();
+
+    $completedRides = Ride::where('user_id',$user->id)
+        ->where('status','completed')
+        ->count();
+
+    $pendingRequests = RideBooking::whereHas('ride',function($query) use($user){
+
+        $query->where('user_id',$user->id);
+
+    })
+    ->where('status','pending')
+    ->count();
+
+    $recentRides = Ride::where('user_id',$user->id)
+        ->latest()
+        ->take(5)
+        ->get();
+
+    $recentRequests = RideBooking::with(['user','ride'])
+        ->whereHas('ride',function($query) use($user){
+
+            $query->where('user_id',$user->id);
+
+        })
+        ->latest()
+        ->take(5)
+        ->get();
+
+    return view('frontend.webviews.dashboard',compact(
+
+        'totalRides',
+        'activeRides',
+        'completedRides',
+        'pendingRequests',
+        'recentRides',
+        'recentRequests'
+
+    ));
+}
+
+public function edit(Ride $ride)
+{
+    if ($ride->user_id != auth()->id()) {
+        abort(403);
+    }
+
+    return view('frontend.webviews.edit-ride', compact('ride'));
+}
+
+    public function update(Request $request, Ride $ride)
+{
+    if ($ride->user_id != auth()->id()) {
+        abort(403);
+    }
+
+    $request->validate([
+
+        'pickup_location'=>'required',
+
+        'destination'=>'required',
+
+        'travel_date'=>'required',
+
+        'travel_time'=>'required',
+
+        'available_seats'=>'required',
+
+        'fare'=>'required',
+
+        'vehicle_name'=>'required',
+
+        'vehicle_number'=>'required'
+    ]);
+
+    $ride->update($request->all());
+
+    return redirect()
+            ->route('rides.my')
+            ->with('success','Ride Updated Successfully');
+}
+
+public function destroy(Ride $ride)
+{
+    if ($ride->user_id != auth()->id()) {
+        abort(403);
+    }
+
+    $ride->delete();
+
+    return back()->with('success','Ride Deleted Successfully');
+}
+
+public function show(Ride $ride)
+{
+    $ride->load('user');
+
+    return view('frontend.webviews.ride-details', compact('ride'));
+}
 }
