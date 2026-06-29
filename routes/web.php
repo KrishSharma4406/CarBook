@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\RideController;
+use App\Http\Controllers\RideBookingController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -145,6 +146,26 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/my-rides',[RideController::class,'myRides'])
         ->name('rides.my');
+
+    Route::post('/rides/{ride}/book',
+        [RideBookingController::class,'store'])
+        ->name('rides.book');
+
+    Route::get('/rides/{ride}', [RideController::class, 'show'])
+    ->name('rides.show');
+
+    Route::get('/ride-requests',[RideBookingController::class,'requests'])
+        ->name('rides.requests');
+
+    Route::post('/booking/{booking}/accept',[RideBookingController::class,'accept'])
+        ->name('booking.accept');
+
+    Route::post('/booking/{booking}/reject',[RideBookingController::class,'reject'])
+        ->name('booking.reject');
+
+    Route::get('/dashboard',[RideController::class,'dashboard'])
+        ->name('dashboard');
+
 });
 
 

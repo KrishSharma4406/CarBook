@@ -1,7 +1,3 @@
-@extends('frontend.layout.app')
-
-@section('content')
-
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI/images/bg_3.jpg') }}');">
     <div class="overlay"></div>
 
@@ -24,6 +20,18 @@
     </div>
 
 </section>
+
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
 
 <section class="ftco-section">
 
@@ -169,11 +177,16 @@
 
                         @endif
 
-                        <button class="btn btn-success btn-block">
+                        <form action="{{ route('rides.book', $ride->id) }}" method="POST">
+                            @csrf
 
-                            Book Ride
+                            <a href="{{ route('rides.show',$ride->id) }}"
+                                class="btn btn-success btn-block">
 
-                        </button>
+                                View Details
+
+                            </a>
+                        </form>
 
                     </div>
 
@@ -200,5 +213,3 @@
     </div>
 
 </section>
-
-@endsection

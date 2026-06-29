@@ -48,6 +48,10 @@
 
         <div class="dropdown-divider"></div>
 
+		<a class="dropdown-item" href="{{ route('dashboard') }}">
+            <span class="ml-2">Dashboard</span>
+        </a>
+
         <a class="dropdown-item" href="{{ route('offer.ride') }}">
             <span class="ml-2">Offer Ride</span>
         </a>
@@ -55,6 +59,14 @@
         <a class="dropdown-item" href="{{ route('rides.index') }}">
             <span class="ml-2">View Rides</span>
         </a>
+
+		<a class="dropdown-item" href="{{ route('rides.my') }}">
+    		<span class="ml-2">My Rides</span>
+		</a>
+
+		<a class="dropdown-item" href="{{ route('rides.requests') }}">
+    		<span class="ml-2">Ride Requests</span>
+		</a>
 
         <a class="dropdown-item" href="{{ route('profile.edit') }}">
             <span class="ml-2">Edit Profile</span>
