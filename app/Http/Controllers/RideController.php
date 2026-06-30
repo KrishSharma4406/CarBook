@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RideBooking;
 use Carbon\Carbon;
+use App\Models\Car;
 
 class RideController extends Controller
 {
     public function create()
     {
-        return view('frontend.webviews.offer-ride');
+        $cars = auth()->user()->cars;
+
+        return view('frontend.webviews.offer-ride', compact('cars'));
     }
 
     public function store(Request $request)
@@ -42,13 +45,23 @@ class RideController extends Controller
         Ride::create([
             'user_id' => auth()->id(),
             'car_id' => $request->car_id,
+
             'pickup_location' => $request->pickup_location,
             'destination' => $request->destination,
+
             'travel_date' => $request->travel_date,
             'travel_time' => $request->travel_time,
+
             'available_seats' => $request->available_seats,
+
             'fare' => $request->fare,
+
+            'vehicle_name' => $car->brand . ' ' . $car->model,
+
+            'vehicle_number' => $car->registration_number,
+
             'description' => $request->description,
+
             'status' => 'active',
         ]);
 

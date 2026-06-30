@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\RideBookingController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Admin\RideController as AdminRideController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -84,6 +86,18 @@ Route::any('/admin/users/{user}/toggle-status', [UserController::class, 'toggleS
 
 Route::put('/admin/users/{user}/update', [UserController::class, 'update'])
     ->name('users.update');
+
+Route::get('/admin/rides', [AdminRideController::class,'index'])
+    ->name('admin.rides.index');
+
+Route::get('/admin/rides/{ride}', [AdminRideController::class,'show'])
+    ->name('admin.rides.show');
+
+Route::get('/admin/bookings',[AdminBookingController::class,'index'])
+    ->name('admin.bookings.index');
+
+Route::get('/admin/bookings/{booking}',[AdminBookingController::class,'show'])
+    ->name('admin.bookings.show');
 
 Route::post('/register/send-otp', [RegisteredUserController::class, 'sendOtp'])->name('register.otp');
 
@@ -210,8 +224,6 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
-
-Route::delete('/cars/{car}', [AdminCarController::class, 'destroy'])->name('admin.cars.destroy');
 
 Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
 
