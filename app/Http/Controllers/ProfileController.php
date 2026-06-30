@@ -21,15 +21,14 @@ class ProfileController extends Controller
         $cars = car::where('user_id', $user->id)->get();
         return view("frontend.cars.index", compact("user","cars"));
     }
-    public function edit(Request $request): View
-    {
-        $user = $request->user();
+    public function edit(Request $request)
+{
+    $user = $request->user()->load('cars');
 
-        // Get user's car details
-
-        $cars = $user->car;
-        return view('profile.edit', compact('user', 'cars'));
-    }
+    return view('profile.edit', [
+        'user' => $user,
+    ]);
+}
 
     /**
      * Update the user's profile.

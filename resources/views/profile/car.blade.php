@@ -34,6 +34,16 @@
 
                     <div class="card-body p-4">
 
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
                         <form action="{{ route('car.save') }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
@@ -43,37 +53,37 @@
                                 <div class="col-md-6 mb-3">
                                     <label>Car Name</label>
                                     <input type="text" name="car_name" class="form-control"
-                                           value="{{ old('car_name',$car->car_name ?? '') }}">
+                                        value="{{ old('car_name',$car->car_name ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Brand</label>
                                     <input type="text" name="brand" class="form-control"
-                                           value="{{ old('brand',$car->brand ?? '') }}">
+                                        value="{{ old('brand',$car->brand ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Model</label>
                                     <input type="text" name="model" class="form-control"
-                                           value="{{ old('model',$car->model ?? '') }}">
+                                        value="{{ old('model',$car->model ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Registration No.</label>
                                     <input type="text" name="registration_number" class="form-control"
-                                           value="{{ old('registration_number',$car->registration_number ?? '') }}">
+                                        value="{{ old('registration_number',$car->registration_number ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Manufacturing Year</label>
                                     <input type="number" name="manufacturing_year" class="form-control"
-                                           value="{{ old('manufacturing_year',$car->manufacturing_year ?? '') }}">
+                                        value="{{ old('manufacturing_year',$car->manufacturing_year ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Color</label>
                                     <input type="text" name="color" class="form-control"
-                                           value="{{ old('color',$car->color ?? '') }}">
+                                        value="{{ old('color',$car->color ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -102,7 +112,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label>Rent Per Day (₹)</label>
                                     <input type="number" name="rent_per_day" class="form-control"
-                                           value="{{ old('rent_per_day',$car->rent_per_day ?? '') }}">
+                                        value="{{ old('rent_per_day',$car->rent_per_day ?? '') }}">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -113,8 +123,8 @@
                                 @if(isset($car) && $car->image)
                                 <div class="col-12 text-center mb-3">
                                     <img src="{{ asset('uploads/cars/'.$car->image) }}"
-                                         class="img-fluid rounded shadow"
-                                         style="max-height:220px;">
+                                        class="img-fluid rounded shadow"
+                                        style="max-height:220px;">
                                 </div>
                                 @endif
 
@@ -123,8 +133,8 @@
                                     <label>Description</label>
 
                                     <textarea name="description"
-                                              rows="5"
-                                              class="form-control">{{ old('description',$car->description ?? '') }}</textarea>
+                                        rows="5"
+                                        class="form-control">{{ old('description',$car->description ?? '') }}</textarea>
 
                                 </div>
 
@@ -141,7 +151,7 @@
                                 </button>
 
                                 <a href="{{ route('profile.edit') }}"
-                                   class="btn btn-secondary px-5">
+                                    class="btn btn-secondary px-5">
 
                                     Back
 

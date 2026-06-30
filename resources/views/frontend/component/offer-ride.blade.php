@@ -118,19 +118,32 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Vehicle Name</label>
-                                <input type="text"
-                                    name="vehicle_name"
-                                    class="form-control"
-                                    value="{{ old('vehicle_name') }}">
-                            </div>
 
-                            <div class="form-group">
-                                <label>Vehicle Number</label>
-                                <input type="text"
-                                    name="vehicle_number"
-                                    class="form-control"
-                                    value="{{ old('vehicle_number') }}">
+                                <label>Select Your Car</label>
+
+                                <select name="car_id" class="form-control" required>
+
+                                    <option value="">Choose a Car</option>
+
+                                    @foreach(auth()->user()->cars as $car)
+
+                                    <option value="{{ $car->id }}">
+
+                                        {{ $car->brand }}
+                                        {{ $car->model }}
+                                        -
+                                        {{ $car->registration_number }}
+
+                                    </option>
+
+                                    @endforeach
+
+                                </select>
+
+                                @error('car_id')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+
                             </div>
 
                             <div class="form-group">

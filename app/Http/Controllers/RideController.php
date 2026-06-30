@@ -18,55 +18,43 @@ class RideController extends Controller
     public function store(Request $request)
     {
 
+        $car = auth()->user()->cars()->findOrFail($request->car_id);
+
         $request->validate([
 
-            'pickup_location'=>'required',
+            'pickup_location' => 'required',
 
-            'destination'=>'required',
+            'car_id' => 'required|exists:cars,id',
 
-            'travel_date'=>'required|date',
+            'destination' => 'required',
 
-            'travel_time'=>'required',
+            'travel_date' => 'required|date',
 
-            'available_seats'=>'required|integer|min:1|max:8',
+            'travel_time' => 'required',
 
-            'fare'=>'required|numeric|min:0',
+            'available_seats' => 'required|integer|min:1|max:8',
 
-            'vehicle_name'=>'required',
+            'fare' => 'required|numeric|min:0',
 
-            'vehicle_number'=>'required',
-
-            'description'=>'nullable'
+            'description' => 'nullable'
         ]);
 
         Ride::create([
-
-            'user_id'=>Auth::id(),
-
-            'pickup_location'=>$request->pickup_location,
-
-            'destination'=>$request->destination,
-
-            'travel_date'=>$request->travel_date,
-
-            'travel_time'=>$request->travel_time,
-
-            'available_seats'=>$request->available_seats,
-
-            'fare'=>$request->fare,
-
-            'vehicle_name'=>$request->vehicle_name,
-
-            'vehicle_number'=>$request->vehicle_number,
-
-            'description'=>$request->description,
-
-            'status'=>'active'
+            'user_id' => auth()->id(),
+            'car_id' => $request->car_id,
+            'pickup_location' => $request->pickup_location,
+            'destination' => $request->destination,
+            'travel_date' => $request->travel_date,
+            'travel_time' => $request->travel_time,
+            'available_seats' => $request->available_seats,
+            'fare' => $request->fare,
+            'description' => $request->description,
+            'status' => 'active',
         ]);
 
         return redirect()
             ->back()
-            ->with('success','Ride Offered Successfully!');
+            ->with('success', 'Ride Offered Successfully!');
     }
 
     public function index(Request $request)
@@ -74,174 +62,161 @@ class RideController extends Controller
 
         $rides = Ride::with('user')
 
-        ->when($request->pickup,function($q) use($request){
+            ->when($request->pickup, function ($q) use ($request) {
 
-            $q->where('pickup_location','LIKE','%'.$request->pickup.'%');
+                $q->where('pickup_location', 'LIKE', '%' . $request->pickup . '%');
+            })
 
-        })
+            ->when($request->destination, function ($q) use ($request) {
 
-        ->when($request->destination,function($q) use($request){
+                $q->where('destination', 'LIKE', '%' . $request->destination . '%');
+            })
 
-            $q->where('destination','LIKE','%'.$request->destination.'%');
+            ->when($request->travel_date, function ($q) use ($request) {
 
-        })
+                $q->where('travel_date', $request->travel_date);
+            })
 
-        ->when($request->travel_date,function($q) use($request){
+            ->where('status', 'active')
 
-            $q->where('travel_date',$request->travel_date);
+            ->latest()
 
-        })
+            ->get();
 
-        ->where('status','active')
-
-        ->latest()
-
-        ->get();
-
-        return view('frontend.webviews.view-rides',compact('rides'));
+        return view('frontend.webviews.view-rides', compact('rides'));
     }
 
     public function myRides()
     {
-        $rides = Ride::where('user_id',Auth::id())
+        $rides = Ride::where('user_id', Auth::id())
             ->latest()
             ->get();
 
-        return view('frontend.webviews.my-rides',compact('rides'));
+        return view('frontend.webviews.my-rides', compact('rides'));
     }
 
     public function dashboard()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    $totalRides = Ride::where('user_id',$user->id)->count();
+        $totalRides = Ride::where('user_id', $user->id)->count();
 
-    $activeRides = Ride::where('user_id',$user->id)
-        ->where('status','active')
-        ->count();
+        $activeRides = Ride::where('user_id', $user->id)
+            ->where('status', 'active')
+            ->count();
 
-    $completedRides = Ride::where('user_id',$user->id)
-        ->where('status','completed')
-        ->count();
+        $completedRides = Ride::where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->count();
 
-    $pendingRequests = RideBooking::whereHas('ride',function($query) use($user){
+        $pendingRequests = RideBooking::whereHas('ride', function ($query) use ($user) {
 
-        $query->where('user_id',$user->id);
-
-    })
-    ->where('status','pending')
-    ->count();
-
-    $recentRides = Ride::where('user_id',$user->id)
-        ->latest()
-        ->take(5)
-        ->get();
-
-    $recentRequests = RideBooking::with(['user','ride'])
-        ->whereHas('ride',function($query) use($user){
-
-            $query->where('user_id',$user->id);
-
+            $query->where('user_id', $user->id);
         })
-        ->latest()
-        ->take(5)
-        ->get();
+            ->where('status', 'pending')
+            ->count();
 
-    return view('frontend.webviews.dashboard',compact(
+        $recentRides = Ride::where('user_id', $user->id)
+            ->latest()
+            ->take(5)
+            ->get();
 
-        'totalRides',
-        'activeRides',
-        'completedRides',
-        'pendingRequests',
-        'recentRides',
-        'recentRequests'
+        $recentRequests = RideBooking::with(['user', 'ride'])
+            ->whereHas('ride', function ($query) use ($user) {
 
-    ));
-}
+                $query->where('user_id', $user->id);
+            })
+            ->latest()
+            ->take(5)
+            ->get();
 
-public function edit(Ride $ride)
-{
-    if ($ride->user_id != auth()->id()) {
-        abort(403);
+        return view('frontend.webviews.dashboard', compact(
+
+            'totalRides',
+            'activeRides',
+            'completedRides',
+            'pendingRequests',
+            'recentRides',
+            'recentRequests'
+
+        ));
     }
 
-    return view('frontend.webviews.edit-ride', compact('ride'));
-}
+    public function edit(Ride $ride)
+    {
+        if ($ride->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        return view('frontend.webviews.edit-ride', compact('ride'));
+    }
 
     public function update(Request $request, Ride $ride)
-{
-    if ($ride->user_id != auth()->id()) {
-        abort(403);
-    }
+    {
+        if ($ride->user_id != auth()->id()) {
+            abort(403);
+        }
 
-    $request->validate([
+        $request->validate([
+            'pickup_location' => 'required',
+            'destination' => 'required',
+            'travel_date' => 'required|date',
+            'travel_time' => 'required',
+            'available_seats' => 'required|integer|min:1|max:8',
+            'fare' => 'required|numeric|min:0',
+            'car_id' => 'required|exists:cars,id',
+            'description' => 'nullable',
+        ]);
 
-        'pickup_location'=>'required',
+        $ride->update($request->all());
 
-        'destination'=>'required',
-
-        'travel_date'=>'required',
-
-        'travel_time'=>'required',
-
-        'available_seats'=>'required',
-
-        'fare'=>'required',
-
-        'vehicle_name'=>'required',
-
-        'vehicle_number'=>'required'
-    ]);
-
-    $ride->update($request->all());
-
-    return redirect()
+        return redirect()
             ->route('rides.my')
-            ->with('success','Ride Updated Successfully');
-}
-
-public function destroy(Ride $ride)
-{
-    if ($ride->user_id != auth()->id()) {
-        abort(403);
+            ->with('success', 'Ride Updated Successfully');
     }
 
-    $ride->delete();
+    public function destroy(Ride $ride)
+    {
+        if ($ride->user_id != auth()->id()) {
+            abort(403);
+        }
 
-    return back()->with('success','Ride Deleted Successfully');
-}
+        $ride->delete();
 
-public function show(Ride $ride)
-{
-    $ride->load('user');
-
-    return view('frontend.webviews.ride-details', compact('ride'));
-}
-
-public function search(Request $request)
-{
-    $query = Ride::with('user')
-        ->where('status', 'active');
-
-    if ($request->filled('pickup_location')) {
-        $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
+        return back()->with('success', 'Ride Deleted Successfully');
     }
 
-    if ($request->filled('destination')) {
-        $query->where('destination', 'LIKE', '%' . $request->destination . '%');
+    public function show(Ride $ride)
+    {
+        $ride->load('user', 'car');
+
+        return view('frontend.webviews.ride-details', compact('ride'));
     }
 
-    if ($request->filled('travel_date')) {
-        $date = Carbon::parse($request->travel_date)->format('Y-m-d');
-        $query->whereDate('travel_date', $date);
+    public function search(Request $request)
+    {
+        $query = Ride::with('user')
+            ->where('status', 'active');
+
+        if ($request->filled('pickup_location')) {
+            $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
+        }
+
+        if ($request->filled('destination')) {
+            $query->where('destination', 'LIKE', '%' . $request->destination . '%');
+        }
+
+        if ($request->filled('travel_date')) {
+            $date = Carbon::parse($request->travel_date)->format('Y-m-d');
+            $query->whereDate('travel_date', $date);
+        }
+
+        if ($request->filled('travel_time')) {
+            $query->whereTime('travel_time', $request->travel_time);
+        }
+
+        $rides = $query->get();
+
+        return view('frontend.webviews.search', compact('rides'));
     }
-
-    if ($request->filled('travel_time')) {
-        $query->whereTime('travel_time', $request->travel_time);
-    }
-
-    $rides = $query->get();
-
-    return view('frontend.webviews.search', compact('rides'));
-}
 }

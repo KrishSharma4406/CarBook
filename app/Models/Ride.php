@@ -10,6 +10,8 @@ class Ride extends Model
 
         'user_id',
 
+        'car_id',
+
         'pickup_location',
 
         'destination',
@@ -22,10 +24,6 @@ class Ride extends Model
 
         'fare',
 
-        'vehicle_name',
-
-        'vehicle_number',
-
         'description',
 
         'status'
@@ -37,7 +35,12 @@ class Ride extends Model
     }
 
     public function bookings()
-{
-    return $this->hasMany(RideBooking::class);
-}
+    {
+        return $this->hasMany(RideBooking::class);
+    }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
 }

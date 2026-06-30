@@ -111,31 +111,73 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <hr>
 
-                                <p>
+                            <h5 class="mb-4">
 
-                                    <strong>Vehicle</strong>
+                                <i class="fa fa-car text-success"></i>
 
-                                    <br>
+                                Car Information
 
-                                    {{ $ride->vehicle_name }}
+                            </h5>
 
-                                </p>
+                            <div class="row">
 
-                            </div>
+                                <div class="col-md-4 text-center">
 
-                            <div class="col-md-6">
+                                    <img src="{{ asset('uploads/cars/'.$ride->car->image) }}"
+                                        class="img-fluid rounded shadow"
+                                        style="height:180px; width:100%; object-fit:cover;">
 
-                                <p>
+                                </div>
 
-                                    <strong>Vehicle Number</strong>
+                                <div class="col-md-8">
 
-                                    <br>
+                                    <table class="table table-borderless">
 
-                                    {{ $ride->vehicle_number }}
+                                        <tr>
+                                            <th>Car Name</th>
+                                            <td>{{ $ride->car->car_name }}</td>
+                                        </tr>
 
-                                </p>
+                                        <tr>
+                                            <th>Brand</th>
+                                            <td>{{ $ride->car->brand }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Model</th>
+                                            <td>{{ $ride->car->model }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Registration</th>
+                                            <td>{{ $ride->car->registration_number }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Color</th>
+                                            <td>{{ $ride->car->color }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Fuel</th>
+                                            <td>{{ $ride->car->fuel_type }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Transmission</th>
+                                            <td>{{ $ride->car->transmission }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Manufacturing Year</th>
+                                            <td>{{ $ride->car->manufacturing_year }}</td>
+                                        </tr>
+
+                                    </table>
+
+                                </div>
 
                             </div>
 
@@ -166,16 +208,10 @@
                         <img src="https://ui-avatars.com/api/?name={{ urlencode($ride->user->name) }}&background=01d28e&color=fff&size=128"
                             class="rounded-circle mb-3">
 
-                        <h4>
-
-                            {{ $ride->user->name }}
-
-                        </h4>
+                        <h4>{{ $ride->user->name }}</h4>
 
                         <p>
-
                             Ride Owner
-
                         </p>
 
                         <hr>
