@@ -39,146 +39,231 @@
         </div>
         @endif
 
-        <div class="row align-items-start">
+        <!-- ================= PROFILE ================= -->
 
-            <!-- Profile -->
-            <div class="col-md-8">
+        <div class="card shadow mb-5">
 
-                <div class="col-md-4">
+            <div class="card-header bg-primary text-white">
 
-                    <div class="card-header bg-primary text-white">
-
-                        <h4 class="mb-0">
-
-                            <i class="fa fa-user mr-2"></i>
-
-                            My Profile
-
-                        </h4>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <form method="POST" action="{{ route('profile.update') }}">
-
-                            @csrf
-                            @method('PATCH')
-
-                            <div class="mb-3">
-                                <label>Name</label>
-                                <input type="text"
-                                    name="name"
-                                    class="form-control"
-                                    value="{{ old('name',$user->name) }}"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>Email</label>
-                                <input type="email"
-                                    name="email"
-                                    class="form-control"
-                                    value="{{ old('email',$user->email) }}"
-                                    required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>Contact Number</label>
-                                <input type="text"
-                                    name="phone"
-                                    class="form-control"
-                                    value="{{ old('phone',$user->phone) }}">
-                            </div>
-
-                            <div class="mb-3">
-                                <label>Member Since</label>
-                                <input type="text"
-                                    class="form-control"
-                                    value="{{ $user->created_at->format('d M Y') }}"
-                                    readonly>
-                            </div>
-
-                            <button class="btn btn-primary">
-                                Update Profile
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
+                <h4 class="mb-0">
+                    <i class="fa fa-user mr-2"></i>
+                    My Profile
+                </h4>
 
             </div>
 
-            <!-- Car -->
-            <div class="col-md-4">
+            <div class="card-body">
 
-                <div class="card shadow">
+                <form method="POST" action="{{ route('profile.update') }}">
 
-                    <div class="card-header bg-dark text-white">
+                    @csrf
+                    @method('PATCH')
 
-                        <h4 class="mb-0 text-white">
+                    <div class="row">
 
-                            <i class="fa fa-car mr-2"></i>
+                        <div class="col-md-6 mb-3">
 
-                            My Car
+                            <label>Name</label>
 
-                        </h4>
+                            <input type="text"
+                                name="name"
+                                class="form-control"
+                                value="{{ old('name',$user->name) }}"
+                                required>
 
-                    </div>
+                        </div>
 
-                    <div class="card-body">
+                        <div class="col-md-6 mb-3">
 
-                        @if($cars)
+                            <label>Email</label>
 
-                        @if($cars->image)
-                        <img src="{{ asset('uploads/cars/'.$cars->image) }}"
-                            class="img-fluid rounded shadow"
+                            <input type="email"
+                                name="email"
+                                class="form-control"
+                                value="{{ old('email',$user->email) }}"
+                                required>
 
-                            style="height:220px;
-                                    width:100%;
-                                    object-fit:cover;">
-                        @endif
+                        </div>
 
-                        <h5>{{ $cars->car_name }}</h5>
+                        <div class="col-md-6 mb-3">
 
-                        <p><strong>Brand:</strong> {{ $cars->brand }}</p>
+                            <label>Contact Number</label>
 
-                        <p><strong>Model:</strong> {{ $cars->model }}</p>
+                            <input type="text"
+                                name="phone"
+                                class="form-control"
+                                value="{{ old('phone',$user->phone) }}">
 
-                        <p><strong>Registration:</strong> {{ $cars->registration_number }}</p>
+                        </div>
 
-                        <p><strong>Rent/Day:</strong> ₹{{ $cars->rent_per_day }}</p>
+                        <div class="col-md-6 mb-3">
 
-                        <a href="{{ route('car.edit') }}"
-                            class="btn btn-primary btn-block py-3">
+                            <label>Member Since</label>
 
-                            Edit Car
+                            <input type="text"
+                                class="form-control"
+                                value="{{ $user->created_at->format('d M Y') }}"
+                                readonly>
 
-                        </a>
-
-                        @else
-
-                        <p>No car added yet.</p>
-
-                        <a href="{{ route('car.edit') }}"
-                            class="btn btn-primary w-100">
-
-                            Add Car
-
-                        </a>
-
-                        @endif
+                        </div>
 
                     </div>
 
-                </div>
+                    <button class="btn btn-primary">
+                        Update Profile
+                    </button>
+
+                </form>
 
             </div>
 
         </div>
+
+        <!-- ================= MY CARS ================= -->
+
+        <div class="card shadow">
+
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+
+                <h4 class="mb-0 text-white">
+                    <i class="fa fa-car mr-2"></i>
+                    My Cars
+                </h4>
+
+                <a href="{{ route('car.edit') }}" class="btn btn-success btn-sm">
+
+                    <i class="fa fa-plus"></i>
+
+                    Add Car
+
+                </a>
+
+            </div>
+
+            <div class="card-body">
+
+                @if($user->cars->count())
+
+                <div class="row">
+
+                    @foreach($user->cars as $car)
+
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+
+                        <div class="card shadow-sm h-100 border-0">
+
+                            <img src="{{ asset('uploads/cars/'.$car->image) }}"
+                                class="card-img-top"
+                                style="height:180px;object-fit:cover;">
+
+                            <div class="card-body">
+
+                                <h5 class="font-weight-bold">
+
+                                    {{ $car->brand }}
+
+                                    {{ $car->model }}
+
+                                </h5>
+
+                                <p class="mb-1">
+                                    <strong>Name:</strong>
+                                    {{ $car->car_name }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Registration:</strong>
+                                    {{ $car->registration_number }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Fuel:</strong>
+                                    {{ $car->fuel_type }}
+                                </p>
+
+                                <p class="mb-3">
+                                    <strong>₹{{ $car->rent_per_day }}</strong>/day
+                                </p>
+
+                            </div>
+
+                            <div class="card-footer bg-white border-0">
+
+                                <div class="row">
+
+                                    <div class="col-6">
+
+                                        <a href="{{ route('car.edit') }}"
+                                            class="btn btn-primary btn-block">
+
+                                            <i class="fa fa-edit"></i>
+
+                                            Edit
+
+                                        </a>
+
+                                    </div>
+
+                                    <div class="col-6">
+
+                                        <form action="{{ route('car.destroy',$car->id) }}"
+                                            method="POST"
+                                            onsubmit="return confirm('Delete this car?')">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button class="btn btn-danger btn-block">
+
+                                                <i class="fa fa-trash"></i>
+
+                                                Delete
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @endforeach
+
+                </div>
+
+                @else
+
+                <div class="text-center py-5">
+
+                    <i class="fa fa-car fa-4x text-muted mb-3"></i>
+
+                    <h4>No Cars Added</h4>
+
+                    <p>Add your first car to start offering rides.</p>
+
+                    <a href="{{ route('car.edit') }}"
+                        class="btn btn-primary">
+
+                        Add Car
+
+                    </a>
+
+                </div>
+
+                @endif
+
+            </div>
+
+        </div>
+
     </div>
+
 </section>
 
 </div>

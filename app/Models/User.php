@@ -51,9 +51,9 @@ class User extends Authenticatable
     /**
      * A user has one car.
      */
-    public function car()
+    public function cars()
     {
-        return $this->hasOne(Car::class);
+        return $this->hasMany(Car::class);
     }
 
     public function bookings()

@@ -136,6 +136,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/car', [CarController::class, 'save'])
         ->name('car.save');
 
+    Route::get('/profile/car/add', [CarController::class,'create'])
+        ->name('car.create');
+
+    Route::post('/profile/car/store', [CarController::class,'save'])
+        ->name('car.store');
+
+    Route::get('/profile/car/{car}/edit',[CarController::class,'editCar'])
+        ->name('car.edit.single');
+
+    Route::delete('/profile/car/{car}',[CarController::class,'destroy'])
+        ->name('car.delete');
+
+    Route::delete('/profile/car/{car}', [CarController::class, 'destroy'])
+        ->name('car.destroy');
+
     Route::get('/offer-ride',[RideController::class,'create'])
         ->name('offer.ride');
 

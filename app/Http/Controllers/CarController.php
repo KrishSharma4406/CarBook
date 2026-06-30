@@ -10,9 +10,9 @@ class CarController extends Controller
 {
     public function edit()
     {
-        $car = Auth::user()->car;
+        $cars = auth()->user()->cars;
 
-        return view('profile.car', compact('car'));
+        return view('profile.car', compact('cars'));
     }
 
     public function save(Request $request)
@@ -31,12 +31,9 @@ class CarController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $car = Auth::user()->car;
+        $car = new Car();
 
-        if (!$car) {
-            $car = new Car();
-            $car->user_id = Auth::id();
-        }
+        $car->user_id = Auth::id();
 
         $car->fill($request->except('image'));
 
@@ -64,5 +61,37 @@ class CarController extends Controller
     $car->load('user');
 
     return view('frontend.webviews.car-details', compact('car'));
+}
+
+public function create()
+{
+    return view('profile.add-car');
+}
+
+public function editCar(Car $car)
+{
+    abort_if($car->user_id != auth()->id(),403);
+
+    return view('profile.edit-car',compact('car'));
+}
+
+public function destroy(Car $car)
+{
+    // Ensure the logged-in user owns the car
+    if ($car->user_id != auth()->id()) {
+        abort(403);
+    }
+
+    // Delete image from uploads folder
+    if ($car->image && file_exists(public_path('uploads/cars/'.$car->image))) {
+        unlink(public_path('uploads/cars/'.$car->image));
+    }
+
+    // Delete database record
+    $car->delete();
+
+    return redirect()
+        ->route('profile.edit')
+        ->with('success', 'Car deleted successfully.');
 }
 }

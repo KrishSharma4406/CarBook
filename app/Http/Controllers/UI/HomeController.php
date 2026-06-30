@@ -35,9 +35,14 @@ class HomeController extends Controller
     {
         return view('frontend.webviews.price');
     }
+
     public function car()
     {
-        return view('frontend.webviews.car');
+    $cars = Car::with('user')
+        ->latest()
+        ->paginate(9);
+
+    return view('frontend.webviews.car', compact('cars'));
     }
     public function carDetails()
     {
