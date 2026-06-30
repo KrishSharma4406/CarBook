@@ -1,62 +1,46 @@
-@extends('admin.frontend.layout.app')
+@extends('admin.frontend.webview.home')
+
 @section('content')
 
 <div class="content-wrapper">
 
-    <div class="card mb-3">
+    <section class="content-header">
 
-        <div class="card-body">
+        <div class="container-fluid">
 
-            <form>
+            <div class="row mb-2">
 
-                <div class="row">
+                <div class="col-sm-6">
 
-                    <div class="col-md-6">
-
-                        <div class="input-group">
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Search user by name or email">
-
-                            <div class="input-group-append">
-
-                                <button class="btn btn-primary">
-
-                                    <i class="fas fa-search"></i>
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <h1>All Cars</h1>
 
                 </div>
 
-            </form>
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
     <section class="content">
 
         <div class="container-fluid">
 
-
             <div class="card">
 
                 <div class="card-header">
-                    <h3 class="card-title"> All User Cars</h3>
+
+                    <h3 class="card-title">
+
+                        Cars Uploaded By Users
+
+                    </h3>
+
                 </div>
 
-                <div class="card-body table-responsive">
+                <div class="card-body p-0">
 
-                    <table class="table table-hover table-striped text-center align-middle">
-
+                    <table class="table table-bordered table-hover">
 
                         <thead>
 
@@ -68,19 +52,15 @@
 
                                 <th>Owner</th>
 
-                                <th>Email</th>
-
-                                <th>Phone</th>
-
-                                <th>Car Name</th>
-
                                 <th>Brand</th>
 
                                 <th>Model</th>
 
-                                <th>Rent/Day</th>
+                                <th>Registration</th>
 
-                                <th>Status</th>
+                                <th>Fuel</th>
+
+                                <th>Rent/Day</th>
 
                                 <th>Action</th>
 
@@ -96,40 +76,38 @@
 
                                 <td>{{ $car->id }}</td>
 
-                                <td>
+                                <td width="120">
 
                                     @if($car->image)
 
                                     <img src="{{ asset('uploads/cars/'.$car->image) }}"
-                                        width="80"
-                                        height="60"
-                                        style="object-fit:cover;border-radius:8px;">
+                                        style="height:70px;width:110px;object-fit:cover;border-radius:8px;">
 
                                     @endif
 
                                 </td>
 
-                                <td>{{ $car->user->name }}</td>
+                                <td>
 
-                                <td>{{ $car->user->email }}</td>
+                                    <strong>{{ $car->user->name }}</strong>
 
-                                <td>{{ $car->user->phone }}</td>
+                                    <br>
 
-                                <td>{{ $car->car_name }}</td>
+                                    <small>{{ $car->user->email }}</small>
+
+                                </td>
 
                                 <td>{{ $car->brand }}</td>
 
                                 <td>{{ $car->model }}</td>
 
-                                <td>₹{{ number_format($car->rent_per_day) }}</td>
+                                <td>{{ $car->registration_number }}</td>
+
+                                <td>{{ $car->fuel_type }}</td>
 
                                 <td>
 
-                                    <span class="badge badge-success">
-
-                                        Available
-
-                                    </span>
+                                    ₹{{ number_format($car->rent_per_day) }}
 
                                 </td>
 
@@ -138,26 +116,9 @@
                                     <a href="{{ route('admin.cars.show',$car->id) }}"
                                         class="btn btn-info btn-sm">
 
-                                        <i class="fas fa-eye"></i>
+                                        View
 
                                     </a>
-
-                                    <form action="{{ route('admin.cars.destroy',$car->id) }}"
-                                        method="POST"
-                                        style="display:inline;">
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button
-                                            class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Delete this car?')">
-
-                                            <i class="fas fa-trash"></i>
-
-                                        </button>
-
-                                    </form>
 
                                 </td>
 
@@ -167,7 +128,7 @@
 
                             <tr>
 
-                                <td colspan="11" class="text-center">
+                                <td colspan="9" class="text-center">
 
                                     No Cars Found
 
@@ -184,7 +145,9 @@
                 </div>
 
                 <div class="card-footer">
+
                     {{ $cars->links() }}
+
                 </div>
 
             </div>
@@ -194,4 +157,5 @@
     </section>
 
 </div>
+
 @endsection

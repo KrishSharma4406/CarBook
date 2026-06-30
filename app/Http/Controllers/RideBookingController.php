@@ -76,7 +76,7 @@ class RideBookingController extends Controller
 
     $booking->ride->decrement('available_seats');
 
-    return back()->with('success','Booking Accepted');
+    return back()->with('success', 'Booking Accepted');
 }
 
     /**

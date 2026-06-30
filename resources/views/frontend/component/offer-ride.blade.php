@@ -125,14 +125,13 @@
 
                                     <option value="">Choose a Car</option>
 
-                                    @foreach(auth()->user()->cars as $car)
+                                    @foreach($cars as $car)
 
                                     <option value="{{ $car->id }}">
 
                                         {{ $car->brand }}
                                         {{ $car->model }}
-                                        -
-                                        {{ $car->registration_number }}
+                                        ({{ $car->registration_number }})
 
                                     </option>
 

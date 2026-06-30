@@ -98,6 +98,40 @@
           </a>
         </li>
 
+        <li class="nav-item">
+
+          <a href="{{ route('admin.rides.index') }}"
+            class="nav-link {{ request()->routeIs('admin.rides.*') ? 'active' : '' }}">
+
+            <i class="nav-icon fas fa-road"></i>
+
+            <p>
+
+              Rides
+
+            </p>
+
+          </a>
+
+        </li>
+
+        <li class="nav-item">
+
+          <a href="{{ route('admin.bookings.index') }}"
+            class="nav-link {{ request()->routeIs('admin.bookings.*') ? 'active' : '' }}">
+
+            <i class="nav-icon fas fa-book"></i>
+
+            <p>
+
+              Bookings
+
+            </p>
+
+          </a>
+
+        </li>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
