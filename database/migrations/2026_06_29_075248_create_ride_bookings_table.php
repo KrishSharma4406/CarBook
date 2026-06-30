@@ -22,12 +22,12 @@ return new class extends Migration
 
             $table->integer('seats')->default(1);
 
-            $table->enum('status',[
+            $table->enum('booking_status', [
                 'pending',
-                'accepted',
-                'rejected',
-                'cancelled'
+                'approved',
+                'rejected'
             ])->default('pending');
+
 
             $table->timestamps();
         });

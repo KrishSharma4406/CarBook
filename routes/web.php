@@ -161,14 +161,17 @@ Route::middleware('auth')->group(function () {
         [RideBookingController::class,'store'])
         ->name('rides.book');
 
-    Route::get('/rides/{ride}', [RideController::class, 'show'])
-        ->name('rides.show');
-
     Route::post('/rides/{ride}/confirm',[BookingController::class,'confirm'])
         ->name('booking.confirm');
 
     Route::get('/ride-requests',[RideBookingController::class,'requests'])
         ->name('rides.requests');
+
+    Route::get('/rides/search', [RideController::class, 'search'])
+        ->name('rides.search');
+
+    Route::get('/rides/{ride}', [RideController::class, 'show'])
+        ->name('rides.show');
 
     Route::post('/booking/{booking}/accept',[RideBookingController::class,'accept'])
         ->name('booking.accept');
