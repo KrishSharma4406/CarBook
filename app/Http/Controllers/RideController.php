@@ -6,6 +6,7 @@ use App\Models\Ride;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RideBooking;
+use Carbon\Carbon;
 
 class RideController extends Controller
 {
@@ -215,5 +216,32 @@ public function show(Ride $ride)
     $ride->load('user');
 
     return view('frontend.webviews.ride-details', compact('ride'));
+}
+
+public function search(Request $request)
+{
+    $query = Ride::with('user')
+        ->where('status', 'active');
+
+    if ($request->filled('pickup_location')) {
+        $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
+    }
+
+    if ($request->filled('destination')) {
+        $query->where('destination', 'LIKE', '%' . $request->destination . '%');
+    }
+
+    if ($request->filled('travel_date')) {
+        $date = Carbon::parse($request->travel_date)->format('Y-m-d');
+        $query->whereDate('travel_date', $date);
+    }
+
+    if ($request->filled('travel_time')) {
+        $query->whereTime('travel_time', $request->travel_time);
+    }
+
+    $rides = $query->get();
+
+    return view('frontend.webviews.search', compact('rides'));
 }
 }
