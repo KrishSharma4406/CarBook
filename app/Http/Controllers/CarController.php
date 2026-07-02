@@ -94,4 +94,11 @@ public function destroy(Car $car)
         ->route('profile.edit')
         ->with('success', 'Car deleted successfully.');
 }
+
+public function pricing()
+{
+    $cars = Car::latest()->get();
+
+    return view('frontend.price', compact('cars'));
+}
 }
