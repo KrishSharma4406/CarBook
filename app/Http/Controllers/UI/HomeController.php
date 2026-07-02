@@ -32,9 +32,11 @@ class HomeController extends Controller
         return view('frontend.webviews.service');
     }
     public function price()
-    {
-        return view('frontend.webviews.price');
-    }
+{
+    $cars = Car::all();
+
+    return view('frontend.webviews.price', compact('cars'));
+}
 
     public function car()
     {

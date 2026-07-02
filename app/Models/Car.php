@@ -26,11 +26,18 @@ class Car extends Model
 
         'color',
 
+        'rent_per_hour',
+
         'rent_per_day',
+
+        'rent_per_month',
+
+        'fuel_surcharge',
 
         'description',
 
         'image'
+
     ];
 
     public function user()

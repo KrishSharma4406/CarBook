@@ -1,87 +1,186 @@
-@extends('frontend.layouts.app')
+@extends('frontend.layout.app')
 
 @section('content')
 
-<section class="ftco-section">
+<!-- Hero Section -->
+<section class="hero-wrap hero-wrap-2 js-fullheight"
+	style="background-image: url('{{ asset('UI/images/bg_3.jpg') }}');"
+	data-stellar-background-ratio="0.5">
 
+	<div class="overlay"></div>
+
+	<div class="container">
+		<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+			<div class="col-md-9 ftco-animate pb-5">
+				<p class="breadcrumbs">
+					<span class="mr-2">
+						<a href="{{ route('home') }}">
+							Home
+							<i class="ion-ios-arrow-forward"></i>
+						</a>
+					</span>
+
+					<span>
+						{{ $car->car_name }}
+						<i class="ion-ios-arrow-forward"></i>
+					</span>
+				</p>
+
+				<h1 class="mb-3 bread">
+					{{ $car->car_name }}
+				</h1>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+<!-- Car Details -->
+<section class="ftco-section">
 	<div class="container">
 
 		<div class="row">
 
-			<div class="col-md-6">
+			<!-- Image -->
+			<div class="col-lg-6 ftco-animate">
 
-				@if($car->image)
+				<div class="car-wrap rounded shadow">
 
-				<img
-					src="{{ asset('uploads/cars/'.$car->image) }}"
-					class="img-fluid rounded shadow">
+					@if($car->image)
 
-				@else
+					<img src="{{ asset('uploads/cars/'.$car->image) }}"
+						class="img-fluid rounded"
+						style="width:100%;height:450px;object-fit:cover;">
 
-				<img
-					src="{{ asset('UI/images/car-1.jpg') }}"
-					class="img-fluid rounded shadow">
+					@else
 
-				@endif
+					<img src="{{ asset('UI/images/car-1.jpg') }}"
+						class="img-fluid rounded"
+						style="width:100%;height:450px;object-fit:cover;">
+
+					@endif
+
+				</div>
 
 			</div>
 
-			<div class="col-md-6">
+			<!-- Details -->
+			<div class="col-lg-6 ftco-animate">
 
-				<h2>{{ $car->car_name }}</h2>
+				<h2 class="mb-4">
+					{{ $car->car_name }}
+				</h2>
 
-				<hr>
+				<table class="table table-bordered">
 
-				<p><strong>Brand :</strong> {{ $car->brand }}</p>
+					<tr>
+						<th width="35%">Brand</th>
+						<td>{{ $car->brand }}</td>
+					</tr>
 
-				<p><strong>Model :</strong> {{ $car->model }}</p>
+					<tr>
+						<th>Model</th>
+						<td>{{ $car->model }}</td>
+					</tr>
 
-				<p><strong>Registration :</strong> {{ $car->registration_number }}</p>
+					<tr>
+						<th>Registration No.</th>
+						<td>{{ $car->registration_number }}</td>
+					</tr>
 
-				<p><strong>Year :</strong> {{ $car->manufacturing_year }}</p>
+					<tr>
+						<th>Manufacturing Year</th>
+						<td>{{ $car->manufacturing_year }}</td>
+					</tr>
 
-				<p><strong>Fuel :</strong> {{ $car->fuel_type }}</p>
+					<tr>
+						<th>Fuel Type</th>
+						<td>{{ $car->fuel_type }}</td>
+					</tr>
 
-				<p><strong>Transmission :</strong> {{ $car->transmission }}</p>
+					<tr>
+						<th>Transmission</th>
+						<td>{{ $car->transmission }}</td>
+					</tr>
 
-				<p><strong>Color :</strong> {{ $car->color }}</p>
+					<tr>
+						<th>Color</th>
+						<td>{{ $car->color }}</td>
+					</tr>
 
-				<p><strong>Owner :</strong> {{ $car->user->name }}</p>
+					<tr>
+						<th>Owner</th>
+						<td>{{ $car->user->name }}</td>
+					</tr>
 
-				<p><strong>Contact :</strong> {{ $car->user->phone }}</p>
+					<tr>
+						<th>Contact</th>
+						<td>{{ $car->user->phone }}</td>
+					</tr>
 
-				<h3 class="text-primary">
+				</table>
 
-					₹{{ number_format($car->rent_per_day) }}
+				<!-- Pricing -->
 
-					<small>/Day</small>
+				<div class="bg-light p-4 rounded shadow-sm mt-4">
 
-				</h3>
+					<h5 class="mb-3">Rental Price</h5>
 
-				<hr>
+					<h2 class="text-primary mb-2">
+						₹{{ number_format($car->rent_per_day, 2) }}
+						<small class="text-dark">/ Day</small>
+					</h2>
 
-				<h5>Description</h5>
+				</div>
 
-				<p>
+				<div class="mt-4">
 
-					{{ $car->description }}
+					<strong>Fuel Surcharge :</strong>
 
-				</p>
+					₹{{ number_format($car->fuel_surcharge,2) }}
 
-				<a href="#"
+				</div>
 
-					class="btn btn-primary">
+				<div class="mt-5">
 
-					Book Now
+					<a href="#"
+						class="btn btn-primary py-3 px-5">
 
-				</a>
+						Book Now
+
+					</a>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Description -->
+
+		<div class="row mt-5">
+
+			<div class="col-md-12 ftco-animate">
+
+				<div class="bg-light p-5 rounded">
+
+					<h3>Description</h3>
+
+					<hr>
+
+					<p class="mb-0">
+
+						{{ $car->description }}
+
+					</p>
+
+				</div>
 
 			</div>
 
 		</div>
 
 	</div>
-
 </section>
 
 @endsection
