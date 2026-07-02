@@ -1,179 +1,295 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarBook | Login</title>
+@extends('frontend.layout.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-        body{
-            min-height:100vh;
-            background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070')
-            center center/cover no-repeat;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family:'Segoe UI',sans-serif;
-        }
+<style>
 
-        .overlay{
-            position:absolute;
-            inset:0;
-            background:rgba(0,0,0,.55);
-        }
+.login-section{
 
-        .login-card{
-            position:relative;
-            z-index:2;
-            width:100%;
-            max-width:450px;
-            padding:40px;
-            border-radius:20px;
-            backdrop-filter:blur(15px);
-            background:rgba(255,255,255,.12);
-            border:1px solid rgba(255,255,255,.2);
-            box-shadow:0 8px 32px rgba(0,0,0,.25);
-            color:#fff;
-        }
+    min-height:100vh;
 
-        .brand{
-            text-align:center;
-            margin-bottom:30px;
-        }
+    background:
+    linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
+    url('{{ asset('UI/images/bg_3.jpg') }}');
 
-        .brand h2{
-            font-weight:700;
-            margin-bottom:5px;
-        }
+    background-size:cover;
+    background-position:center;
 
-        .brand p{
-            color:#ddd;
-        }
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-        .form-control{
-            height:50px;
-            border-radius:10px;
-        }
+    padding:80px 15px;
 
-        .btn-login{
-            height:50px;
-            border-radius:10px;
-            background:#ff6b00;
-            border:none;
-            font-weight:600;
-        }
+}
 
-        .btn-login:hover{
-            background:#e05f00;
-        }
+.register-card{
 
-        .extra-links a{
-            color:#fff;
-            text-decoration:none;
-        }
+    width:100%;
+    max-width:500px;
 
-        .extra-links a:hover{
-            text-decoration:underline;
-        }
-    </style>
-</head>
-<body>
-            <!-- Right Side -->
-       <div class="overlay"></div>
+    background:rgba(255,255,255,.12);
 
-        <div class="login-card">
-        <div class="brand">
-        <h2>CarBook</h2>
-        <p>Welcome Back</p>
-    </div>
+    backdrop-filter:blur(18px);
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            {{ $errors->first() }}
-        </div>
-    @endif
-                <form method="POST" action="{{ route('register.otp') }}" class="space-y-5">
-                    @csrf
+    border-radius:20px;
 
-                    <!-- Name -->
-                   <div class="mb-3">
-            <label>Name</label>
-            <input type="text"
-                   name="name"
-                   class="form-control"
-                   required>
-        </div>
+    padding:45px;
 
-                    <!-- Email -->
-                    <div class="mb-3">
-            <label>Email Address</label>
-            <input type="email"
-                   name="email"
-                   class="form-control"
-                   required>
-        </div>
+    color:#fff;
 
-                    <!-- Password -->
-                    <div class="mb-3">
-            <label>Password</label>
-            <input type="password"
-                   name="password"
-                   class="form-control"
-                   required>
-        </div>
+    border:1px solid rgba(255,255,255,.2);
 
-                    <!-- Confirm Password -->
-                    <div class="mb-3">
-                        <label>Confirm Password</label>
-                            <input type="password"
-                            name="password_confirmation"
-                            class="form-control"
-                            required>
-                    </div>
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
 
-                    <div class="flex items-center justify-between text-sm">
+}
 
-                        <a href="{{ route('login') }}"
-                           class="text-white hover:text-indigo-800 font-medium">
-                            Already have an account?
-                        </a>
+.brand{
 
-                    </div>
+    text-align:center;
+    margin-bottom:30px;
 
-                    <button type="submit" class="btn btn-login text-white w-100">
-                        Register
-                    </button>
+}
 
-                    <div class="text-center mt-3">
+.brand h2{
 
-                        <a href="{{ route('google.login') }}"
-                        class="btn btn-light border shadow-sm w-100 py-2">
+    font-weight:700;
 
-                        <img src="https://developers.google.com/identity/images/g-logo.png"
-                        width="22"
-                        class="me-2">
+}
 
-                        Continue with Google
+.input-group{
 
-                    </a>
+    margin-bottom:18px;
 
-                    </div>
+}
 
-                </form>
+.input-group-text{
 
-            </div>
+    border:none;
 
- <!-- #region -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- #endregion -->
+    background:#fff;
 
-</body>
-</html>
+    border-radius:12px 0 0 12px;
+
+}
+
+.form-control{
+
+    height:55px;
+
+    border:none;
+
+    border-radius:0 12px 12px 0;
+
+}
+
+.form-control:focus{
+
+    box-shadow:none;
+
+}
+
+.btn-register{
+
+    height:55px;
+
+    background:#01d28e;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:17px;
+
+    font-weight:600;
+
+}
+
+.btn-register:hover{
+
+    background:#00b57c;
+
+}
+
+.divider{
+
+    display:flex;
+
+    align-items:center;
+
+    margin:25px 0;
+
+}
+
+.divider::before,
+.divider::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:rgba(255,255,255,.3);
+
+}
+
+.divider span{
+
+    padding:0 15px;
+
+}
+
+.google-btn{
+
+    height:52px;
+
+    border-radius:12px;
+
+}
+
+</style>
+
+<section class="login-section">
+
+<div class="register-card">
+
+<div class="brand">
+
+<h2>
+
+<span class="text-white">CAR</span>
+
+<span class="text-success">BOOK</span>
+
+</h2>
+
+<p>Create Your Account</p>
+
+</div>
+
+@if ($errors->any())
+
+<div class="alert alert-danger">
+
+{{ $errors->first() }}
+
+</div>
+
+@endif
+
+<form method="POST" action="{{ route('register.otp') }}">
+
+@csrf
+
+<div class="input-group">
+
+<span class="input-group-text">
+
+<i class="bi bi-person-fill"></i>
+
+</span>
+
+<input
+type="text"
+name="name"
+class="form-control"
+placeholder="Full Name"
+required>
+
+</div>
+
+<div class="input-group">
+
+<span class="input-group-text">
+
+<i class="bi bi-envelope-fill"></i>
+
+</span>
+
+<input
+type="email"
+name="email"
+class="form-control"
+placeholder="Email Address"
+required>
+
+</div>
+
+<div class="input-group">
+
+<span class="input-group-text">
+
+<i class="bi bi-lock-fill"></i>
+
+</span>
+
+<input
+type="password"
+name="password"
+class="form-control"
+placeholder="Password"
+required>
+
+</div>
+
+<div class="input-group">
+
+<span class="input-group-text">
+
+<i class="bi bi-shield-lock-fill"></i>
+
+</span>
+
+<input
+type="password"
+name="password_confirmation"
+class="form-control"
+placeholder="Confirm Password"
+required>
+
+</div>
+
+<button class="btn btn-register text-white w-100">
+
+Create Account
+
+</button>
+
+<div class="divider">
+
+<span>OR</span>
+
+</div>
+
+<a href="{{ route('google.login') }}" class="btn btn-light google-btn w-100">
+
+<img src="https://developers.google.com/identity/images/g-logo.png"
+width="22"
+class="me-2">
+
+Continue with Google
+
+</a>
+
+<div class="text-center mt-4">
+
+Already have an account?
+
+<a href="{{ route('login') }}" class="text-success fw-bold">
+
+Login
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+@endsection

@@ -92,7 +92,7 @@
 
 						<p class="d-flex mb-0 d-block">
 
-							<a href="#"
+							<a href="{{ route('booking.summary',$rides->id) }}"
 								class="btn btn-primary py-2 mr-1">
 
 								Book Now
