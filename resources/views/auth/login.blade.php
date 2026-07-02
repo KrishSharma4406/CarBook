@@ -1,180 +1,285 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarBook | Login</title>
+@extends('frontend.layout.app')
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+@section('content')
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+<style>
+    .login-section {
 
-        body{
-            min-height:100vh;
-            background:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070')
-            center center/cover no-repeat;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-family:'Segoe UI',sans-serif;
-        }
+        min-height: calc(100vh - 220px);
 
-        .overlay{
-            position:absolute;
-            inset:0;
-            background:rgba(0,0,0,.55);
-        }
+        background: linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
+        url('{{ asset("UI/images/bg_3.jpg") }}');
 
-        .login-card{
-            position:relative;
-            z-index:2;
-            width:100%;
-            max-width:450px;
-            padding:40px;
-            border-radius:20px;
-            backdrop-filter:blur(15px);
-            background:rgba(255,255,255,.12);
-            border:1px solid rgba(255,255,255,.2);
-            box-shadow:0 8px 32px rgba(0,0,0,.25);
-            color:#fff;
-        }
+        background-size: cover;
+        background-position: center;
 
-        .brand{
-            text-align:center;
-            margin-bottom:30px;
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        .brand h2{
-            font-weight:700;
-            margin-bottom:5px;
-        }
+        padding: 80px 15px;
 
-        .brand p{
-            color:#ddd;
-        }
+    }
 
-        .form-control{
-            height:50px;
-            border-radius:10px;
-        }
+    .login-card {
 
-        .btn-login{
-            height:50px;
-            border-radius:10px;
-            background:#ff6b00;
-            border:none;
-            font-weight:600;
-        }
+        width: 100%;
+        max-width: 450px;
 
-        .btn-login:hover{
-            background:#e05f00;
-        }
+        background: rgba(255, 255, 255, .12);
 
-        .extra-links a{
-            color:#fff;
-            text-decoration:none;
-        }
+        backdrop-filter: blur(18px);
 
-        .extra-links a:hover{
-            text-decoration:underline;
-        }
-    </style>
-</head>
-<body>
+        border: 1px solid rgba(255, 255, 255, .2);
 
-<div class="overlay"></div>
+        border-radius: 20px;
 
-<div class="login-card">
+        padding: 45px;
 
-    <div class="brand">
-        <h2>CarBook</h2>
-        <p>Welcome Back</p>
-    </div>
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
 
-    @if ($errors->any())
+        color: #fff;
+
+    }
+
+    .logo h2 {
+
+        font-weight: 700;
+
+    }
+
+    .input-group {
+
+        margin-bottom: 20px;
+
+    }
+
+    .input-group-text {
+
+        background: #fff;
+
+        border: none;
+
+        border-radius: 12px 0 0 12px;
+
+    }
+
+    .form-control {
+
+        height: 55px;
+
+        border: none;
+
+        border-radius: 0 12px 12px 0;
+
+    }
+
+    .form-control:focus {
+
+        box-shadow: none;
+
+    }
+
+    .btn-login {
+
+        height: 55px;
+
+        border-radius: 12px;
+
+        background: #01d28e;
+
+        border: none;
+
+        font-weight: 600;
+
+    }
+
+    .btn-login:hover {
+
+        background: #00b57c;
+
+    }
+
+    .divider {
+
+        display: flex;
+
+        align-items: center;
+
+        margin: 25px 0;
+
+    }
+
+    .divider::before,
+    .divider::after {
+
+        content: "";
+
+        flex: 1;
+
+        height: 1px;
+
+        background: rgba(255, 255, 255, .3);
+
+    }
+
+    .divider span {
+
+        padding: 0 15px;
+
+    }
+
+    .google-btn {
+
+        height: 52px;
+
+        border-radius: 12px;
+
+    }
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<section class="login-section">
+
+    <div class="login-card">
+
+        <div class="logo text-center mb-4">
+
+            <h2>
+
+                <span class="text-white">CAR</span>
+
+                <span class="text-success">BOOK</span>
+
+            </h2>
+
+            <p>Welcome Back</p>
+
+        </div>
+
+        @if ($errors->any())
+
         <div class="alert alert-danger">
+
             {{ $errors->first() }}
-        </div>
-    @endif
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <div class="mb-3">
-            <label>Email Address</label>
-            <input type="email"
-                   name="email"
-                   class="form-control"
-                   required>
         </div>
 
-        <div class="mb-3">
-            <label>Password</label>
-            <input type="password"
-                   name="password"
-                   class="form-control"
-                   required>
-        </div>
+        @endif
 
-        <div class="d-flex justify-content-between mb-3">
+        <form method="POST" action="{{ route('login') }}">
 
-            <div class="form-check">
-                <input type="checkbox"
-                       class="form-check-input"
-                       name="remember">
+            @csrf
 
-                <label class="form-check-label">
-                    Remember Me
-                </label>
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                </span>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Email Address"
+                    required>
+
             </div>
 
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}"
-                   class="text-white">
+            <div class="input-group">
+
+                <span class="input-group-text">
+
+                    <i class="bi bi-lock-fill"></i>
+
+                </span>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Password"
+                    required>
+
+            </div>
+
+            <div class="d-flex justify-content-between mb-3">
+
+                <div class="form-check">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="remember">
+
+                    <label class="form-check-label">
+
+                        Remember Me
+
+                    </label>
+
+                </div>
+
+                @if(Route::has('password.request'))
+
+                <a href="{{ route('password.request') }}" class="text-white">
+
                     Forgot Password?
+
                 </a>
-            @endif
 
-        </div>
+                @endif
 
-        <button type="submit"
-                class="btn btn-login text-white w-100">
-            Sign In
-        </button>
+            </div>
 
-        <div class="text-center mt-4 extra-links">
+            <button class="btn btn-login w-100 text-white">
 
-            <span>Don't have an account?</span>
+                <i class="bi bi-box-arrow-in-right"></i>
 
-            <a href="{{ route('register') }}">
-                Register
+                Sign In
+
+            </button>
+
+            <div class="divider">
+
+                <span>OR</span>
+
+            </div>
+
+            <a
+                href="{{ route('google.login') }}"
+                class="btn btn-light w-100 google-btn align-center">
+
+                <img
+                    src="https://developers.google.com/identity/images/g-logo.png"
+                    width="22"
+                    class="me-2">
+
+                Continue with Google
+
             </a>
 
-        </div>
+            <div class="text-center mt-4">
 
-        <div class="text-center mt-3">
+                Don't have an account?
 
-        <a href="{{ route('google.login') }}"
-class="btn btn-light border shadow-sm w-100 py-2">
+                <a
+                    href="{{ route('register') }}"
+                    class="text-success fw-bold">
 
-<img src="https://developers.google.com/identity/images/g-logo.png"
-width="22"
-class="me-2">
+                    Register
 
-Continue with Google
+                </a>
 
-</a>
+            </div>
 
-</div>
+        </form>
 
-    </form>
+    </div>
 
-</div>
+</section>
 
-</body>
-</html>
+@endsection
