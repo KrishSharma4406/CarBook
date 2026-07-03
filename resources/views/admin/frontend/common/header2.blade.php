@@ -83,13 +83,20 @@
           </a>
         </li>
 
+        @can('users.view')
         <li class="nav-item">
+
           <a href="{{ route('admin-users') }}"
-            class="nav-link {{ request()->routeIs('admin-users') ? 'active' : '' }}">
-            <i class="far fa-circle nav-icon"></i>
+            class="nav-link">
+
+            <i class="nav-icon fas fa-users"></i>
+
             <p>Users</p>
+
           </a>
+
         </li>
+        @endcan
 
         <li class="nav-item">
           <a href="{{ route('admin.cars.index') }}" class="nav-link">
@@ -100,8 +107,8 @@
 
         <li class="nav-item">
 
-          <a href="{{ route('admin.rides.index') }}"
-            class="nav-link {{ request()->routeIs('admin.rides.*') ? 'active' : '' }}">
+          <a href="{{ route('rides.index') }}"
+            class="nav-link {{ request()->routeIs('rides.*') ? 'active' : '' }}">
 
             <i class="nav-icon fas fa-road"></i>
 
@@ -117,8 +124,8 @@
 
         <li class="nav-item">
 
-          <a href="{{ route('admin.bookings.index') }}"
-            class="nav-link {{ request()->routeIs('admin.bookings.*') ? 'active' : '' }}">
+          <a href="{{ route('bookings.index') }}"
+            class="nav-link {{ request()->routeIs('bookings.*') ? 'active' : '' }}">
 
             <i class="nav-icon fas fa-book"></i>
 
@@ -132,6 +139,25 @@
 
         </li>
 
+        <li class="nav-header">
+          ACCESS CONTROL
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('roles.index') }}"
+            class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user-shield"></i>
+            <p>Roles</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('permissions.index') }}"
+            class="nav-link {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-lock"></i>
+            <p>Permissions</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

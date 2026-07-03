@@ -15,6 +15,8 @@ use App\Http\Controllers\RideBookingController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Admin\RideController as AdminRideController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -76,8 +78,12 @@ Route::get('/admin/register', [AdminRegisterController::class, 'create'])
 Route::post('/admin/register', [AdminRegisterController::class, 'store'])
     ->name('admin.register.store');
 
-Route::get('/admin/users', [UserController::class, 'index'])
-    ->name('admin-users');
+Route::middleware('permission:users.view')->group(function () {
+
+    Route::get('/admin/users', [UserController::class, 'index'])
+        ->name('admin-users');
+
+});
 
 Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])
     ->name('users.edit');
@@ -88,14 +94,20 @@ Route::any('/admin/users/{user}/toggle-status', [UserController::class, 'toggleS
 Route::put('/admin/users/{user}/update', [UserController::class, 'update'])
     ->name('users.update');
 
-Route::get('/admin/rides', [AdminRideController::class,'index'])
-    ->name('admin.rides.index');
+Route::middleware('permission:rides.view')->group(function () {
+
+    Route::resource('rides', RideController::class);
+
+});
 
 Route::get('/admin/rides/{ride}', [AdminRideController::class,'show'])
     ->name('admin.rides.show');
 
-Route::get('/admin/bookings',[AdminBookingController::class,'index'])
-    ->name('admin.bookings.index');
+Route::middleware('permission:bookings.view')->group(function () {
+
+    Route::resource('bookings', BookingController::class);
+
+});
 
 Route::get('/admin/bookings/{booking}',[AdminBookingController::class,'show'])
     ->name('admin.bookings.show');
@@ -223,13 +235,60 @@ Route::middleware('auth')->group(function () {
     ->name('booking.cancel');
 });
 
+// Route::middleware('permission:roles.view')->group(function () {
 
-Route::get('/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
+//     Route::resource('roles', RoleController::class);
+
+// });
+
+// Route::middleware(['permission:permissions.view'])->group(function () {
+//     Route::resource('permissions', PermissionController::class);
+// });
+
+Route::get('/admin/users/{user}/role',[UserController::class,'editRole'])
+    ->name('users.role.edit');
+
+Route::put('/admin/users/{user}/role',[UserController::class,'updateRole'])->name('users.role.update');
+
+
+Route::get('permission:cars.view', [AdminCarController::class, 'index'])->name('admin.cars.index');
 
 Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
 
 Route::get('/car/{car}', [CarController::class, 'show'])->name('car.show');
 
-Route::get('admin/cars', [AdminCarController::class, 'index'])->name('admin.cars.index');
+Route::middleware('/cars')->group(function () {
+
+    Route::resource('cars', CarController::class);
+
+});
+
+Route::middleware(['permission:users.view'])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'index'])
+        ->name('admin-users');
+});
+
+Route::middleware(['permission:users.create'])->group(function () {
+    Route::get('/admin/users/create', [UserController::class, 'create']);
+    Route::post('/admin/users', [UserController::class, 'store']);
+});
+
+Route::middleware(['permission:users.edit'])->group(function () {
+    Route::get('/admin/users/{user}/edit', [UserController::class, 'edit']);
+    Route::put('/admin/users/{user}', [UserController::class, 'update']);
+});
+
+Route::middleware(['permission:users.delete'])->group(function () {
+    Route::delete('/admin/users/{user}', [UserController::class, 'destroy']);
+});
+
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+
+        Route::resource('roles', RoleController::class);
+        Route::resource('permissions', PermissionController::class);
+
+    });
 
 require __DIR__ . '/auth.php';

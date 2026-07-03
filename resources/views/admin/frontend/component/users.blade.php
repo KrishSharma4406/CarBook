@@ -2,28 +2,30 @@
 
     <div class="card mb-3">
 
-    <div class="card-body">
+        <div class="card-body">
 
-        <form>
+            <form>
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-md-6">
+                    <div class="col-md-6">
 
-                    <div class="input-group">
+                        <div class="input-group">
 
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search user by name or email">
+                            <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Search user by name or email">
 
-                        <div class="input-group-append">
+                            <div class="input-group-append">
 
-                            <button class="btn btn-primary">
+                                <button class="btn btn-primary">
 
-                                <i class="fas fa-search"></i>
+                                    <i class="fas fa-search"></i>
 
-                            </button>
+                                </button>
+
+                            </div>
 
                         </div>
 
@@ -31,13 +33,11 @@
 
                 </div>
 
-            </div>
+            </form>
 
-        </form>
+        </div>
 
     </div>
-
-</div>
 
     <section class="content">
 
@@ -100,9 +100,10 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Role</th>
                                 <th>Status</th>
                                 <th>Joined</th>
-                                <th width="220">Action</th>
+                                <th width="280">Action</th>
 
                             </tr>
 
@@ -120,6 +121,30 @@
 
                                 <td>{{ $user->email }}</td>
 
+                                <!-- Role -->
+                                <td>
+
+                                    @if($user->roles->count())
+
+                                    <span class="badge badge-primary">
+
+                                        {{ $user->roles->first()->name }}
+
+                                    </span>
+
+                                    @else
+
+                                    <span class="badge badge-secondary">
+
+                                        No Role
+
+                                    </span>
+
+                                    @endif
+
+                                </td>
+
+                                <!-- Status -->
                                 <td>
 
                                     @if($user->status)
@@ -176,6 +201,15 @@
                                         </button>
 
                                         @endif
+
+                                        <a href="{{ route('users.role.edit', $user->id) }}"
+                                            class="btn btn-info btn-sm">
+
+                                            <i class="fas fa-user-tag"></i>
+
+                                            Role
+
+                                        </a>
 
                                     </form>
 
