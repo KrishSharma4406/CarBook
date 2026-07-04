@@ -115,7 +115,7 @@
 
                                 <td>
 
-                                    @can('cars.show')
+                                    @can('cars.view')
                                     <a href="{{ route('admin.cars.show',$car->id) }}"
                                         class="btn btn-info btn-sm">
                                         View
@@ -159,8 +159,6 @@
     </section>
 
 </div>
-
-@endcan
 
 @endcan
 

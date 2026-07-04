@@ -59,10 +59,6 @@ Route::get('/dashboard', function () {
 //     return view('frontend.webviews.index');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/admin/home', function () {
-    return view('admin.frontend.webview.home');
-})->name('admin.home');
-
 Route::any('/admin/logout', [AdminLoginController::class, 'logout'])
     ->name('admin.logout');
 
@@ -71,31 +67,6 @@ Route::get('/admin/register', [AdminRegisterController::class, 'create'])
 
 Route::post('/admin/register', [AdminRegisterController::class, 'store'])
     ->name('admin.register.store');
-
-Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])
-    ->name('users.edit');
-
-Route::any('/admin/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])
-    ->name('users.toggleStatus');
-
-Route::put('/admin/users/{user}/update', [UserController::class, 'update'])
-    ->name('users.update');
-
-Route::middleware('permission:rides.view')->group(function () {
-
-    Route::resource('rides', RideController::class);
-});
-
-Route::get('/admin/rides/{ride}', [AdminRideController::class, 'show'])
-    ->name('admin.rides.show');
-
-Route::middleware('permission:bookings.view')->group(function () {
-
-    Route::resource('bookings', BookingController::class);
-});
-
-Route::get('/admin/bookings/{booking}', [AdminBookingController::class, 'show'])
-    ->name('admin.bookings.show');
 
 Route::post('/register/send-otp', [RegisteredUserController::class, 'sendOtp'])->name('register.otp');
 
@@ -233,55 +204,68 @@ Route::prefix('admin')
         })->name('admin.home');
 
         Route::get('/tables', [HomeController::class, 'admintabels'])
-            ->middleware('permission:tables.view,admin')
+            ->middleware('permission:tables.view')
             ->name('admin.tables');
 
         Route::get('/forms', [HomeController::class, 'adminforms'])
-            ->middleware('permission:forms.view,admin')
+            ->middleware('permission:forms.view')
             ->name('admin.forms');
 
+        // Access Control
         Route::resource('roles', RoleController::class);
-
         Route::resource('permissions', PermissionController::class);
 
-        Route::resource('users', UserController::class);
+        // User Management
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('admin-users');
 
+        Route::get('/users/create', [UserController::class, 'create'])
+            ->name('users.create');
+
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('users.store');
+
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+            ->name('users.edit');
+
+        Route::put('/users/{user}/update', [UserController::class, 'update'])
+            ->name('users.update');
+
+        Route::put('/users/{user}', [UserController::class, 'update'])
+            ->name('users.update.alt');
+
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])
+            ->name('users.destroy');
+
+        Route::any('/users/{user}/toggle-status', [UserController::class, 'toggleStatus'])
+            ->name('users.toggleStatus');
+
+        Route::get('/users/{user}/role', [UserController::class, 'editRole'])
+            ->name('users.role.edit');
+
+        Route::put('/users/{user}/role', [UserController::class, 'updateRole'])
+            ->name('users.role.update');
+
+        // Cars Management
         Route::resource('cars', AdminCarController::class);
+
+        // Rides Management
+        Route::get('/rides', [AdminRideController::class, 'index'])
+            ->name('admin.rides.index');
+
+        Route::get('/rides/{ride}', [AdminRideController::class, 'show'])
+            ->name('admin.rides.show');
+
+        // Bookings Management
+        Route::get('/bookings', [AdminBookingController::class, 'index'])
+            ->name('admin.bookings.index');
+
+        Route::get('/bookings/{booking}', [AdminBookingController::class, 'show'])
+            ->name('admin.bookings.show');
     });
-
-Route::get('/admin/users/{user}/role', [UserController::class, 'editRole'])
-    ->name('users.role.edit');
-
-Route::put('/admin/users/{user}/role', [UserController::class, 'updateRole'])->name('users.role.update');
-
-
-Route::get('permission:cars.view', [AdminCarController::class, 'index'])->name('admin.cars.index');
 
 Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
 
 Route::get('/car/{car}', [CarController::class, 'show'])->name('car.show');
-
-Route::middleware('permission:cars.view')->group(function () {
-
-    Route::resource('cars', CarController::class);
-});
-
-// Route::middleware(['permission:users.view'])->group(function () {
-    Route::get('/admin/users', [UserController::class, 'index'])
-        ->name('admin-users');
-// });
-
-// Route::middleware(['permission:users.create'])->group(function () {
-    Route::get('/admin/users/create', [UserController::class, 'create']);
-    Route::post('/admin/users', [UserController::class, 'store']);
-// });
-
-// Route::middleware(['permission:users.edit'])->group(function () {
-    Route::put('/admin/users/{user}', [UserController::class, 'update']);
-// });
-
-// Route::middleware(['permission:users.delete'])->group(function () {
-    Route::delete('/admin/users/{user}', [UserController::class, 'destroy']);
-// });
 
 require __DIR__ . '/auth.php';

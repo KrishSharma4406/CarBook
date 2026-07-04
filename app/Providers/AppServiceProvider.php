@@ -28,15 +28,22 @@ class AppServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
 
         if (Auth::guard('admin')->check()) {
+            $admin = Auth::guard('admin')->user();
 
-            return Auth::guard('admin')
-                ->user()
-                ->hasPermissionTo($ability, 'admin');
+            // Super Admin gets unrestricted access
+            if ($admin->hasRole('Super Admin')) {
+                return true;
+            }
+
+            // Other admins: check permission on 'web' guard (where permissions are stored)
+            if ($admin->hasPermissionTo($ability)) {
+                return true;
+            }
+
+            return false;
         }
 
         return null;
-
-        
     });
     }
 }
