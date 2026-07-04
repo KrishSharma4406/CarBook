@@ -7,6 +7,28 @@ use App\Models\Ride;
 
 class RideController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:rides.view')->only([
+            'index',
+            'show'
+        ]);
+
+        $this->middleware('permission:rides.create')->only([
+            'create',
+            'store'
+        ]);
+
+        $this->middleware('permission:rides.edit')->only([
+            'edit',
+            'update'
+        ]);
+
+        $this->middleware('permission:rides.delete')->only([
+            'destroy'
+        ]);
+    }
+
     /**
      * Display all rides
      */

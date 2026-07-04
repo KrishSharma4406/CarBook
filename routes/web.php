@@ -40,7 +40,7 @@ Route::get('/admin/login', [AdminLoginController::class, 'showLogin'])->name('ad
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
 Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
-Route::get('/pricing',[HomeController::class,'pricing'])->name('pricing');
+Route::get('/pricing', [HomeController::class, 'pricing'])->name('pricing');
 
 // Route::middleware('admin')->group(function () {
 
@@ -63,12 +63,6 @@ Route::get('/admin/home', function () {
     return view('admin.frontend.webview.home');
 })->name('admin.home');
 
-Route::get('/admin/login', [AdminLoginController::class, 'showLogin'])
-    ->name('admin.login');
-
-Route::post('/admin/login', [AdminLoginController::class, 'login'])
-    ->name('admin.login.submit');
-
 Route::any('/admin/logout', [AdminLoginController::class, 'logout'])
     ->name('admin.logout');
 
@@ -77,13 +71,6 @@ Route::get('/admin/register', [AdminRegisterController::class, 'create'])
 
 Route::post('/admin/register', [AdminRegisterController::class, 'store'])
     ->name('admin.register.store');
-
-Route::middleware('permission:users.view')->group(function () {
-
-    Route::get('/admin/users', [UserController::class, 'index'])
-        ->name('admin-users');
-
-});
 
 Route::get('/admin/users/{user}/edit', [UserController::class, 'edit'])
     ->name('users.edit');
@@ -97,19 +84,17 @@ Route::put('/admin/users/{user}/update', [UserController::class, 'update'])
 Route::middleware('permission:rides.view')->group(function () {
 
     Route::resource('rides', RideController::class);
-
 });
 
-Route::get('/admin/rides/{ride}', [AdminRideController::class,'show'])
+Route::get('/admin/rides/{ride}', [AdminRideController::class, 'show'])
     ->name('admin.rides.show');
 
 Route::middleware('permission:bookings.view')->group(function () {
 
     Route::resource('bookings', BookingController::class);
-
 });
 
-Route::get('/admin/bookings/{booking}',[AdminBookingController::class,'show'])
+Route::get('/admin/bookings/{booking}', [AdminBookingController::class, 'show'])
     ->name('admin.bookings.show');
 
 Route::post('/register/send-otp', [RegisteredUserController::class, 'sendOtp'])->name('register.otp');
@@ -163,31 +148,31 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/car', [CarController::class, 'save'])
         ->name('car.save');
 
-    Route::get('/profile/car/add', [CarController::class,'create'])
+    Route::get('/profile/car/add', [CarController::class, 'create'])
         ->name('car.create');
 
-    Route::post('/profile/car/store', [CarController::class,'save'])
+    Route::post('/profile/car/store', [CarController::class, 'save'])
         ->name('car.store');
 
-    Route::get('/profile/car/{car}/edit',[CarController::class,'editCar'])
+    Route::get('/profile/car/{car}/edit', [CarController::class, 'editCar'])
         ->name('car.edit.single');
 
-    Route::delete('/profile/car/{car}',[CarController::class,'destroy'])
+    Route::delete('/profile/car/{car}', [CarController::class, 'destroy'])
         ->name('car.delete');
 
     Route::delete('/profile/car/{car}', [CarController::class, 'destroy'])
         ->name('car.destroy');
 
-    Route::get('/offer-ride',[RideController::class,'create'])
+    Route::get('/offer-ride', [RideController::class, 'create'])
         ->name('offer.ride');
 
-    Route::post('/offer-ride',[RideController::class,'store'])
+    Route::post('/offer-ride', [RideController::class, 'store'])
         ->name('offer.ride.store');
 
-    Route::get('/view-rides',[RideController::class,'index'])
+    Route::get('/view-rides', [RideController::class, 'index'])
         ->name('rides.index');
 
-    Route::get('/my-rides',[RideController::class,'myRides'])
+    Route::get('/my-rides', [RideController::class, 'myRides'])
         ->name('rides.my');
 
     Route::get('/my-rides/{ride}/edit', [RideController::class, 'edit'])
@@ -199,14 +184,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/my-rides/{ride}', [RideController::class, 'destroy'])
         ->name('rides.destroy');
 
-    Route::post('/rides/{ride}/book',
-        [RideBookingController::class,'store'])
+    Route::post(
+        '/rides/{ride}/book',
+        [RideBookingController::class, 'store']
+    )
         ->name('rides.book');
 
-    Route::post('/rides/{ride}/confirm',[BookingController::class,'confirm'])
+    Route::post('/rides/{ride}/confirm', [BookingController::class, 'confirm'])
         ->name('booking.confirm');
 
-    Route::get('/ride-requests',[RideBookingController::class,'requests'])
+    Route::get('/ride-requests', [RideBookingController::class, 'requests'])
         ->name('rides.requests');
 
     Route::get('/rides/search', [RideController::class, 'search'])
@@ -215,40 +202,57 @@ Route::middleware('auth')->group(function () {
     Route::get('/rides/{ride}', [RideController::class, 'show'])
         ->name('rides.show');
 
-    Route::post('/booking/{booking}/accept',[RideBookingController::class,'accept'])
+    Route::post('/booking/{booking}/accept', [RideBookingController::class, 'accept'])
         ->name('booking.accept');
 
-    Route::post('/booking/{booking}/reject',[RideBookingController::class,'reject'])
+    Route::post('/booking/{booking}/reject', [RideBookingController::class, 'reject'])
         ->name('booking.reject');
 
-    Route::get('/dashboard',[RideController::class,'dashboard'])
+    Route::get('/dashboard', [RideController::class, 'dashboard'])
         ->name('dashboard');
 
-           Route::get('/rides/{ride}/booking', [BookingController::class, 'summary'])
+    Route::get('/rides/{ride}/booking', [BookingController::class, 'summary'])
         ->name('booking.summary');
 
     Route::get('/my-bookings', [BookingController::class, 'myBookings'])
         ->name('booking.my');
 
-    Route::post('/booking/{booking}/cancel',
-    [BookingController::class,'cancel'])
-    ->name('booking.cancel');
+    Route::post('/booking/{booking}/cancel',[BookingController::class, 'cancel']
+    )
+        ->name('booking.cancel');
 });
 
-// Route::middleware('permission:roles.view')->group(function () {
 
-//     Route::resource('roles', RoleController::class);
 
-// });
+Route::prefix('admin')
+    ->middleware(['auth:admin'])
+    ->group(function () {
 
-// Route::middleware(['permission:permissions.view'])->group(function () {
-//     Route::resource('permissions', PermissionController::class);
-// });
+        Route::get('/home', function () {
+            return view('admin.frontend.webview.home');
+        })->name('admin.home');
 
-Route::get('/admin/users/{user}/role',[UserController::class,'editRole'])
+        Route::get('/tables', [HomeController::class, 'admintabels'])
+            ->middleware('permission:tables.view,admin')
+            ->name('admin.tables');
+
+        Route::get('/forms', [HomeController::class, 'adminforms'])
+            ->middleware('permission:forms.view,admin')
+            ->name('admin.forms');
+
+        Route::resource('roles', RoleController::class);
+
+        Route::resource('permissions', PermissionController::class);
+
+        Route::resource('users', UserController::class);
+
+        Route::resource('cars', AdminCarController::class);
+    });
+
+Route::get('/admin/users/{user}/role', [UserController::class, 'editRole'])
     ->name('users.role.edit');
 
-Route::put('/admin/users/{user}/role',[UserController::class,'updateRole'])->name('users.role.update');
+Route::put('/admin/users/{user}/role', [UserController::class, 'updateRole'])->name('users.role.update');
 
 
 Route::get('permission:cars.view', [AdminCarController::class, 'index'])->name('admin.cars.index');
@@ -257,38 +261,27 @@ Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars
 
 Route::get('/car/{car}', [CarController::class, 'show'])->name('car.show');
 
-Route::middleware('/cars')->group(function () {
+Route::middleware('permission:cars.view')->group(function () {
 
     Route::resource('cars', CarController::class);
-
 });
 
-Route::middleware(['permission:users.view'])->group(function () {
+// Route::middleware(['permission:users.view'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'index'])
         ->name('admin-users');
-});
+// });
 
-Route::middleware(['permission:users.create'])->group(function () {
+// Route::middleware(['permission:users.create'])->group(function () {
     Route::get('/admin/users/create', [UserController::class, 'create']);
     Route::post('/admin/users', [UserController::class, 'store']);
-});
+// });
 
-Route::middleware(['permission:users.edit'])->group(function () {
-    Route::get('/admin/users/{user}/edit', [UserController::class, 'edit']);
+// Route::middleware(['permission:users.edit'])->group(function () {
     Route::put('/admin/users/{user}', [UserController::class, 'update']);
-});
+// });
 
-Route::middleware(['permission:users.delete'])->group(function () {
+// Route::middleware(['permission:users.delete'])->group(function () {
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy']);
-});
-
-Route::prefix('admin')
-    ->middleware(['auth'])
-    ->group(function () {
-
-        Route::resource('roles', RoleController::class);
-        Route::resource('permissions', PermissionController::class);
-
-    });
+// });
 
 require __DIR__ . '/auth.php';

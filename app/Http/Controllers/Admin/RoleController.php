@@ -6,11 +6,49 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Auth;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+
+        $this->middleware('permission:roles.view')->only([
+            'index',
+            'show',
+        ]);
+
+        $this->middleware('permission:roles.create')->only([
+            'create',
+            'store',
+        ]);
+
+        $this->middleware('permission:roles.edit')->only([
+            'edit',
+            'update',
+        ]);
+
+        $this->middleware('permission:roles.delete')->only([
+            'destroy',
+        ]);
+    }
+
     public function index()
     {
+        // dd(Auth::guard('admin')->user());
+        // $admin = Auth::guard('admin')->user();
+
+        // dd([
+        //     'roles' => $admin->getRoleNames(),
+        //     'permissions' => $admin->getAllPermissions()->pluck('name'),
+        // ]);
+
+//         dd([
+//     'admin' => Auth::guard('admin')->user(),
+//     'permissions' => Auth::guard('admin')->user()?->getAllPermissions()->pluck('name'),
+//     'roles' => Auth::guard('admin')->user()?->getRoleNames(),
+// ]);
         $roles = Role::with('permissions')->latest()->get();
 
         return view('admin.roles.index', compact('roles'));
@@ -70,14 +108,12 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        if ($role->name == "Super Admin") {
-            return back()
-                ->with('error', 'Super Admin cannot be deleted.');
+        if ($role->name === 'Super Admin') {
+            return back()->with('error', 'Super Admin cannot be deleted.');
         }
 
         $role->delete();
 
-        return back()
-            ->with('success', 'Role Deleted Successfully');
+        return back()->with('success', 'Role Deleted Successfully');
     }
 }

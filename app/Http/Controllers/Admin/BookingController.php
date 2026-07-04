@@ -7,6 +7,14 @@ use App\Models\RideBooking;
 
 class BookingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:bookings.view')->only([
+            'index',
+            'show'
+        ]);
+    }
+
     /**
      * Display all bookings
      */
@@ -16,9 +24,7 @@ class BookingController extends Controller
             'user',
             'ride.user',
             'ride.car'
-        ])
-        ->latest()
-        ->paginate(10);
+        ])->latest()->paginate(10);
 
         return view('admin.bookings.index', compact('bookings'));
     }

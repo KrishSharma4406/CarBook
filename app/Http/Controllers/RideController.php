@@ -11,6 +11,33 @@ use App\Models\Car;
 
 class RideController extends Controller
 {
+    public function __construct()
+{
+    $this->middleware('permission:rides.view')->only([
+        'index',
+        'myRides',
+        'show'
+    ]);
+
+    $this->middleware('permission:rides.create')->only([
+        'create',
+        'store'
+    ]);
+
+    $this->middleware('permission:rides.edit')->only([
+        'edit',
+        'update'
+    ]);
+
+    $this->middleware('permission:rides.delete')->only([
+        'destroy'
+    ]);
+
+    $this->middleware('permission:dashboard.view')->only([
+        'dashboard'
+    ]);
+}
+
     public function create()
     {
         $cars = auth()->user()->cars;
@@ -20,7 +47,6 @@ class RideController extends Controller
 
     public function store(Request $request)
     {
-
         $car = auth()->user()->cars()->findOrFail($request->car_id);
 
         $request->validate([
@@ -72,7 +98,6 @@ class RideController extends Controller
 
     public function index(Request $request)
     {
-
         $rides = Ride::with('user')
 
             ->when($request->pickup, function ($q) use ($request) {

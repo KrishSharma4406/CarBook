@@ -59,29 +59,35 @@
         role="menu"
         data-accordion="false">
 
+        @if(Auth::guard('admin')->user()->hasPermissionTo('dashboard.view', 'admin'))
         <li class="nav-item">
-          <a href="{{ route('admin-home') }}"
-            class="nav-link {{ request()->routeIs('admin-home') ? 'active' : '' }}">
+          <a href="{{ route('admin.home') }}"
+            class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Dashboard</p>
           </a>
         </li>
+        @endif
 
+        @can('forms.view')
         <li class="nav-item">
-          <a href="{{ route('admin-forms') }}"
+          <a href="{{ route('admin.forms') }}"
             class="nav-link {{ request()->routeIs('admin-forms') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Forms</p>
           </a>
         </li>
+        @endcan
 
+        @can('tables.view')
         <li class="nav-item">
-          <a href="{{ route('admin-tabels') }}"
-            class="nav-link {{ request()->routeIs('admin-tabels') ? 'active' : '' }}">
+          <a href="{{ route('admin.tables') }}"
+            class="nav-link {{ request()->routeIs('admin.tables') ? 'active' : '' }}">
             <i class="far fa-circle nav-icon"></i>
             <p>Tables</p>
           </a>
         </li>
+        @endcan
 
         @can('users.view')
         <li class="nav-item">
@@ -98,13 +104,16 @@
         </li>
         @endcan
 
+        @can('cars.view')
         <li class="nav-item">
           <a href="{{ route('admin.cars.index') }}" class="nav-link">
             <i class="nav-icon fas fa-car"></i>
             <p>Cars</p>
           </a>
         </li>
+        @endcan
 
+        @can('rides.view')
         <li class="nav-item">
 
           <a href="{{ route('rides.index') }}"
@@ -121,7 +130,9 @@
           </a>
 
         </li>
+        @endcan
 
+        @can('bookings.view')
         <li class="nav-item">
 
           <a href="{{ route('bookings.index') }}"
@@ -138,11 +149,13 @@
           </a>
 
         </li>
+        @endcan
 
         <li class="nav-header">
           ACCESS CONTROL
         </li>
 
+        @can('roles.view')
         <li class="nav-item">
           <a href="{{ route('roles.index') }}"
             class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
@@ -150,14 +163,16 @@
             <p>Roles</p>
           </a>
         </li>
-
+        @endcan
+        @can('permissions.view')
         <li class="nav-item">
           <a href="{{ route('permissions.index') }}"
-            class="nav-link {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+            class="nav-link {{ request()->routeIs('admin.permissions.*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-lock"></i>
             <p>Permissions</p>
           </a>
         </li>
+        @endcan
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

@@ -1,6 +1,8 @@
 @extends('frontend.layout.app')
 @section('content')
 
+@can('cars.view')
+
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -39,13 +41,15 @@
 
                 <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h3 class="card-title mb-0">All User Cars</h3>
+                    <h3 class="card-title mb-0">All User Cars</h3>
 
-                <a href="{{ route('car.edit') }}" class="btn btn-primary">
-                    <i class="fa fa-plus"></i> Add Car
-                </a>
+                    @can('cars.create')
+                    <a href="{{ route('car.edit') }}" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> Add Car
+                    </a>
+                    @endcan
 
-            </div>
+                </div>
 
                 <div class="card-body">
 
@@ -116,11 +120,14 @@
 
                                 <td>
 
+                                    @can('cars.view')
                                     <a href="{{ route('admin.cars.show', $car->id) }}"
                                         class="btn btn-info btn-sm">
                                         View
                                     </a>
+                                    @endcan
 
+                                    @can('cars.delete')
                                     <form action="{{ route('admin.cars.destroy', $car->id) }}"
                                         method="POST"
                                         style="display:inline;">
@@ -134,6 +141,7 @@
                                         </button>
 
                                     </form>
+                                    @endcan
 
                                 </td>
 
@@ -166,5 +174,15 @@
     </section>
 
 </div>
+
+@endcan
+
+@cannot('cars.view')
+<div class="container mt-5">
+    <div class="alert alert-danger">
+        You do not have permission to access this page.
+    </div>
+</div>
+@endcannot
 
 @endsection

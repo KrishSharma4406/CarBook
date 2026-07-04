@@ -2,6 +2,8 @@
 
 @section('content')
 
+@can('cars.view')
+
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -177,5 +179,19 @@
     </section>
 
 </div>
+
+@endcan
+
+@cannot('cars.view')
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid mt-3">
+            <div class="alert alert-danger">
+                You do not have permission to view car details.
+            </div>
+        </div>
+    </section>
+</div>
+@endcannot
 
 @endsection

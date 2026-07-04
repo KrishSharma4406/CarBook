@@ -5,6 +5,7 @@
 
 @section('content')
 
+@can('rides.view')
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -31,11 +32,11 @@
 
             @if(session('success'))
 
-                <div class="alert alert-success">
+            <div class="alert alert-success">
 
-                    {{ session('success') }}
+                {{ session('success') }}
 
-                </div>
+            </div>
 
             @endif
 
@@ -57,139 +58,139 @@
 
                         <thead>
 
-                        <tr>
+                            <tr>
 
-                            <th>ID</th>
+                                <th>ID</th>
 
-                            <th>Car</th>
+                                <th>Car</th>
 
-                            <th>Driver</th>
+                                <th>Driver</th>
 
-                            <th>Route</th>
+                                <th>Route</th>
 
-                            <th>Date</th>
+                                <th>Date</th>
 
-                            <th>Time</th>
+                                <th>Time</th>
 
-                            <th>Fare</th>
+                                <th>Fare</th>
 
-                            <th>Seats</th>
+                                <th>Seats</th>
 
-                            <th>Bookings</th>
+                                <th>Bookings</th>
 
-                            <th>Status</th>
+                                <th>Status</th>
 
-                            <th>Action</th>
+                                <th>Action</th>
 
-                        </tr>
+                            </tr>
 
                         </thead>
 
                         <tbody>
 
-                        @forelse($rides as $ride)
+                            @forelse($rides as $ride)
 
-                        <tr>
+                            <tr>
 
-                            <td>
+                                <td>
 
-                                {{ $ride->id }}
+                                    {{ $ride->id }}
 
-                            </td>
+                                </td>
 
-                            <td width="120">
+                                <td width="120">
 
-                                @if($ride->car && $ride->car->image)
+                                    @if($ride->car && $ride->car->image)
 
                                     <img src="{{ asset('uploads/cars/'.$ride->car->image) }}"
-                                         style="width:110px;height:70px;object-fit:cover;border-radius:8px;">
+                                        style="width:110px;height:70px;object-fit:cover;border-radius:8px;">
 
-                                @else
+                                    @else
 
                                     <img src="{{ asset('UI/images/car-1.jpg') }}"
-                                         style="width:110px;height:70px;object-fit:cover;border-radius:8px;">
+                                        style="width:110px;height:70px;object-fit:cover;border-radius:8px;">
 
-                                @endif
+                                    @endif
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                <strong>
+                                    <strong>
 
-                                    {{ $ride->user->name }}
+                                        {{ $ride->user->name }}
 
-                                </strong>
+                                    </strong>
 
-                                <br>
+                                    <br>
 
-                                <small>
+                                    <small>
 
-                                    {{ $ride->user->email }}
+                                        {{ $ride->user->email }}
 
-                                </small>
+                                    </small>
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                <strong>
+                                    <strong>
 
-                                    {{ $ride->pickup_location }}
+                                        {{ $ride->pickup_location }}
 
-                                </strong>
+                                    </strong>
 
-                                <br>
+                                    <br>
 
-                                <i class="fas fa-arrow-down text-success"></i>
+                                    <i class="fas fa-arrow-down text-success"></i>
 
-                                <br>
+                                    <br>
 
-                                <strong>
+                                    <strong>
 
-                                    {{ $ride->destination }}
+                                        {{ $ride->destination }}
 
-                                </strong>
+                                    </strong>
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
+                                    {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
+                                    {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                ₹{{ number_format($ride->fare) }}
+                                    ₹{{ number_format($ride->fare) }}
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                {{ $ride->available_seats }}
+                                    {{ $ride->available_seats }}
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                <span class="badge badge-info">
+                                    <span class="badge badge-info">
 
-                                    {{ $ride->bookings->count() }}
+                                        {{ $ride->bookings->count() }}
 
-                                </span>
+                                    </span>
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                @if($ride->status=="active")
+                                    @if($ride->status=="active")
 
                                     <span class="badge badge-success">
 
@@ -197,7 +198,7 @@
 
                                     </span>
 
-                                @elseif($ride->status=="completed")
+                                    @elseif($ride->status=="completed")
 
                                     <span class="badge badge-primary">
 
@@ -205,7 +206,7 @@
 
                                     </span>
 
-                                @else
+                                    @else
 
                                     <span class="badge badge-danger">
 
@@ -213,38 +214,37 @@
 
                                     </span>
 
-                                @endif
+                                    @endif
 
-                            </td>
+                                </td>
 
-                            <td>
+                                <td>
 
-                                <a href="{{ route('admin.rides.show',$ride->id) }}"
-                                   class="btn btn-info btn-sm">
+                                    @can('rides.show')
+                                    <a href="{{ route('admin.rides.show',$ride->id) }}"
+                                        class="btn btn-info btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                        View
+                                    </a>
+                                    @endcan
 
-                                    <i class="fas fa-eye"></i>
+                                </td>
 
-                                    View
+                            </tr>
 
-                                </a>
+                            @empty
 
-                            </td>
+                            <tr>
 
-                        </tr>
+                                <td colspan="11" class="text-center">
 
-                        @empty
+                                    No rides found.
 
-                        <tr>
+                                </td>
 
-                            <td colspan="11" class="text-center">
+                            </tr>
 
-                                No rides found.
-
-                            </td>
-
-                        </tr>
-
-                        @endforelse
+                            @endforelse
 
                         </tbody>
 
@@ -265,5 +265,6 @@
     </section>
 
 </div>
+@endcan
 
 @endsection

@@ -2,6 +2,8 @@
 
 @section('content')
 
+@can(isset($car) ? 'cars.edit' : 'cars.create')
+
 <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ asset('UI/images/bg_3.jpg') }}');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -171,5 +173,12 @@
 
     </div>
 </section>
+@endcan
+
+@cannot('cars.create') 
+<div class="container mt-5">
+    <div class="alert alert-danger"> You do not have permission to add a car. </div>
+</div> 
+@endcannot
 
 @endsection

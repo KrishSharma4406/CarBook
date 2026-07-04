@@ -8,6 +8,25 @@ use Illuminate\Support\Facades\Auth;
 
 class CarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:profile.edit')->only([
+            'edit',
+            'save',
+            'create',
+            'editCar',
+            'destroy',
+        ]);
+
+        $this->middleware('permission:cars.view')->only([
+            'show',
+        ]);
+
+        $this->middleware('permission:price.view')->only([
+            'pricing',
+        ]);
+    }
+
     public function edit()
     {
         $cars = auth()->user()->cars;
@@ -39,11 +58,7 @@ class CarController extends Controller
 
         if ($request->hasFile('image')) {
 
-            if ($car->image && file_exists(public_path('uploads/cars/'.$car->image))) {
-                unlink(public_path('uploads/cars/'.$car->image));
-            }
-
-            $imageName = time().'.'.$request->image->extension();
+            $imageName = time() . '.' . $request->image->extension();
 
             $request->image->move(public_path('uploads/cars'), $imageName);
 
@@ -52,53 +67,53 @@ class CarController extends Controller
 
         $car->save();
 
-        return redirect()->route('profile.edit')
-            ->with('success','Car details saved successfully.');
+        return redirect()
+            ->route('profile.edit')
+            ->with('success', 'Car details saved successfully.');
     }
 
-    public function show(\App\Models\Car $car)
-{
-    $car->load('user');
+    public function show(Car $car)
+    {
+        $car->load('user');
 
-    return view('frontend.webviews.car-details', compact('car'));
-}
-
-public function create()
-{
-    return view('profile.add-car');
-}
-
-public function editCar(Car $car)
-{
-    abort_if($car->user_id != auth()->id(),403);
-
-    return view('profile.edit-car',compact('car'));
-}
-
-public function destroy(Car $car)
-{
-    // Ensure the logged-in user owns the car
-    if ($car->user_id != auth()->id()) {
-        abort(403);
+        return view('frontend.webviews.car-details', compact('car'));
     }
 
-    // Delete image from uploads folder
-    if ($car->image && file_exists(public_path('uploads/cars/'.$car->image))) {
-        unlink(public_path('uploads/cars/'.$car->image));
+    public function create()
+    {
+        return view('profile.add-car');
     }
 
-    // Delete database record
-    $car->delete();
+    public function editCar(Car $car)
+    {
+        if ($car->user_id != auth()->id()) {
+            abort(403);
+        }
 
-    return redirect()
-        ->route('profile.edit')
-        ->with('success', 'Car deleted successfully.');
-}
+        return view('profile.edit-car', compact('car'));
+    }
 
-public function pricing()
-{
-    $cars = Car::latest()->get();
+    public function destroy(Car $car)
+    {
+        if ($car->user_id != auth()->id()) {
+            abort(403);
+        }
 
-    return view('frontend.price', compact('cars'));
-}
+        if ($car->image && file_exists(public_path('uploads/cars/' . $car->image))) {
+            unlink(public_path('uploads/cars/' . $car->image));
+        }
+
+        $car->delete();
+
+        return redirect()
+            ->route('profile.edit')
+            ->with('success', 'Car deleted successfully.');
+    }
+
+    public function pricing()
+    {
+        $cars = Car::latest()->get();
+
+        return view('frontend.price', compact('cars'));
+    }
 }
