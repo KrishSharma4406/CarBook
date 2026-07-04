@@ -2,6 +2,8 @@
 
 @section('content')
 
+@can('cars.view')
+
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -113,12 +115,12 @@
 
                                 <td>
 
+                                    @can('cars.show')
                                     <a href="{{ route('admin.cars.show',$car->id) }}"
                                         class="btn btn-info btn-sm">
-
                                         View
-
                                     </a>
+                                    @endcan
 
                                 </td>
 
@@ -157,5 +159,21 @@
     </section>
 
 </div>
+
+@endcan
+
+@endcan
+
+@cannot('cars.view')
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid mt-3">
+            <div class="alert alert-danger">
+                You do not have permission to view cars.
+            </div>
+        </div>
+    </section>
+</div>
+@endcannot
 
 @endsection

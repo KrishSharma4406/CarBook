@@ -9,6 +9,27 @@ use Illuminate\Support\Facades\Auth;
 
 class RideBookingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:ride-booking.create')->only([
+            'store'
+        ]);
+
+        $this->middleware('permission:ride-booking.view')->only([
+            'requests',
+            'show'
+        ]);
+
+        $this->middleware('permission:ride-booking.edit')->only([
+            'accept',
+            'reject'
+        ]);
+
+        $this->middleware('permission:ride-booking.delete')->only([
+            'destroy'
+        ]);
+    }
+
     /**
      * Book a Ride
      */
@@ -68,25 +89,23 @@ class RideBookingController extends Controller
      * Accept Request
      */
     public function accept(RideBooking $booking)
-{
-    $booking->update([
-        'booking_status' => 'accepted',
-        'status' => 'accepted'
-    ]);
+    {
+        $booking->update([
+            'booking_status' => 'accepted',
+            'status' => 'accepted'
+        ]);
 
-    $booking->ride->decrement('available_seats');
+        $booking->ride->decrement('available_seats');
 
-    return back()->with('success', 'Booking Accepted');
-}
+        return back()->with('success', 'Booking Accepted');
+    }
 
     /**
      * Reject Request
      */
     public function reject(RideBooking $booking)
     {
-        $ride = $booking->ride;
-
-        if ($ride->user_id != Auth::id()) {
+        if ($booking->ride->user_id != Auth::id()) {
             abort(403);
         }
 
@@ -97,10 +116,13 @@ class RideBookingController extends Controller
         return back()->with('success', 'Booking rejected.');
     }
 
+    /**
+     * Show Ride Details
+     */
     public function show(Ride $ride)
-{
-    $ride->load('user');
+    {
+        $ride->load('user');
 
-    return view('frontend.webviews.ride-details', compact('ride'));
-}
+        return view('frontend.webviews.ride-details', compact('ride'));
+    }
 }

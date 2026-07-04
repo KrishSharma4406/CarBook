@@ -7,6 +7,28 @@ use App\Models\Car;
 
 class CarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:cars.view')->only([
+            'index',
+            'show'
+        ]);
+
+        $this->middleware('permission:cars.create')->only([
+            'create',
+            'store'
+        ]);
+
+        $this->middleware('permission:cars.edit')->only([
+            'edit',
+            'update'
+        ]);
+
+        $this->middleware('permission:cars.delete')->only([
+            'destroy'
+        ]);
+    }
+
     /**
      * Display all cars
      */

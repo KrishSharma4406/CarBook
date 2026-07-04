@@ -109,9 +109,11 @@
 
                     </div>
 
+                    @can('profile.edit')
                     <button class="btn btn-primary">
                         Update Profile
                     </button>
+                    @endcan
 
                 </form>
 
@@ -130,13 +132,12 @@
                     My Cars
                 </h4>
 
+                @can('cars.create')
                 <a href="{{ route('car.edit') }}" class="btn btn-success btn-sm">
-
                     <i class="fa fa-plus"></i>
-
                     Add Car
-
                 </a>
+                @endcan
 
             </div>
 
@@ -193,6 +194,7 @@
 
                                     <div class="col-6">
 
+                                    @can('cars.edit')
                                         <a href="{{ route('car.edit') }}"
                                             class="btn btn-primary btn-block">
 
@@ -201,10 +203,13 @@
                                             Edit
 
                                         </a>
+                                    @endcan
 
                                     </div>
 
                                     <div class="col-6">
+
+                                    @can('cars.delete')
 
                                         <form action="{{ route('car.destroy',$car->id) }}"
                                             method="POST"
@@ -222,6 +227,7 @@
                                             </button>
 
                                         </form>
+                                        @endcan
 
                                     </div>
 
@@ -247,12 +253,14 @@
 
                     <p>Add your first car to start offering rides.</p>
 
+                    @can('cars.create')
                     <a href="{{ route('car.edit') }}"
                         class="btn btn-primary">
 
                         Add Car
 
                     </a>
+                    @endcan
 
                 </div>
 

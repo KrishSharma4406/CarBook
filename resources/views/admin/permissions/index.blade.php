@@ -121,13 +121,13 @@
 
                                 <td>
 
-                                    <a href="{{ route('permissions.edit',$permission->id) }}"
+                                    @if(Auth::guard('admin')->user()->hasPermissionTo('permissions.edit', 'admin'))
+                                    <a href="{{ route('permissions.edit', $permission->id) }}"
                                         class="btn btn-warning btn-sm">
-
                                         <i class="fas fa-edit"></i>
-
                                     </a>
-
+                                    @endif
+                                    @can('permissions.delete')
                                     <form
                                         action="{{ route('permissions.destroy',$permission->id) }}"
                                         method="POST"
@@ -146,6 +146,7 @@
                                         </button>
 
                                     </form>
+                                    @endcan
 
                                 </td>
 

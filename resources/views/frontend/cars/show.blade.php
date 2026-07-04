@@ -1,6 +1,8 @@
 @extends('frontend.layout.app')
 @section('content')
 
+@can('cars.view')
+
 <section class="hero-wrap hero-wrap-2"
     style="background-image:url('{{ asset('UI/images/bg_3.jpg') }}');">
 
@@ -40,142 +42,146 @@
 
 <section class="ftco-section">
 
-<div class="container">
+    <div class="container">
 
-<div class="row">
+        <div class="row">
 
-    <!-- Image -->
+            <!-- Image -->
 
-    <div class="col-lg-5">
+            <div class="col-lg-5">
 
-        <img src="{{ asset('uploads/cars/'.$car->image) }}"
-             class="img-fluid rounded shadow-lg w-100"
-             style="height:400px;object-fit:cover;">
+                <img src="{{ asset('uploads/cars/'.$car->image) }}"
+                    class="img-fluid rounded shadow-lg w-100"
+                    style="height:400px;object-fit:cover;">
 
-    </div>
+            </div>
 
-    <!-- Details -->
+            <!-- Details -->
 
-    <div class="col-lg-7">
+            <div class="col-lg-7">
 
-        <div class="card border-0 shadow-lg">
+                <div class="card border-0 shadow-lg">
 
-            <div class="card-body p-auto">
+                    <div class="card-body p-auto">
 
-                <h2 class="mb-4">
+                        <h2 class="mb-4">
 
-                    {{ $car->car_name }}
+                            {{ $car->car_name }}
 
-                </h2>
+                        </h2>
 
-                <table class="table table-borderless">
+                        <table class="table table-borderless">
 
-                    <tr>
+                            <tr>
 
-                        <th width="35%">Owner</th>
+                                <th width="35%">Owner</th>
 
-                        <td>{{ $car->user->name }}</td>
+                                <td>{{ $car->user->name }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Email</th>
+                                <th>Email</th>
 
-                        <td>{{ $car->user->email }}</td>
+                                <td>{{ $car->user->email }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Phone</th>
+                                <th>Phone</th>
 
-                        <td>{{ $car->user->phone }}</td>
+                                <td>{{ $car->user->phone }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Brand</th>
+                                <th>Brand</th>
 
-                        <td>{{ $car->brand }}</td>
+                                <td>{{ $car->brand }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Model</th>
+                                <th>Model</th>
 
-                        <td>{{ $car->model }}</td>
+                                <td>{{ $car->model }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Registration</th>
+                                <th>Registration</th>
 
-                        <td>{{ $car->registration_number }}</td>
+                                <td>{{ $car->registration_number }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Fuel Type</th>
+                                <th>Fuel Type</th>
 
-                        <td>{{ $car->fuel_type }}</td>
+                                <td>{{ $car->fuel_type }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Transmission</th>
+                                <th>Transmission</th>
 
-                        <td>{{ $car->transmission }}</td>
+                                <td>{{ $car->transmission }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Color</th>
+                                <th>Color</th>
 
-                        <td>{{ $car->color }}</td>
+                                <td>{{ $car->color }}</td>
 
-                    </tr>
+                            </tr>
 
-                    <tr>
+                            <tr>
 
-                        <th>Rent</th>
+                                <th>Rent</th>
 
-                        <td>
+                                <td>
 
-                            <span class="badge badge-success p-2">
+                                    <span class="badge badge-success p-2">
 
-                                ₹{{ number_format($car->rent_per_day) }}/Day
+                                        ₹{{ number_format($car->rent_per_day) }}/Day
 
-                            </span>
+                                    </span>
 
-                        </td>
+                                </td>
 
-                    </tr>
+                            </tr>
 
-                </table>
+                        </table>
 
-                <hr>
+                        <hr>
 
-                <h5>Description</h5>
+                        <h5>Description</h5>
 
-                <p>
+                        <p>
 
-                    {{ $car->description }}
+                            {{ $car->description }}
 
-                </p>
+                        </p>
 
-                <a href="{{ url()->previous() }}"
-                   class="btn btn-primary">
+                        <a href="{{ url()->previous() }}"
+                            class="btn btn-primary">
 
-                    Back
+                            Back
 
-                </a>
+                        </a>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -183,10 +189,14 @@
 
     </div>
 
-</div>
-
-</div>
-
 </section>
+
+@endcan
+
+@cannot('cars.view')
+<div class="container mt-5">
+    <div class="alert alert-danger"> You do not have permission to view car details. </div>
+</div>
+@endcannot
 
 @endsection

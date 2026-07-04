@@ -7,28 +7,48 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 use App\Models\Car;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:profile.view')->only([
+            'index'
+        ]);
+
+        $this->middleware('permission:profile.edit')->only([
+            'edit',
+            'update'
+        ]);
+
+        $this->middleware('permission:profile.delete')->only([
+            'destroy'
+        ]);
+    }
+
     /**
      * Display the user's profile.
      */
-
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
-        $cars = car::where('user_id', $user->id)->get();
-        return view("frontend.cars.index", compact("user","cars"));
-    }
-    public function edit(Request $request)
-{
-    $user = $request->user()->load('cars');
+        $cars = Car::where('user_id', $user->id)->get();
 
-    return view('profile.edit', [
-        'user' => $user,
-    ]);
-}
+        return view('frontend.cars.index', compact('user', 'cars'));
+    }
+
+    /**
+     * Edit profile.
+     */
+    public function edit(Request $request)
+    {
+        $user = $request->user()->load('cars');
+
+        return view('profile.edit', [
+            'user' => $user,
+        ]);
+    }
 
     /**
      * Update the user's profile.
@@ -39,7 +59,6 @@ class ProfileController extends Controller
 
         $user->fill($request->validated());
 
-        // Update phone number
         $user->phone = $request->phone;
 
         if ($user->isDirty('email')) {
@@ -49,7 +68,7 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect('/')
-    ->with('success', 'Profile updated successfully.');
+            ->with('success', 'Profile updated successfully.');
     }
 
     /**

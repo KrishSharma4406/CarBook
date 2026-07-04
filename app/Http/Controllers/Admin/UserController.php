@@ -9,12 +9,35 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:users.view')->only([
+    //         'index'
+    //     ]);
+
+    //     $this->middleware('permission:users.edit')->only([
+    //         'edit',
+    //         'update',
+    //         'toggleStatus',
+    //         'editRole',
+    //         'updateRole'
+    //     ]);
+
+    //     $this->middleware('permission:users.create')->only([
+    //         'create',
+    //         'store'
+    //     ]);
+
+    //     $this->middleware('permission:users.delete')->only([
+    //         'destroy'
+    //     ]);
+    // }
+
     public function index()
     {
-        $users = User::latest()->paginate(10);
         $users = User::with('roles')
             ->latest()
-            ->get();
+            ->paginate(10);
 
         $totalUsers = User::count();
         $activeUsers = User::where('status', 1)->count();
@@ -45,7 +68,8 @@ class UserController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect()->route('admin-users')
+        return redirect()
+            ->route('admin-users')
             ->with('success', 'User updated successfully.');
     }
 
@@ -59,15 +83,13 @@ class UserController extends Controller
 
     public function editRole(User $user)
     {
+        $user->load('roles');
         $roles = Role::all();
 
-        return view(
-            'admin.users.role',
-            compact(
-                'user',
-                'roles'
-            )
-        );
+        return view('admin.users.role', compact(
+            'user',
+            'roles'
+        ));
     }
 
     public function updateRole(Request $request, User $user)
