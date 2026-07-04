@@ -9,29 +9,29 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('permission:users.view')->only([
-    //         'index'
-    //     ]);
+    public function __construct()
+    {
+        $this->middleware('permission:users.view')->only([
+            'index'
+        ]);
 
-    //     $this->middleware('permission:users.edit')->only([
-    //         'edit',
-    //         'update',
-    //         'toggleStatus',
-    //         'editRole',
-    //         'updateRole'
-    //     ]);
+        $this->middleware('permission:users.edit')->only([
+            'edit',
+            'update',
+            'toggleStatus',
+            'editRole',
+            'updateRole'
+        ]);
 
-    //     $this->middleware('permission:users.create')->only([
-    //         'create',
-    //         'store'
-    //     ]);
+        $this->middleware('permission:users.create')->only([
+            'create',
+            'store'
+        ]);
 
-    //     $this->middleware('permission:users.delete')->only([
-    //         'destroy'
-    //     ]);
-    // }
+        $this->middleware('permission:users.delete')->only([
+            'destroy'
+        ]);
+    }
 
     public function index()
     {

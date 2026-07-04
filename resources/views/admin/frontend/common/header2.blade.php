@@ -59,7 +59,7 @@
         role="menu"
         data-accordion="false">
 
-        @if(Auth::guard('admin')->user()->hasPermissionTo('dashboard.view', 'admin'))
+        @can('dashboard.view')
         <li class="nav-item">
           <a href="{{ route('admin.home') }}"
             class="nav-link {{ request()->routeIs('admin.home') ? 'active' : '' }}">
@@ -67,7 +67,7 @@
             <p>Dashboard</p>
           </a>
         </li>
-        @endif
+        @endcan
 
         @can('forms.view')
         <li class="nav-item">
@@ -106,7 +106,7 @@
 
         @can('cars.view')
         <li class="nav-item">
-          <a href="{{ route('admin.cars.index') }}" class="nav-link">
+          <a href="{{ route('cars.index') }}" class="nav-link">
             <i class="nav-icon fas fa-car"></i>
             <p>Cars</p>
           </a>
@@ -115,39 +115,21 @@
 
         @can('rides.view')
         <li class="nav-item">
-
-          <a href="{{ route('rides.index') }}"
-            class="nav-link {{ request()->routeIs('rides.*') ? 'active' : '' }}">
-
+          <a href="{{ route('admin.rides.index') }}"
+            class="nav-link {{ request()->routeIs('admin.rides.*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-road"></i>
-
-            <p>
-
-              Rides
-
-            </p>
-
+            <p>Rides</p>
           </a>
-
         </li>
         @endcan
 
         @can('bookings.view')
         <li class="nav-item">
-
-          <a href="{{ route('bookings.index') }}"
-            class="nav-link {{ request()->routeIs('bookings.*') ? 'active' : '' }}">
-
+          <a href="{{ route('admin.bookings.index') }}"
+            class="nav-link {{ request()->routeIs('admin.bookings.*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-book"></i>
-
-            <p>
-
-              Bookings
-
-            </p>
-
+            <p>Bookings</p>
           </a>
-
         </li>
         @endcan
 

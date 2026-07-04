@@ -220,7 +220,7 @@
 
                                 <td>
 
-                                    @can('rides.show')
+                                    @can('rides.view')
                                     <a href="{{ route('admin.rides.show',$ride->id) }}"
                                         class="btn btn-info btn-sm">
                                         <i class="fas fa-eye"></i>
