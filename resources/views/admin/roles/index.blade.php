@@ -159,6 +159,17 @@
 
                     </table>
 
+                    <div class="card-footer border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $roles->firstItem() }} to {{ $roles->lastItem() }}
+                                of {{ $roles->total() }} roles
+                            </small>
+
+                            {{ $roles->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

@@ -87,7 +87,7 @@
 
                             <tr>
 
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $permissions->firstItem() + $loop->index }}</td>
 
                                 <td>
 
@@ -157,6 +157,17 @@
                         </tbody>
 
                     </table>
+
+                    <div class="card-footer border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $permissions->firstItem() }} to {{ $permissions->lastItem() }}
+                                of {{ $permissions->total() }} permissions
+                            </small>
+
+                            {{ $permissions->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
 
                 </div>
 

@@ -2,8 +2,8 @@
 
 @section('content')
 
-<section class="hero-wrap hero-wrap-2 js-fullheight"
-    style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');"
+    data-stellar-background-ratio="0.5">
 
     <div class="overlay"></div>
 
@@ -29,124 +29,132 @@
 
         @if($rides->count())
 
-            @foreach($rides as $ride)
+        @foreach($rides as $ride)
 
-                <div class="card shadow-lg border-0 rounded mb-4">
+        <div class="card shadow-lg border-0 rounded mb-4">
 
-                    <div class="card-body p-4">
+            <div class="card-body p-4">
 
-                        <div class="row align-items-center">
+                <div class="row align-items-center">
 
-                            <div class="col-md-2 text-center">
+                    <div class="col-md-2 text-center">
 
-                                <h6 class="mt-3 mb-0">
-                                    {{ $ride->user->name }}
-                                </h6>
+                        @php
+                        $filename = $ride->user->profile_image ?? 'default.png';
+                        @endphp
 
-                            </div>
+                        <img src="{{ asset('uploads/profileimages/' . $filename) }}"
+                            alt="{{ $ride->user->name ?? 'User' }}"
+                            class="rounded-circle shadow mb-2"
+                            width="80"
+                            height="80"
+                            style="object-fit:cover;border:2px solid #ddd;">
 
-                            <div class="col-md-5">
+                        <h6 class="mt-2 mb-0">
+                            {{ $ride->user->name }}
+                        </h6>
 
-                                <h5 class="font-weight-bold">
+                    </div>
 
-                                    {{ $ride->pickup_location }}
+                    <div class="col-md-5">
 
-                                    <span class="text-success px-2">
-                                        →
-                                    </span>
+                        <h5 class="font-weight-bold">
 
-                                    {{ $ride->destination }}
+                            {{ $ride->pickup_location }}
 
-                                </h5>
+                            <span class="text-success px-2">
+                                →
+                            </span>
 
-                                <p class="mb-1">
+                            {{ $ride->destination }}
 
-                                    <i class="fa fa-calendar text-primary"></i>
+                        </h5>
 
-                                    {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
+                        <p class="mb-1">
 
-                                </p>
+                            <i class="fa fa-calendar text-primary"></i>
 
-                                <p class="mb-1">
+                            {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
 
-                                    <i class="fa fa-clock text-primary"></i>
+                        </p>
 
-                                    {{ date('h:i A', strtotime($ride->travel_time)) }}
+                        <p class="mb-1">
 
-                                </p>
+                            <i class="fa fa-clock text-primary"></i>
 
-                            </div>
+                            {{ date('h:i A', strtotime($ride->travel_time)) }}
 
-                            <div class="col-md-2 text-center">
+                        </p>
 
-                                <h4 class="text-success">
+                    </div>
 
-                                    ₹{{ $ride->fare }}
+                    <div class="col-md-2 text-center">
 
-                                </h4>
+                        <h4 class="text-success">
 
-                                <small>per seat</small>
+                            ₹{{ $ride->fare }}
 
-                            </div>
+                        </h4>
 
-                            <div class="col-md-1 text-center">
+                        <small>per seat</small>
 
-                                <span class="badge badge-primary p-2">
+                    </div>
 
-                                    {{ $ride->available_seats }}
+                    <div class="col-md-1 text-center">
 
-                                    Seats
+                        <span class="badge badge-primary p-2">
 
-                                </span>
+                            {{ $ride->available_seats }}
 
-                            </div>
+                            Seats
 
-                            <div class="col-md-2 text-center">
+                        </span>
 
-                                <a href="{{ route('rides.show',$ride->id) }}"
-                                   class="btn btn-primary btn-block">
+                    </div>
 
-                                    View Ride
+                    <div class="col-md-2 text-center">
 
-                                </a>
+                        <a href="{{ route('rides.show', $ride->id) }}" class="btn btn-primary btn-block">
 
-                            </div>
+                            View Ride
 
-                        </div>
+                        </a>
 
                     </div>
 
                 </div>
 
-            @endforeach
+            </div>
+
+        </div>
+
+        @endforeach
 
         @else
 
-            <div class="text-center py-5">
+        <div class="text-center py-5">
 
-                <img src="{{ asset('frontend/images/no-data.png') }}"
-                     width="220">
+            <img src="{{ asset('frontend/images/no-data.png') }}" width="220">
 
-                <h3 class="mt-4">
+            <h3 class="mt-4">
 
-                    No Rides Found
+                No Rides Found
 
-                </h3>
+            </h3>
 
-                <p class="text-muted">
+            <p class="text-muted">
 
-                    Try changing the pickup, destination or date.
+                Try changing the pickup, destination or date.
 
-                </p>
+            </p>
 
-                <a href="{{ route('home') }}"
-                   class="btn btn-primary">
+            <a href="{{ route('home') }}" class="btn btn-primary">
 
-                    Search Again
+                Search Again
 
-                </a>
+            </a>
 
-            </div>
+        </div>
 
         @endif
 

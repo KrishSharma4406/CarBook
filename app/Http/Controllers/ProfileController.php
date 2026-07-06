@@ -3,27 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Car;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
     public function __construct()
     {
         $this->middleware('permission:profile.view')->only([
-            'index'
+            'index',
         ]);
 
         $this->middleware('permission:profile.edit')->only([
             'edit',
-            'update'
+            'update',
         ]);
 
         $this->middleware('permission:profile.delete')->only([
-            'destroy'
+            'destroy',
         ]);
     }
 
@@ -57,7 +58,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        $user->fill($request->validated());
+        $user->fill($request->safe()->except('profile_image'));
 
         $user->phone = $request->phone;
 
@@ -65,9 +66,29 @@ class ProfileController extends Controller
             $user->email_verified_at = null;
         }
 
+        // Upload profile image
+        if ($request->hasFile('profile_image')) {
+            if ($user->profile_image) {
+                $oldPath = public_path('uploads/profileimages/' . basename($user->profile_image));
+
+                if (file_exists($oldPath)) {
+                    unlink($oldPath);
+                }
+
+                if (Storage::disk('public')->exists($user->profile_image)) {
+                    Storage::disk('public')->delete($user->profile_image);
+                }
+            }
+
+            $imageName = time() . '.' . $request->profile_image->extension();
+            $request->profile_image->move(public_path('uploads/profileimages'), $imageName);
+            $user->profile_image = $imageName;
+        }
+
         $user->save();
 
-        return redirect('/')
+        return redirect()
+            ->back()
             ->with('success', 'Profile updated successfully.');
     }
 

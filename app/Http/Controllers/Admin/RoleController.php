@@ -49,7 +49,7 @@ class RoleController extends Controller
 //     'permissions' => Auth::guard('admin')->user()?->getAllPermissions()->pluck('name'),
 //     'roles' => Auth::guard('admin')->user()?->getRoleNames(),
 // ]);
-        $roles = Role::with('permissions')->latest()->get();
+        $roles = Role::with('permissions')->orderBy('id', 'desc')->paginate(5);
 
         return view('admin.roles.index', compact('roles'));
     }
