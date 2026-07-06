@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\RideController as AdminRideController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\AdminProfileController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -262,6 +263,15 @@ Route::prefix('admin')
 
         Route::get('/bookings/{booking}', [AdminBookingController::class, 'show'])
             ->name('admin.bookings.show');
+
+        Route::get('/profile', [AdminProfileController::class, 'index'])
+            ->name('admin.profile.index');
+
+        Route::get('/profile/edit', [AdminProfileController::class, 'edit'])
+            ->name('admin.profile.edit');
+
+        Route::put('/profile/update', [AdminProfileController::class, 'update'])
+            ->name('admin.profile.update');
     });
 
 Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
