@@ -24,8 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'google_id',
-        'avatar',
+        'profile_image',
         'email_verified_at',
         'status',
     ];
@@ -71,4 +70,18 @@ public function rideBookings()
 {
     return $this->hasMany(RideBooking::class);
 }
+
+    public function profileImageUrl(): string
+    {
+        if ($this->profile_image && $this->profile_image !== '0') {
+            $filename = basename($this->profile_image);
+            $path = public_path('uploads/profile-images/' . $filename);
+
+            if (file_exists($path)) {
+                return '/uploads/profile-images/' . $filename;
+            }
+        }
+
+        return '/UI/images/person_1.jpg';
+    }
 }

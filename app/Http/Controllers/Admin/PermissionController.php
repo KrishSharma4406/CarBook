@@ -10,7 +10,7 @@ class PermissionController extends Controller
 {
     public function __construct()
     {
-         $this->middleware('auth:admin');
+        $this->middleware('auth:admin');
         $this->middleware('permission:permissions.view')->only([
             'index'
         ]);
@@ -32,7 +32,7 @@ class PermissionController extends Controller
 
     public function index()
     {
-        $permissions = Permission::latest()->get();
+        $permissions = Permission::orderBy('id', 'desc')->paginate(10);
 
         return view('admin.permissions.index', compact('permissions'));
     }
