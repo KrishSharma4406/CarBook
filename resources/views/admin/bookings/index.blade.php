@@ -267,11 +267,16 @@
 
                 </div>
 
-                <div class="card-footer">
+                <div class="card-footer border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $bookings->firstItem() }} to {{ $bookings->lastItem() }}
+                                of {{ $bookings->total() }} bookings
+                            </small>
 
-                    {{ $bookings->links() }}
-
-                </div>
+                            {{ $bookings->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
 
             </div>
 

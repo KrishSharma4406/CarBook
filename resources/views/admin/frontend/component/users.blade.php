@@ -237,9 +237,16 @@
 
                 </div>
 
-                <div class="card-footer">
-                    {{ $users->links() }}
-                </div>
+                <div class="card-footer border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $users->firstItem() }} to {{ $users->lastItem() }}
+                                of {{ $users->total() }} users
+                            </small>
+
+                            {{ $users->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
 
             </div>
 
