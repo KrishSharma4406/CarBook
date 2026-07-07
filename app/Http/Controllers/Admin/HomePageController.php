@@ -138,15 +138,13 @@ class HomePageController extends Controller
 
         $data = $request->except(['_token', '_method', 'hero_background', 'about_image', 'cta_background']);
 
-        // Handle hero background image upload
         if ($request->hasFile('hero_background')) {
             $file = $request->file('hero_background');
             $filename = 'hero_bg_'.time().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('uploads/homepage'), $filename);
             $data['hero_background'] = 'uploads/homepage/'.$filename;
         }
-
-        // Handle about image upload
+x
         if ($request->hasFile('about_image')) {
             $file = $request->file('about_image');
             $filename = 'about_'.time().'.'.$file->getClientOriginalExtension();
@@ -154,7 +152,6 @@ class HomePageController extends Controller
             $data['about_image'] = 'uploads/homepage/'.$filename;
         }
 
-        // Handle CTA background image upload
         if ($request->hasFile('cta_background')) {
             $file = $request->file('cta_background');
             $filename = 'cta_bg_'.time().'.'.$file->getClientOriginalExtension();
