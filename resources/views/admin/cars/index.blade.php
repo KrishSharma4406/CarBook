@@ -146,11 +146,16 @@
 
                 </div>
 
-                <div class="card-footer">
+                <div class="card-footer border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $cars->firstItem() }} to {{ $cars->lastItem() }}
+                                of {{ $cars->total() }} cars
+                            </small>
 
-                    {{ $cars->links() }}
-
-                </div>
+                            {{ $cars->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
 
             </div>
 

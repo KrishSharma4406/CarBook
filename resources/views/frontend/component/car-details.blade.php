@@ -143,11 +143,9 @@
 
 				<div class="mt-5">
 
-					<a href="#"
+					<a href="{{ route('booking.summary', $car->id) }}"
 						class="btn btn-primary py-3 px-5">
-
 						Book Now
-
 					</a>
 
 				</div>
