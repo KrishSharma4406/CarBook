@@ -92,11 +92,9 @@
 
 						<p class="d-flex mb-0 d-block">
 
-							<a href="{{ route('booking.summary',$rides->id) }}"
+							<a href="{{ route('car.show', $car->id) }}"
 								class="btn btn-primary py-2 mr-1">
-
 								Book Now
-
 							</a>
 
 							<a href="{{ route('car.show',$car->id) }}"

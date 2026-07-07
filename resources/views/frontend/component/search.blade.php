@@ -25,6 +25,72 @@
 
 <section class="ftco-section bg-light">
 
+    <div class="container mb-5 w-auto">
+
+        <div class="card shadow border-0 rounded-lg">
+            <div class="card-body py-4">
+
+                <form action="{{ route('rides.index') }}" method="GET">
+
+                    <div class="row align-items-end">
+
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <label class="font-weight-bold">
+                                <i class="fa fa-map-marker text-success"></i>
+                                Pickup Location
+                            </label>
+
+                            <input
+                                type="text"
+                                name="pickup"
+                                class="form-control"
+                                placeholder="Enter Pickup Location"
+                                value="{{ request('pickup_location') }}">
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <label class="font-weight-bold">
+                                <i class="fa fa-location-arrow text-danger"></i>
+                                Destination
+                            </label>
+
+                            <input
+                                type="text"
+                                name="destination"
+                                class="form-control"
+                                placeholder="Enter Destination"
+                                value="{{ request('destination') }}">
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <label class="font-weight-bold">
+                                <i class="fa fa-calendar text-primary"></i>
+                                Travel Date
+                            </label>
+
+                            <input
+                                type="date"
+                                name="travel_date"
+                                class="form-control"
+                                value="{{ request('travel_date') }}">
+                        </div>
+
+                        <div class="col-lg-1 col-md-6 mb-3">
+                            <button type="submit"
+                                class="btn btn-success btn-block w-9 py-10">Search
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
     <div class="container">
 
         @if($rides->count())

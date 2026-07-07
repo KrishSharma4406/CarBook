@@ -38,10 +38,6 @@ class ProfileController extends Controller
 
         return view('frontend.cars.index', compact('user', 'cars'));
     }
-
-    /**
-     * Edit profile.
-     */
     public function edit(Request $request)
     {
         $user = $request->user()->load('cars');

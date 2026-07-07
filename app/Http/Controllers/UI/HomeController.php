@@ -5,31 +5,41 @@ namespace App\Http\Controllers\UI;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\HomePage;
+use App\Models\AboutPage;
+use App\Models\ServicesPage;
+use App\Models\BlogPage;
+use App\Models\ContactPage;
 
 class HomeController extends Controller
 {
     //
     public function index()
 {
+    $home = HomePage::first();
     $cars = Car::with('user')->latest()->get();
 
-    return view('frontend.webviews.index', compact('cars'));
+    return view('frontend.webviews.index', compact('home', 'cars'));
 }
     public function about()
     {
-        return view('frontend.webviews.about');
+        $about = AboutPage::first();
+        return view('frontend.webviews.about', compact('about'));
     }
     public function contact()
     {
-        return view('frontend.webviews.contact');
+        $contact = ContactPage::first();
+        return view('frontend.webviews.contact', compact('contact'));
     }
     public function blog()
     {
-        return view('frontend.webviews.blog');
+        $blog = BlogPage::first();
+        return view('frontend.webviews.blog', compact('blog'));
     }
     public function service()
     {
-        return view('frontend.webviews.service');
+        $services = ServicesPage::first();
+        return view('frontend.webviews.service', compact('services'));
     }
     public function price()
 {

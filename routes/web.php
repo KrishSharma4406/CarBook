@@ -17,6 +17,12 @@ use App\Http\Controllers\Admin\RideController as AdminRideController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\HomePageController;
+use App\Http\Controllers\Admin\AboutPageController;
+use App\Http\Controllers\Admin\ServicesPageController;
+use App\Http\Controllers\Admin\BlogPageController;
+use App\Http\Controllers\Admin\ContactPageController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -262,6 +268,66 @@ Route::prefix('admin')
 
         Route::get('/bookings/{booking}', [AdminBookingController::class, 'show'])
             ->name('admin.bookings.show');
+
+        Route::get('/profile', [AdminProfileController::class, 'index'])
+            ->name('admin.profile.index');
+
+        Route::get('/profile/edit', [AdminProfileController::class, 'edit'])
+            ->name('admin.profile.edit');
+
+        Route::put('/profile/update', [AdminProfileController::class, 'update'])
+            ->name('admin.profile.update');
+
+        // Homepage Management
+        Route::get('/homepage', [HomePageController::class, 'index'])
+            ->name('admin.homepage.index');
+
+        Route::get('/homepage/edit', [HomePageController::class, 'edit'])
+            ->name('admin.homepage.edit');
+
+        Route::put('/homepage/update', [HomePageController::class, 'update'])
+            ->name('admin.homepage.update');
+
+        // About Page Management
+        Route::get('/about-page', [AboutPageController::class, 'index'])
+            ->name('admin.about.index');
+        Route::get('/about-page/edit', [AboutPageController::class, 'edit'])
+            ->name('admin.about.edit');
+        Route::put('/about-page/update', [AboutPageController::class, 'update'])
+            ->name('admin.about.update');
+
+        // Services Page Management
+        Route::get('/services-page', [ServicesPageController::class, 'index'])
+            ->name('admin.services.index');
+        Route::get('/services-page/edit', [ServicesPageController::class, 'edit'])
+            ->name('admin.services.edit');
+        Route::put('/services-page/update', [ServicesPageController::class, 'update'])
+            ->name('admin.services.update');
+
+        // Blog Page Management
+        Route::get('/blog-page', [BlogPageController::class, 'index'])
+            ->name('admin.blog.index');
+        Route::get('/blog-page/edit', [BlogPageController::class, 'edit'])
+            ->name('admin.blog.edit');
+        Route::put('/blog-page/update', [BlogPageController::class, 'update'])
+            ->name('admin.blog.update');
+
+        // Contact Page Management
+        Route::get('/contact-page', [ContactPageController::class, 'index'])
+            ->name('admin.contact.index');
+        Route::get('/contact-page/edit', [ContactPageController::class, 'edit'])
+            ->name('admin.contact.edit');
+        Route::put('/contact-page/update', [ContactPageController::class, 'update'])
+            ->name('admin.contact.update');
+
+        Route::get('/booking/{car}', [BookingController::class, 'summary'])
+            ->name('booking.summary');
+
+        Route::post('/booking/{car}/confirm', [BookingController::class, 'confirm'])
+            ->name('booking.confirm');
+
+        Route::get('/booking/success/{booking}', [BookingController::class, 'success'])
+            ->name('booking.success');
     });
 
 Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');

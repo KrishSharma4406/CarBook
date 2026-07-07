@@ -252,11 +252,16 @@
 
                 </div>
 
-                <div class="card-footer">
+                <div class="card-footer border-top">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                Showing {{ $rides->firstItem() }} to {{ $rides->lastItem() }}
+                                of {{ $rides->total() }} rides
+                            </small>
 
-                    {{ $rides->links() }}
-
-                </div>
+                            {{ $rides->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
 
             </div>
 

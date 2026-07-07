@@ -1,10 +1,10 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ $contact->hero_background ? asset($contact->hero_background) : asset('UI/images/bg_3.jpg') }}');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Contact Us</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="{{ route('home') }}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">{{ $contact->hero_title ?? 'Contact Us' }}</h1>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
 			          	<div class="icon mr-3">
 			          		<span class="icon-map-o"></span>
 			          	</div>
-			            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+			            <p><span>Address:</span> {{ $contact->contact_address ?? '198 West 21th Street, Suite 721 New York NY 10016' }}</p>
 			          </div>
 		          </div>
 		          <div class="col-md-12">
@@ -28,7 +28,7 @@
 			          	<div class="icon mr-3">
 			          		<span class="icon-mobile-phone"></span>
 			          	</div>
-			            <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+			            <p><span>Phone:</span> <a href="tel:{{ $contact->contact_phone ?? '+1235235598' }}">{{ $contact->contact_phone ?? '+ 1235 2355 98' }}</a></p>
 			          </div>
 		          </div>
 		          <div class="col-md-12">
@@ -36,7 +36,7 @@
 			          	<div class="icon mr-3">
 			          		<span class="icon-envelope-o"></span>
 			          	</div>
-			            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+			            <p><span>Email:</span> <a href="mailto:{{ $contact->contact_email ?? 'info@yoursite.com' }}">{{ $contact->contact_email ?? 'info@yoursite.com' }}</a></p>
 			          </div>
 		          </div>
 		        </div>
