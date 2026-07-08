@@ -180,11 +180,20 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.contact.index') }}"
-                class="nav-link {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('admin.contact.*') && !request()->routeIs('contact-messages.*') ? 'active' : '' }}">
                 <i class="bi bi-arrow-bar-right"></i>
-                <p>Contacts</p>
+                <p>Contacts (Header)</p>
               </a>
             </li>
+            @can('contact.view')
+            <li class="nav-item">
+              <a href="{{ route('contact-messages.index') }}"
+                class="nav-link {{ request()->routeIs('contact-messages.*') ? 'active' : '' }}">
+                <i class="bi bi-arrow-bar-right"></i>
+                <p>Contact Messages</p>
+              </a>
+            </li>
+            @endcan
           </ul>
         </li>
 

@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [App\Http\Controllers\UI\HomeController::class, 'index'])->name('home');
 route::get('/about', [App\Http\Controllers\UI\HomeController::class, 'about'])->name('about');
 route::get('/contact', [App\Http\Controllers\UI\HomeController::class, 'contact'])->name('contact');
+Route::post('/contact', [App\Http\Controllers\UI\ContactMessageController::class, 'store'])->name('contact.store');
 route::get('/blog', [App\Http\Controllers\UI\HomeController::class, 'blog'])->name('blog');
 route::get('/service', [App\Http\Controllers\UI\HomeController::class, 'service'])->name('service');
 route::get('/price', [App\Http\Controllers\UI\HomeController::class, 'price'])->name('price');
@@ -318,6 +319,9 @@ Route::prefix('admin')
         // Contact Page Management
         Route::get('/contact-page', [ContactPageController::class, 'index'])
             ->name('admin.contact.index');
+
+        // Contact Messages (Inquiries) Management
+        Route::resource('contact-messages', \App\Http\Controllers\Admin\AdminContactMessageController::class)->only(['index', 'show', 'destroy']);
         Route::get('/contact-page/edit', [ContactPageController::class, 'edit'])
             ->name('admin.contact.edit');
         Route::put('/contact-page/update', [ContactPageController::class, 'update'])
