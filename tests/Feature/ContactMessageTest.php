@@ -40,10 +40,16 @@ beforeEach(function () {
 test('visitors can view contact page', function () {
     ContactPage::create([
         'hero_title' => 'Contact Us',
+        'contact_address' => '123 Fake St',
+        'contact_phone' => '9999999999',
+        'contact_email' => 'contact@example.com',
     ]);
 
     $response = $this->get(route('contact'));
     $response->assertStatus(200);
+    $response->assertSee('123 Fake St');
+    $response->assertSee('9999999999');
+    $response->assertSee('contact@example.com');
 });
 
 test('visitors can submit contact message', function () {
