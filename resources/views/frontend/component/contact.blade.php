@@ -52,18 +52,37 @@
           </div>
           @endif
           <div class="col-md-8 block-9 mb-md-5">
-            <form action="#" class="bg-light p-5 contact-form">
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mb-4">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show mb-4">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+                </div>
+            @endif
+
+            <form action="{{ route('contact.store') }}" method="POST" class="bg-light p-5 contact-form">
+              @csrf
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Name">
+                <input type="text" name="name" class="form-control" placeholder="Your Name" value="{{ old('name') }}" required>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Your Email">
+                <input type="email" name="email" class="form-control" placeholder="Your Email" value="{{ old('email') }}" required>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
+                <input type="text" name="subject" class="form-control" placeholder="Subject" value="{{ old('subject') }}" required>
               </div>
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                <textarea name="message" id="" cols="30" rows="7" class="form-control" placeholder="Message" required>{{ old('message') }}</textarea>
               </div>
               <div class="form-group">
                 <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
