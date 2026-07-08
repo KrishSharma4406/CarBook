@@ -1,6 +1,6 @@
     <!-- END nav -->
 
-    <div class="hero-wrap ftco-degree-bg" style="background-image: url('{{ asset($home->hero_background ?: 'UI/images/bg_1.jpg') }}');" data-stellar-background-ratio="0.5">
+    <div class="hero-wrap ftco-degree-bg" style="background-image: url('{{ $home->hero_background ? asset($home->hero_background) : '' }}');" data-stellar-background-ratio="0.5">
     	<div class="overlay"></div>
     	<div class="container">
     		<div class="row no-gutters slider-text justify-content-start align-items-center justify-content-center">
@@ -84,34 +84,6 @@
     					</div>
     					<div class="col-md-8 d-flex align-items-center">
     						<div class="services-wrap rounded-right w-100">
-    							<h3 class="heading-section mb-4">Better Way to Rent Your Perfect Cars</h3>
-    							<div class="row d-flex mb-4">
-    								<div class="col-md-4 d-flex align-self-stretch ftco-animate">
-    									<div class="services w-100 text-center">
-    										<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-route"></span></div>
-    										<div class="text w-100">
-    											<h3 class="heading mb-2">Choose Your Pickup Location</h3>
-    										</div>
-    									</div>
-    								</div>
-    								<div class="col-md-4 d-flex align-self-stretch ftco-animate">
-    									<div class="services w-100 text-center">
-    										<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-handshake"></span></div>
-    										<div class="text w-100">
-    											<h3 class="heading mb-2">Select the Best Deal</h3>
-    										</div>
-    									</div>
-    								</div>
-    								<div class="col-md-4 d-flex align-self-stretch ftco-animate">
-    									<div class="services w-100 text-center">
-    										<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-rent"></span></div>
-    										<div class="text w-100">
-    											<h3 class="heading mb-2">Reserve Your Rental Car</h3>
-    										</div>
-    									</div>
-    								</div>
-    							</div>
-    							<p><a href="#" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a></p>
     						</div>
     					</div>
     				</div>
@@ -200,252 +172,196 @@
     	</div>
     </section>
 
+    @if($home->about_title || $home->about_description)
     <section class="ftco-section ftco-about">
     	<div class="container">
     		<div class="row no-gutters">
-    			<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url({{ $home->about_image ? asset($home->about_image) : asset('UI/images/about.jpg') }});">
+    			<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url({{ $home->about_image ? asset($home->about_image) : '' }});">
     			</div>
     			<div class="col-md-6 wrap-about ftco-animate">
     				<div class="heading-section heading-section-white pl-md-5">
-    					<span class="subheading">{{ $home->about_subtitle ?? 'About us' }}</span>
-    					<h2 class="mb-4">{{ $home->about_title ?? 'Welcome to Carbook' }}</h2>
+    					<span class="subheading">{{ $home->about_subtitle ?? '' }}</span>
+    					<h2 class="mb-4">{{ $home->about_title ?? '' }}</h2>
 
-    					<p>{{ $home->about_description ?? 'A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.' }}</p>
+    					<p>{{ $home->about_description ?? '' }}</p>
     					<p><a href="#" class="btn btn-primary py-3 px-4">Search Vehicle</a></p>
     				</div>
     			</div>
     		</div>
     	</div>
     </section>
+    @endif
 
+    @if($home->services_title || $home->service_1_title || $home->service_2_title || $home->service_3_title || $home->service_4_title)
     <section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center mb-5">
     			<div class="col-md-7 text-center heading-section ftco-animate">
-    				<span class="subheading">{{ $home->services_subtitle ?? 'Services' }}</span>
-    				<h2 class="mb-3">{{ $home->services_title ?? 'Our Latest Services' }}</h2>
+    				<span class="subheading">{{ $home->services_subtitle ?? '' }}</span>
+    				<h2 class="mb-3">{{ $home->services_title ?? '' }}</h2>
     			</div>
     		</div>
     		<div class="row">
+    			@if($home->service_1_title)
     			<div class="col-md-3">
     				<div class="services services-2 w-100 text-center">
-    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_1_icon ?? 'flaticon-wedding-car' }}"></span></div>
+    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_1_icon ?? '' }}"></span></div>
     					<div class="text w-100">
-    						<h3 class="heading mb-2">{{ $home->service_1_title ?? 'Wedding Ceremony' }}</h3>
-    						<p>{{ $home->service_1_desc ?? 'A small river named Duden flows by their place and supplies it with the necessary regelialia.' }}</p>
+    						<h3 class="heading mb-2">{{ $home->service_1_title ?? '' }}</h3>
+    						<p>{{ $home->service_1_desc ?? '' }}</p>
     					</div>
     				</div>
     			</div>
+    			@endif
+    			@if($home->service_2_title)
     			<div class="col-md-3">
     				<div class="services services-2 w-100 text-center">
-    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_2_icon ?? 'flaticon-transportation' }}"></span></div>
+    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_2_icon ?? '' }}"></span></div>
     					<div class="text w-100">
-    						<h3 class="heading mb-2">{{ $home->service_2_title ?? 'City Transfer' }}</h3>
-    						<p>{{ $home->service_2_desc ?? 'A small river named Duden flows by their place and supplies it with the necessary regelialia.' }}</p>
+    						<h3 class="heading mb-2">{{ $home->service_2_title ?? '' }}</h3>
+    						<p>{{ $home->service_2_desc ?? '' }}</p>
     					</div>
     				</div>
     			</div>
+    			@endif
+    			@if($home->service_3_title)
     			<div class="col-md-3">
     				<div class="services services-2 w-100 text-center">
-    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_3_icon ?? 'flaticon-car' }}"></span></div>
+    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_3_icon ?? '' }}"></span></div>
     					<div class="text w-100">
-    						<h3 class="heading mb-2">{{ $home->service_3_title ?? 'Airport Transfer' }}</h3>
-    						<p>{{ $home->service_3_desc ?? 'A small river named Duden flows by their place and supplies it with the necessary regelialia.' }}</p>
+    						<h3 class="heading mb-2">{{ $home->service_3_title ?? '' }}</h3>
+    						<p>{{ $home->service_3_desc ?? '' }}</p>
     					</div>
     				</div>
     			</div>
+    			@endif
+    			@if($home->service_4_title)
     			<div class="col-md-3">
     				<div class="services services-2 w-100 text-center">
-    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_4_icon ?? 'flaticon-transportation' }}"></span></div>
+    					<div class="icon d-flex align-items-center justify-content-center"><span class="{{ $home->service_4_icon ?? '' }}"></span></div>
     					<div class="text w-100">
-    						<h3 class="heading mb-2">{{ $home->service_4_title ?? 'Whole City Tour' }}</h3>
-    						<p>{{ $home->service_4_desc ?? 'A small river named Duden flows by their place and supplies it with the necessary regelialia.' }}</p>
+    						<h3 class="heading mb-2">{{ $home->service_4_title ?? '' }}</h3>
+    						<p>{{ $home->service_4_desc ?? '' }}</p>
     					</div>
     				</div>
     			</div>
+    			@endif
     		</div>
     	</div>
     </section>
+    @endif
 
-    <section class="ftco-section ftco-intro" style="background-image: url({{ $home->cta_background ? asset($home->cta_background) : asset('UI/images/bg_3.jpg') }});">
+    @if($home->cta_title)
+    <section class="ftco-section ftco-intro" style="background-image: url({{ $home->cta_background ? asset($home->cta_background) : '' }});">
     	<div class="overlay"></div>
     	<div class="container">
     		<div class="row justify-content-end">
     			<div class="col-md-6 heading-section heading-section-white ftco-animate">
-    				<h2 class="mb-3">{{ $home->cta_title ?? "Do You Want To Earn With Us? So Don't Be Late." }}</h2>
-    				<a href="{{ $home->cta_button_url ?? '#' }}" class="btn btn-primary btn-lg">{{ $home->cta_button_text ?? 'Become A Driver' }}</a>
+    				<h2 class="mb-3">{{ $home->cta_title ?? '' }}</h2>
+    				<a href="{{ $home->cta_button_url ?? '#' }}" class="btn btn-primary btn-lg">{{ $home->cta_button_text ?? '' }}</a>
     			</div>
     		</div>
     	</div>
     </section>
+    @endif
 
 
+    @if($home->testimonial_title)
     <section class="ftco-section testimony-section bg-light">
     	<div class="container">
     		<div class="row justify-content-center mb-5">
     			<div class="col-md-7 text-center heading-section ftco-animate">
-    				<span class="subheading">{{ $home->testimonial_subtitle ?? 'Testimonial' }}</span>
-    				<h2 class="mb-3">{{ $home->testimonial_title ?? 'Happy Clients' }}</h2>
+    				<span class="subheading">{{ $home->testimonial_subtitle ?? '' }}</span>
+    				<h2 class="mb-3">{{ $home->testimonial_title ?? '' }}</h2>
     			</div>
     		</div>
     		<div class="row ftco-animate">
     			<div class="col-md-12">
     				<div class="carousel-testimony owl-carousel ftco-owl">
-    				    <div class="item">
-    						<div class="testimony-wrap rounded text-center py-4 pb-5">
-    							<div class="user-img mb-2" style="background-image: url({{ asset("UI") }}/images/person_1.jpg)">
-    							</div>
-    							<div class="text pt-4">
-    								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-    								<p class="name">Roger Scott</p>
-    								<span class="position">Marketing Manager</span>
-    							</div>
-    						</div>
-    					</div>
-    					<div class="item">
-    						<div class="testimony-wrap rounded text-center py-4 pb-5">
-    							<div class="user-img mb-2" style="background-image: url({{ asset('UI') }}/images/person_2.jpg)">
-    							</div>
-    							<div class="text pt-4">
-    								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-    								<p class="name">Roger Scott</p>
-    								<span class="position">Interface Designer</span>
-    							</div>
-    						</div>
-    					</div>
-    					<div class="item">
-    						<div class="testimony-wrap rounded text-center py-4 pb-5">
-    							<div class="user-img mb-2" style="background-image: url({{ asset('UI') }}/images/person_3.jpg)">
-    							</div>
-    							<div class="text pt-4">
-    								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-    								<p class="name">Roger Scott</p>
-    								<span class="position">UI Designer</span>
-    							</div>
-    						</div>
-    					</div>
-    					<div class="item">
-    						<div class="testimony-wrap rounded text-center py-4 pb-5">
-    							<div class="user-img mb-2" style="background-image: url({{ asset('UI') }}/images/person_1.jpg)">
-    							</div>
-    							<div class="text pt-4">
-    								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-    								<p class="name">Roger Scott</p>
-    								<span class="position">Web Developer</span>
-    							</div>
-    						</div>
-    					</div>
-    					<div class="item">
-    						<div class="testimony-wrap rounded text-center py-4 pb-5">
-    							<div class="user-img mb-2" style="background-image: url({{ asset('UI') }}/images/person_1.jpg)">
-    							</div>
-    							<div class="text pt-4">
-    								<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-    								<p class="name">Roger Scott</p>
-    								<span class="position">System Analyst</span>
-    							</div>
-    						</div>
-    					</div>
     				</div>
     			</div>
     		</div>
     	</div>
     </section>
+    @endif
 
+    @if($home->blog_title)
     <section class="ftco-section">
     	<div class="container">
     		<div class="row justify-content-center mb-5">
     			<div class="col-md-7 heading-section text-center ftco-animate">
-    				<span class="subheading">{{ $home->blog_subtitle ?? 'Blog' }}</span>
-    				<h2>{{ $home->blog_title ?? 'Recent Blog' }}</h2>
+    				<span class="subheading">{{ $home->blog_subtitle ?? '' }}</span>
+    				<h2>{{ $home->blog_title ?? '' }}</h2>
     			</div>
     		</div>
     		<div class="row d-flex">
+    			@foreach($blogs as $post)
     			<div class="col-md-4 d-flex ftco-animate">
     				<div class="blog-entry justify-content-end">
-    					<a href="blog-single.html" class="block-20" style="background-image: url('{{ asset('UI') }}/images/image_1.jpg');">
+    					<a href="{{ route('blog-details', $post->slug) }}" class="block-20" style="background-image: url('{{ $post->image ? asset($post->image) : '' }}');">
     					</a>
     					<div class="text pt-4">
     						<div class="meta mb-3">
-    							<div><a href="#">Oct. 29, 2019</a></div>
-    							<div><a href="#">Admin</a></div>
-    							<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+    							<div><a href="#">{{ $post->created_at->format('M. d, Y') }}</a></div>
+    							<div><a href="#">{{ $post->author }}</a></div>
     						</div>
-    						<h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-    						<p><a href="#" class="btn btn-primary">Read more</a></p>
+    						<h3 class="heading mt-2"><a href="{{ route('blog-details', $post->slug) }}">{{ $post->title }}</a></h3>
+    						<p><a href="{{ route('blog-details', $post->slug) }}" class="btn btn-primary">Read more</a></p>
     					</div>
     				</div>
     			</div>
-    			<div class="col-md-4 d-flex ftco-animate">
-    				<div class="blog-entry justify-content-end">
-    					<a href="blog-single.html" class="block-20" style="background-image: url('{{ asset('UI') }}/images/image_2.jpg');">
-    					</a>
-    					<div class="text pt-4">
-    						<div class="meta mb-3">
-    							<div><a href="#">Oct. 29, 2019</a></div>
-    							<div><a href="#">Admin</a></div>
-    							<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-    						</div>
-    						<h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-    						<p><a href="#" class="btn btn-primary">Read more</a></p>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="col-md-4 d-flex ftco-animate">
-    				<div class="blog-entry">
-    					<a href="blog-single.html" class="block-20" style="background-image: url('{{ asset('UI') }}/images/image_3.jpg');">
-    					</a>
-    					<div class="text pt-4">
-    						<div class="meta mb-3">
-    							<div><a href="#">Oct. 29, 2019</a></div>
-    							<div><a href="#">Admin</a></div>
-    							<div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-    						</div>
-    						<h3 class="heading mt-2"><a href="#">Why Lead Generation is Key for Business Growth</a></h3>
-    						<p><a href="#" class="btn btn-primary">Read more</a></p>
-    					</div>
-    				</div>
-    			</div>
+    			@endforeach
     		</div>
     	</div>
     </section>
+    @endif
 
+    @if($home->counter_1_number || $home->counter_2_number || $home->counter_3_number || $home->counter_4_number)
     <section class="ftco-counter ftco-section img bg-light" id="section-counter">
     	<div class="overlay"></div>
     	<div class="container">
     		<div class="row">
+    			@if($home->counter_1_number)
     			<div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
     				<div class="block-18">
     					<div class="text text-border d-flex align-items-center">
-    						<strong class="number" data-number="{{ $home->counter_1_number ?? 60 }}">0</strong>
-    						<span>{!! nl2br(e($home->counter_1_label ?? "Year \nExperienced")) !!}</span>
+    						<strong class="number" data-number="{{ $home->counter_1_number ?? 0 }}">0</strong>
+    						<span>{!! nl2br(e($home->counter_1_label ?? "")) !!}</span>
     					</div>
     				</div>
     			</div>
+    			@endif
+    			@if($home->counter_2_number)
     			<div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
     				<div class="block-18">
     					<div class="text text-border d-flex align-items-center">
-    						<strong class="number" data-number="{{ $home->counter_2_number ?? 1090 }}">0</strong>
-    						<span>{!! nl2br(e($home->counter_2_label ?? "Total \nCars")) !!}</span>
+    						<strong class="number" data-number="{{ $home->counter_2_number ?? 0 }}">0</strong>
+    						<span>{!! nl2br(e($home->counter_2_label ?? "")) !!}</span>
     					</div>
     				</div>
     			</div>
+    			@endif
+    			@if($home->counter_3_number)
     			<div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
     				<div class="block-18">
     					<div class="text text-border d-flex align-items-center">
-    						<strong class="number" data-number="{{ $home->counter_3_number ?? 2590 }}">0</strong>
-    						<span>{!! nl2br(e($home->counter_3_label ?? "Happy \nCustomers")) !!}</span>
+    						<strong class="number" data-number="{{ $home->counter_3_number ?? 0 }}">0</strong>
+    						<span>{!! nl2br(e($home->counter_3_label ?? "")) !!}</span>
     					</div>
     				</div>
     			</div>
+    			@endif
+    			@if($home->counter_4_number)
     			<div class="col-md-6 col-lg-3 justify-content-center counter-wrap ftco-animate">
     				<div class="block-18">
     					<div class="text d-flex align-items-center">
-    						<strong class="number" data-number="{{ $home->counter_4_number ?? 67 }}">0</strong>
-    						<span>{!! nl2br(e($home->counter_4_label ?? "Total \nBranches")) !!}</span>
+    						<strong class="number" data-number="{{ $home->counter_4_number ?? 0 }}">0</strong>
+    						<span>{!! nl2br(e($home->counter_4_label ?? "")) !!}</span>
     					</div>
     				</div>
     			</div>
+    			@endif
     		</div>
     	</div>
     </section>
+    @endif

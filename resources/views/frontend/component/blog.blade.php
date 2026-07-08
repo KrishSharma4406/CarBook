@@ -1,129 +1,51 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ $blog->hero_background ? asset($blog->hero_background) : asset('UI/images/bg_3.jpg') }}');" data-stellar-background-ratio="0.5">
+@if($blog->hero_title)
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ $blog->hero_background ? asset($blog->hero_background) : '' }}');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
           	<p class="breadcrumbs"><span class="mr-2"><a href="{{ route('home') }}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Blog <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">{{ $blog->hero_title ?? 'Our Blog' }}</h1>
+            <h1 class="mb-3 bread">{{ $blog->hero_title ?? '' }}</h1>
           </div>
         </div>
       </div>
     </section>
+@endif
 
     <section class="ftco-section">
       <div class="container">
         <div class="row d-flex justify-content-center">
+          @forelse($blogs as $post)
           <div class="col-md-12 text-center d-flex ftco-animate">
           	<div class="blog-entry justify-content-end mb-md-5">
-              <a href="{{ route('blog-details') }}" class="block-20 img" style="background-image: url('{{ asset('UI/images/image_1.jpg') }}');">
+              <a href="{{ route('blog-details', $post->slug) }}" class="block-20 img" style="background-image: url('{{ $post->image ? asset($post->image) : '' }}');">
               </a>
               <div class="text px-md-5 pt-4">
               	<div class="meta mb-3">
-                  <div><a href="#">Oct. 29, 2019</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+                  <div><a href="#">{{ $post->created_at->format('M. d, Y') }}</a></div>
+                  <div><a href="#">{{ $post->author }}</a></div>
                 </div>
-                <h3 class="heading mt-2"><a href="{{ route('blog-details') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                <p><a href="{{ route('blog-details') }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
+                <h3 class="heading mt-2"><a href="{{ route('blog-details', $post->slug) }}">{{ $post->title }}</a></h3>
+                <p>{{ $post->description }}</p>
+                <p><a href="{{ route('blog-details', $post->slug) }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
               </div>
             </div>
           </div>
-          <div class="col-md-12 text-center d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end mb-md-5">
-              <a href="{{ route('blog-details') }}" class="block-20 img" style="background-image: url('{{ asset('UI/images/image_2.jpg') }}');">
-              </a>
-              <div class="text px-md-5 pt-4">
-              	<div class="meta mb-3">
-                  <div><a href="#">Oct. 29, 2019</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading mt-2"><a href="{{ route('blog-details') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                <p><a href="{{ route('blog-details') }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
-              </div>
-            </div>
+          @empty
+          <div class="col-md-12 text-center">
+              <p class="lead text-muted">No blog posts have been uploaded yet.</p>
           </div>
-          <div class="col-md-12 text-center d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="{{ route('blog-details') }}" class="block-20 img" style="background-image: url('{{ asset('UI/images/image_3.jpg') }}');">
-              </a>
-              <div class="text px-md-5 pt-4">
-              	<div class="meta mb-3">
-                  <div><a href="#">Oct. 29, 2019</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading mt-2"><a href="{{ route('blog-details') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                <p><a href="{{ route('blog-details') }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 text-center d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end mb-md-5">
-              <a href="{{ route('blog-details') }}" class="block-20 img" style="background-image: url('{{ asset('UI/images/image_4.jpg') }}');">
-              </a>
-              <div class="text px-md-5 pt-4">
-              	<div class="meta mb-3">
-                  <div><a href="#">Oct. 29, 2019</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading mt-2"><a href="{{ route('blog-details') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                <p><a href="{{ route('blog-details') }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 text-center d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end mb-md-5">
-              <a href="{{ route('blog-details') }}" class="block-20 img" style="background-image: url('{{ asset('UI/images/image_5.jpg') }}');">
-              </a>
-              <div class="text px-md-5 pt-4">
-              	<div class="meta mb-3">
-                  <div><a href="#">Oct. 29, 2019</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading mt-2"><a href="{{ route('blog-details') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                <p><a href="{{ route('blog-details') }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 text-center d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="{{ route('blog-details') }}" class="block-20 img" style="background-image: url('{{ asset('UI/images/image_6.jpg') }}');">
-              </a>
-              <div class="text px-md-5 pt-4">
-              	<div class="meta mb-3">
-                  <div><a href="#">Oct. 29, 2019</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-                <h3 class="heading mt-2"><a href="{{ route('blog-details') }}">Why Lead Generation is Key for Business Growth</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                <p><a href="{{ route('blog-details') }}" class="btn btn-primary">Continue <span class="icon-long-arrow-right"></span></a></p>
-              </div>
-            </div>
-          </div>
+          @endforelse
         </div>
+        
+        @if($blogs->hasPages())
         <div class="row mt-5">
           <div class="col text-center">
-            <div class="block-27">
-              <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
-              </ul>
+            <div class="block-27 d-flex justify-content-center">
+              {{ $blogs->links('pagination::bootstrap-4') }}
             </div>
           </div>
         </div>
+        @endif
       </div>
     </section>

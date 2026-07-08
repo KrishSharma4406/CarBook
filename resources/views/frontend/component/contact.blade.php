@@ -1,46 +1,56 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ $contact->hero_background ? asset($contact->hero_background) : asset('UI/images/bg_3.jpg') }}');" data-stellar-background-ratio="0.5">
+@if($contact->hero_title)
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ $contact->hero_background ? asset($contact->hero_background) : '' }}');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
           	<p class="breadcrumbs"><span class="mr-2"><a href="{{ route('home') }}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">{{ $contact->hero_title ?? 'Contact Us' }}</h1>
+            <h1 class="mb-3 bread">{{ $contact->hero_title ?? '' }}</h1>
           </div>
         </div>
       </div>
     </section>
+@endif
 
     <section class="ftco-section contact-section">
       <div class="container">
         <div class="row d-flex mb-5 contact-info">
+          @if($contact->contact_address || $contact->contact_phone || $contact->contact_email)
         	<div class="col-md-4">
         		<div class="row mb-5">
+        		  @if($contact->contact_address)
 		          <div class="col-md-12">
 		          	<div class="border w-100 p-4 rounded mb-2 d-flex">
 			          	<div class="icon mr-3">
 			          		<span class="icon-map-o"></span>
 			          	</div>
-			            <p><span>Address:</span> {{ $contact->contact_address ?? '198 West 21th Street, Suite 721 New York NY 10016' }}</p>
+			            <p><span>Address:</span> {{ $contact->contact_address }}</p>
 			          </div>
 		          </div>
+		          @endif
+		          @if($contact->contact_phone)
 		          <div class="col-md-12">
 		          	<div class="border w-100 p-4 rounded mb-2 d-flex">
 			          	<div class="icon mr-3">
 			          		<span class="icon-mobile-phone"></span>
 			          	</div>
-			            <p><span>Phone:</span> <a href="tel:{{ $contact->contact_phone ?? '+1235235598' }}">{{ $contact->contact_phone ?? '+ 1235 2355 98' }}</a></p>
+			            <p><span>Phone:</span> <a href="tel:{{ $contact->contact_phone }}">{{ $contact->contact_phone }}</a></p>
 			          </div>
 		          </div>
+		          @endif
+		          @if($contact->contact_email)
 		          <div class="col-md-12">
 		          	<div class="border w-100 p-4 rounded mb-2 d-flex">
 			          	<div class="icon mr-3">
 			          		<span class="icon-envelope-o"></span>
 			          	</div>
-			            <p><span>Email:</span> <a href="mailto:{{ $contact->contact_email ?? 'info@yoursite.com' }}">{{ $contact->contact_email ?? 'info@yoursite.com' }}</a></p>
+			            <p><span>Email:</span> <a href="mailto:{{ $contact->contact_email }}">{{ $contact->contact_email }}</a></p>
 			          </div>
 		          </div>
+		          @endif
 		        </div>
           </div>
+          @endif
           <div class="col-md-8 block-9 mb-md-5">
             <form action="#" class="bg-light p-5 contact-form">
               <div class="form-group">
@@ -61,11 +71,6 @@
             </form>
           
           </div>
-        </div>
-        <div class="row justify-content-center">
-        	<div class="col-md-12">
-        		<div id="map" class="bg-white"></div>
-        	</div>
         </div>
       </div>
     </section>

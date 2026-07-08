@@ -166,9 +166,16 @@
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.blog.index') }}"
-                class="nav-link {{ request()->routeIs('admin.blog.*') ? 'active' : '' }}">
+                class="nav-link {{ request()->routeIs('admin.blog.*') && !request()->routeIs('blog-posts.*') ? 'active' : '' }}">
                 <i class="bi bi-arrow-bar-right"></i>
-                <p>Blogs</p>
+                <p>Blogs (Header)</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('blog-posts.index') }}"
+                class="nav-link {{ request()->routeIs('blog-posts.*') ? 'active' : '' }}">
+                <i class="bi bi-arrow-bar-right"></i>
+                <p>Blog Posts</p>
               </a>
             </li>
             <li class="nav-item">
