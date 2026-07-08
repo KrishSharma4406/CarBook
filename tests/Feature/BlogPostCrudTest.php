@@ -23,7 +23,9 @@ beforeEach(function () {
         'rides.view', 
         'bookings.view', 
         'roles.view', 
-        'permissions.view'
+        'permissions.view',
+        'contact.view',
+        'contact.delete'
     ] as $permission) {
         Permission::findOrCreate($permission, 'web');
     }
