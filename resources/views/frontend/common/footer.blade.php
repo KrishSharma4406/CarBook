@@ -1,4 +1,7 @@
- <footer class="ftco-footer ftco-bg-dark ftco-section">
+@php
+  $footerContact = \App\Models\ContactPage::first() ?? new \App\Models\ContactPage();
+@endphp
+<footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md">
@@ -41,9 +44,15 @@
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	                @if($footerContact->contact_address)
+	                <li><span class="icon icon-map-marker"></span><span class="text">{{ $footerContact->contact_address }}</span></li>
+	                @endif
+	                @if($footerContact->contact_phone)
+	                <li><a href="tel:{{ $footerContact->contact_phone }}"><span class="icon icon-phone"></span><span class="text">{{ $footerContact->contact_phone }}</span></a></li>
+	                @endif
+	                @if($footerContact->contact_email)
+	                <li><a href="mailto:{{ $footerContact->contact_email }}"><span class="icon icon-envelope"></span><span class="text">{{ $footerContact->contact_email }}</span></a></li>
+	                @endif
 	              </ul>
 	            </div>
             </div>
