@@ -38,7 +38,7 @@ route::get('/service', [App\Http\Controllers\UI\HomeController::class, 'service'
 route::get('/price', [App\Http\Controllers\UI\HomeController::class, 'price'])->name('price');
 route::get('/car', [App\Http\Controllers\UI\HomeController::class, 'car'])->name('car');
 route::get('/car-details', [App\Http\Controllers\UI\HomeController::class, 'carDetails'])->name('car-details');
-route::get('/blog-details', [App\Http\Controllers\UI\HomeController::class, 'blogDetails'])->name('blog-details');
+route::get('/blog/{slug}', [App\Http\Controllers\UI\HomeController::class, 'blogDetails'])->name('blog-details');
 route::get('/admin-home', [App\Http\Controllers\UI\HomeController::class, 'adminHome'])->name('admin-home');
 route::get('/admin-tabels', [App\Http\Controllers\UI\HomeController::class, 'admintabels'])->name('admin-tabels');
 route::get('/admin-forms', [App\Http\Controllers\UI\HomeController::class, 'adminforms'])->name('admin-forms');
@@ -311,6 +311,9 @@ Route::prefix('admin')
             ->name('admin.blog.edit');
         Route::put('/blog-page/update', [BlogPageController::class, 'update'])
             ->name('admin.blog.update');
+
+        // Blog Posts Management
+        Route::resource('blog-posts', \App\Http\Controllers\Admin\BlogPostController::class);
 
         // Contact Page Management
         Route::get('/contact-page', [ContactPageController::class, 'index'])
