@@ -53,6 +53,21 @@ class BlogPageController extends Controller
         $blog->fill($data);
         $blog->save();
 
+        // Sync with HomePage
+        $home = \App\Models\HomePage::first();
+        if ($home) {
+            $home->update([
+                'blog_subtitle' => $blog->blog_subtitle,
+                'blog_title' => $blog->blog_title,
+            ]);
+        } else {
+            \App\Models\HomePage::create([
+                'hero_title' => 'Fast & Easy Way To Rent A Car',
+                'blog_subtitle' => $blog->blog_subtitle,
+                'blog_title' => $blog->blog_title,
+            ]);
+        }
+
         return redirect()->route('admin.blog.index')->with('success', 'Blog page updated successfully.');
     }
 }

@@ -144,7 +144,7 @@ class HomePageController extends Controller
             $file->move(public_path('uploads/homepage'), $filename);
             $data['hero_background'] = 'uploads/homepage/'.$filename;
         }
-x
+
         if ($request->hasFile('about_image')) {
             $file = $request->file('about_image');
             $filename = 'about_'.time().'.'.$file->getClientOriginalExtension();
@@ -161,6 +161,83 @@ x
 
         $home->fill($data);
         $home->save();
+
+        // Sync with AboutPage
+        $about = \App\Models\AboutPage::first();
+        $aboutData = [
+            'about_subtitle' => $home->about_subtitle,
+            'about_title' => $home->about_title,
+            'about_description' => $home->about_description,
+            'cta_title' => $home->cta_title,
+            'cta_button_text' => $home->cta_button_text,
+            'cta_button_url' => $home->cta_button_url,
+            'testimonial_subtitle' => $home->testimonial_subtitle,
+            'testimonial_title' => $home->testimonial_title,
+            'counter_1_number' => $home->counter_1_number,
+            'counter_1_label' => $home->counter_1_label,
+            'counter_2_number' => $home->counter_2_number,
+            'counter_2_label' => $home->counter_2_label,
+            'counter_3_number' => $home->counter_3_number,
+            'counter_3_label' => $home->counter_3_label,
+            'counter_4_number' => $home->counter_4_number,
+            'counter_4_label' => $home->counter_4_label,
+        ];
+        if ($home->about_image) {
+            $aboutData['about_image'] = $home->about_image;
+        }
+        if ($home->cta_background) {
+            $aboutData['cta_background'] = $home->cta_background;
+        }
+        if ($about) {
+            $about->update($aboutData);
+        } else {
+            $aboutData['hero_title'] = 'About Us';
+            \App\Models\AboutPage::create($aboutData);
+        }
+
+        // Sync with ServicesPage
+        $services = \App\Models\ServicesPage::first();
+        $servicesData = [
+            'services_subtitle' => $home->services_subtitle,
+            'services_title' => $home->services_title,
+            'service_1_icon' => $home->service_1_icon,
+            'service_1_title' => $home->service_1_title,
+            'service_1_desc' => $home->service_1_desc,
+            'service_2_icon' => $home->service_2_icon,
+            'service_2_title' => $home->service_2_title,
+            'service_2_desc' => $home->service_2_desc,
+            'service_3_icon' => $home->service_3_icon,
+            'service_3_title' => $home->service_3_title,
+            'service_3_desc' => $home->service_3_desc,
+            'service_4_icon' => $home->service_4_icon,
+            'service_4_title' => $home->service_4_title,
+            'service_4_desc' => $home->service_4_desc,
+            'cta_title' => $home->cta_title,
+            'cta_button_text' => $home->cta_button_text,
+            'cta_button_url' => $home->cta_button_url,
+        ];
+        if ($home->cta_background) {
+            $servicesData['cta_background'] = $home->cta_background;
+        }
+        if ($services) {
+            $services->update($servicesData);
+        } else {
+            $servicesData['hero_title'] = 'Our Services';
+            \App\Models\ServicesPage::create($servicesData);
+        }
+
+        // Sync with BlogPage
+        $blog = \App\Models\BlogPage::first();
+        $blogData = [
+            'blog_subtitle' => $home->blog_subtitle,
+            'blog_title' => $home->blog_title,
+        ];
+        if ($blog) {
+            $blog->update($blogData);
+        } else {
+            $blogData['hero_title'] = 'Our Blog';
+            \App\Models\BlogPage::create($blogData);
+        }
 
         return redirect()
             ->route('admin.homepage.index')

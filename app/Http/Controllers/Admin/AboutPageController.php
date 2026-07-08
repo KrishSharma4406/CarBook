@@ -98,6 +98,39 @@ class AboutPageController extends Controller
         $about->fill($data);
         $about->save();
 
+        // Sync with HomePage
+        $home = \App\Models\HomePage::first();
+        $homeData = [
+            'about_subtitle' => $about->about_subtitle,
+            'about_title' => $about->about_title,
+            'about_description' => $about->about_description,
+            'cta_title' => $about->cta_title,
+            'cta_button_text' => $about->cta_button_text,
+            'cta_button_url' => $about->cta_button_url,
+            'testimonial_subtitle' => $about->testimonial_subtitle,
+            'testimonial_title' => $about->testimonial_title,
+            'counter_1_number' => $about->counter_1_number,
+            'counter_1_label' => $about->counter_1_label,
+            'counter_2_number' => $about->counter_2_number,
+            'counter_2_label' => $about->counter_2_label,
+            'counter_3_number' => $about->counter_3_number,
+            'counter_3_label' => $about->counter_3_label,
+            'counter_4_number' => $about->counter_4_number,
+            'counter_4_label' => $about->counter_4_label,
+        ];
+        if ($about->about_image) {
+            $homeData['about_image'] = $about->about_image;
+        }
+        if ($about->cta_background) {
+            $homeData['cta_background'] = $about->cta_background;
+        }
+        if ($home) {
+            $home->update($homeData);
+        } else {
+            $homeData['hero_title'] = 'Fast & Easy Way To Rent A Car';
+            \App\Models\HomePage::create($homeData);
+        }
+
         return redirect()->route('admin.about.index')->with('success', 'About page updated successfully.');
     }
 }

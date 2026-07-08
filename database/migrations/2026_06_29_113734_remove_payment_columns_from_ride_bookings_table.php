@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
 {
     Schema::table('ride_bookings', function (Blueprint $table) {
-
-        $table->dropColumn([
-            'amount',
-            'payment_method',
-            'payment_status',
-            'transaction_id'
-        ]);
-
+        $columnsToDrop = [];
+        foreach (['amount', 'payment_method', 'payment_status', 'transaction_id'] as $column) {
+            if (Schema::hasColumn('ride_bookings', $column)) {
+                $columnsToDrop[] = $column;
+            }
+        }
+        if (!empty($columnsToDrop)) {
+            $table->dropColumn($columnsToDrop);
+        }
     });
 }
 

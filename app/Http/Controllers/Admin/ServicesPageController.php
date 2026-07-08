@@ -91,6 +91,37 @@ class ServicesPageController extends Controller
         $services->fill($data);
         $services->save();
 
+        // Sync with HomePage
+        $home = \App\Models\HomePage::first();
+        $homeData = [
+            'services_subtitle' => $services->services_subtitle,
+            'services_title' => $services->services_title,
+            'service_1_icon' => $services->service_1_icon,
+            'service_1_title' => $services->service_1_title,
+            'service_1_desc' => $services->service_1_desc,
+            'service_2_icon' => $services->service_2_icon,
+            'service_2_title' => $services->service_2_title,
+            'service_2_desc' => $services->service_2_desc,
+            'service_3_icon' => $services->service_3_icon,
+            'service_3_title' => $services->service_3_title,
+            'service_3_desc' => $services->service_3_desc,
+            'service_4_icon' => $services->service_4_icon,
+            'service_4_title' => $services->service_4_title,
+            'service_4_desc' => $services->service_4_desc,
+            'cta_title' => $services->cta_title,
+            'cta_button_text' => $services->cta_button_text,
+            'cta_button_url' => $services->cta_button_url,
+        ];
+        if ($services->cta_background) {
+            $homeData['cta_background'] = $services->cta_background;
+        }
+        if ($home) {
+            $home->update($homeData);
+        } else {
+            $homeData['hero_title'] = 'Fast & Easy Way To Rent A Car';
+            \App\Models\HomePage::create($homeData);
+        }
+
         return redirect()->route('admin.services.index')->with('success', 'Services page updated successfully.');
     }
 }
