@@ -250,7 +250,12 @@ class RideController extends Controller
         }
 
         if ($request->filled('travel_time')) {
-            $query->whereTime('travel_time', $request->travel_time);
+            try {
+                $time = Carbon::parse($request->travel_time)->format('H:i:s');
+                $query->whereTime('travel_time', $time);
+            } catch (\Exception $e) {
+                $query->whereTime('travel_time', $request->travel_time);
+            }
         }
 
         $rides = $query->get();

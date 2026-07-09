@@ -50,40 +50,72 @@
     									placeholder="City, Airport, Station, etc">
     							</div>
 
-								<div class="form-group">
-    								<label class="label">Travel Time</label>
-
-    								<input
-        								type="time"
-        								name="travel_time"
-        								class="form-control"
-        								required>
+								<div class="d-flex">
+									<div class="form-group mr-2 w-100">
+										<label class="label">Pick-up date</label>
+										<input type="text"
+											name="travel_date"
+											class="form-control"
+											id="book_pick_date"
+											placeholder="Date">
+									</div>
+									<div class="form-group ml-2 w-100">
+										<label class="label">Pick-up time</label>
+										<input type="text"
+											name="travel_time"
+											class="form-control"
+											id="time_pick"
+											placeholder="Time"
+											required>
+									</div>
 								</div>
 
-    							<div class="d-flex">
-
-    								<div class="form-group mr-2">
-    									<label class="label">Travel Date</label>
-
-    									<input type="text"
-    										name="travel_date"
-    										class="form-control"
-    										id="book_pick_date"
-    										placeholder="Date">
-    								</div>
-
-    							</div>
-
-    							<div class="form-group">
-    								<input type="submit"
-    									value="Search Rides"
-    									class="btn btn-secondary py-3 px-4">
-    							</div>
+								<div class="form-group">
+									<input type="submit"
+										value="Rent A Car Now"
+										class="btn btn-secondary py-3 px-4 btn-block">
+								</div>
 
     						</form>
     					</div>
     					<div class="col-md-8 d-flex align-items-center">
     						<div class="services-wrap rounded-right w-100">
+								<h3 class="heading-section mb-4">Better Way to Rent Your Perfect Cars</h3>
+								<div class="row d-flex mb-4">
+									<div class="col-md-4 d-flex align-self-stretch ftco-animate">
+										<div class="services w-100 text-center">
+											<div class="icon d-flex align-items-center justify-content-center">
+												<span class="flaticon-route"></span>
+											</div>
+											<div class="text w-100">
+												<h3 class="heading mb-2">Choose Your Pickup Location</h3>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 d-flex align-self-stretch ftco-animate">
+										<div class="services w-100 text-center">
+											<div class="icon d-flex align-items-center justify-content-center">
+												<span class="flaticon-handshake"></span>
+											</div>
+											<div class="text w-100">
+												<h3 class="heading mb-2">Select the Best Deal</h3>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4 d-flex justify-content-center align-self-stretch ftco-animate">
+										<div class="services w-100 text-center">
+											<div class="icon d-flex align-items-center justify-content-center">
+												<span class="flaticon-rent"></span>
+											</div>
+											<div class="text w-100 text-center mx-auto m-auto">
+												<h3 class="heading mb-2 text-center">Reserve Your Rental Car</h3>
+											</div>
+										</div>
+									</div>
+								</div>
+								<p class="mt-5">
+									<a href="#" class="btn btn-primary py-3 px-4">Reserve Your Perfect Car</a>
+								</p>
     						</div>
     					</div>
     				</div>
