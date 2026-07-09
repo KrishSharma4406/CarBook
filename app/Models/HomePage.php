@@ -59,5 +59,16 @@ class HomePage extends Model
         'counter_3_label',
         'counter_4_number',
         'counter_4_label',
+
+        // Rent steps section
+        'rent_title',
+        'rent_step_1_icon',
+        'rent_step_1_title',
+        'rent_step_2_icon',
+        'rent_step_2_title',
+        'rent_step_3_icon',
+        'rent_step_3_title',
+        'rent_button_text',
+        'rent_button_url',
     ];
 }
