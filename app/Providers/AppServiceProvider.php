@@ -45,5 +45,27 @@ class AppServiceProvider extends ServiceProvider
 
         return null;
     });
+
+        view()->composer('frontend.common.header', function ($view) {
+            if (Auth::check()) {
+                $unreadBookingsCount = \App\Models\Notification::where('user_id', Auth::id())
+                    ->where('target_tab', 'booking.my')
+                    ->where('is_read', false)
+                    ->count();
+
+                $unreadRequestsCount = \App\Models\Notification::where('user_id', Auth::id())
+                    ->where('target_tab', 'rides.requests')
+                    ->where('is_read', false)
+                    ->count();
+
+                $totalUnreadCount = $unreadBookingsCount + $unreadRequestsCount;
+
+                $view->with([
+                    'unreadBookingsCount' => $unreadBookingsCount,
+                    'unreadRequestsCount' => $unreadRequestsCount,
+                    'totalUnreadCount' => $totalUnreadCount,
+                ]);
+            }
+        });
     }
 }

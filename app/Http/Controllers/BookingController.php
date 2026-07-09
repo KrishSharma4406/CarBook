@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ride;
 use App\Models\RideBooking;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,12 +63,22 @@ class BookingController extends Controller
             return back()->with('error', 'You have already requested this ride.');
         }
 
-        RideBooking::create([
+        $booking = RideBooking::create([
             'ride_id' => $ride->id,
             'user_id' => auth()->id(),
             'seats' => $request->seats,
             'booking_status' => 'pending',
             'status' => 'pending'
+        ]);
+
+        Notification::create([
+            'user_id' => $ride->user_id, // Driver
+            'sender_id' => auth()->id(), // Passenger
+            'ride_booking_id' => $booking->id,
+            'type' => 'booked',
+            'message' => auth()->user()->name . ' requested to book your ride to ' . $ride->destination . '.',
+            'target_tab' => 'rides.requests',
+            'is_read' => false,
         ]);
 
         return redirect()
@@ -80,6 +91,12 @@ class BookingController extends Controller
      */
     public function myBookings()
     {
+        // Mark passenger bookings notifications as read
+        Notification::where('user_id', Auth::id())
+            ->where('target_tab', 'booking.my')
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
+
         $bookings = RideBooking::with('ride')
             ->where('user_id', Auth::id())
             ->latest()
@@ -99,6 +116,16 @@ class BookingController extends Controller
 
         $booking->update([
             'booking_status' => 'cancelled'
+        ]);
+
+        Notification::create([
+            'user_id' => $booking->ride->user_id, // Driver
+            'sender_id' => Auth::id(), // Passenger
+            'ride_booking_id' => $booking->id,
+            'type' => 'cancelled',
+            'message' => Auth::user()->name . ' cancelled their booking request for ride to ' . $booking->ride->destination . '.',
+            'target_tab' => 'rides.requests',
+            'is_read' => false,
         ]);
 
         return redirect()->back()->with('success', 'Booking cancelled successfully.');

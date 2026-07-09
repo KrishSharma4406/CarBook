@@ -19,6 +19,39 @@
 
 @if(Auth::check())
 
+<style>
+/* Notification Badge Top styling */
+.profile-avatar-container {
+    position: relative;
+    display: inline-block;
+}
+.notification-badge-top {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff3b30;
+    color: #ffffff;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    border: 1.5px solid #ffffff;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* Hover trigger for Profile Dropdown on Desktop */
+@media (min-width: 992px) {
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        margin-top: 0;
+    }
+}
+</style>
+
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle d-flex align-items-center"
        href="#"
@@ -28,8 +61,13 @@
        aria-haspopup="true"
        aria-expanded="false">
 
-        <div class="profile-avatar mr-2">
-            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+        <div class="profile-avatar-container mr-2">
+            <div class="profile-avatar">
+                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+            </div>
+            @if(isset($totalUnreadCount) && $totalUnreadCount > 0)
+                <span class="notification-badge-top">{{ $totalUnreadCount }}</span>
+            @endif
         </div>
 
         <span>{{ Auth::user()->name }}</span>
@@ -64,12 +102,18 @@
     		<span class="ml-2">My Rides</span>
 		</a>
 
-		<a class="dropdown-item" href="{{ route('booking.my') }}">
+		<a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ route('booking.my') }}">
 			<span class="ml-2">My Bookings</span>
+            @if(isset($unreadBookingsCount) && $unreadBookingsCount > 0)
+                <span class="badge badge-pill badge-danger" style="background-color: #ff3b30; color: white; font-weight: bold; font-size: 10px; padding: 3px 6px;">{{ $unreadBookingsCount }}</span>
+            @endif
 		</a>
 
-		<a class="dropdown-item" href="{{ route('rides.requests') }}">
+		<a class="dropdown-item d-flex justify-content-between align-items-center" href="{{ route('rides.requests') }}">
     		<span class="ml-2">Ride Requests</span>
+            @if(isset($unreadRequestsCount) && $unreadRequestsCount > 0)
+                <span class="badge badge-pill badge-danger" style="background-color: #ff3b30; color: white; font-weight: bold; font-size: 10px; padding: 3px 6px;">{{ $unreadRequestsCount }}</span>
+            @endif
 		</a>
 
         <a class="dropdown-item" href="{{ route('profile.edit') }}">

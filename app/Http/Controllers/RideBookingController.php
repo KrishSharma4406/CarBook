@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ride;
 use App\Models\RideBooking;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,11 +61,21 @@ class RideBookingController extends Controller
             return back()->with('error', 'You have already requested this ride.');
         }
 
-        RideBooking::create([
+        $booking = RideBooking::create([
             'ride_id' => $ride->id,
             'user_id' => Auth::id(),
             'seats'   => 1,
             'status'  => 'pending'
+        ]);
+
+        Notification::create([
+            'user_id' => $ride->user_id, // Driver
+            'sender_id' => Auth::id(), // Passenger
+            'ride_booking_id' => $booking->id,
+            'type' => 'booked',
+            'message' => Auth::user()->name . ' requested to book your ride to ' . $ride->destination . '.',
+            'target_tab' => 'rides.requests',
+            'is_read' => false,
         ]);
 
         return back()->with('success', 'Ride request sent successfully.');
@@ -75,6 +86,11 @@ class RideBookingController extends Controller
      */
     public function requests()
     {
+        Notification::where('user_id', Auth::id())
+            ->where('target_tab', 'rides.requests')
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
+
         $bookings = RideBooking::with(['ride', 'user'])
             ->whereHas('ride', function ($query) {
                 $query->where('user_id', Auth::id());
@@ -97,6 +113,16 @@ class RideBookingController extends Controller
 
         $booking->ride->decrement('available_seats');
 
+        Notification::create([
+            'user_id' => $booking->user_id, // Passenger
+            'sender_id' => Auth::id(), // Driver
+            'ride_booking_id' => $booking->id,
+            'type' => 'accepted',
+            'message' => 'Your booking request for ride to ' . $booking->ride->destination . ' has been accepted.',
+            'target_tab' => 'booking.my',
+            'is_read' => false,
+        ]);
+
         return back()->with('success', 'Booking Accepted');
     }
 
@@ -110,7 +136,18 @@ class RideBookingController extends Controller
         }
 
         $booking->update([
+            'booking_status' => 'rejected',
             'status' => 'rejected'
+        ]);
+
+        Notification::create([
+            'user_id' => $booking->user_id, // Passenger
+            'sender_id' => Auth::id(), // Driver
+            'ride_booking_id' => $booking->id,
+            'type' => 'rejected',
+            'message' => 'Your booking request for ride to ' . $booking->ride->destination . ' has been rejected.',
+            'target_tab' => 'booking.my',
+            'is_read' => false,
         ]);
 
         return back()->with('success', 'Booking rejected.');
