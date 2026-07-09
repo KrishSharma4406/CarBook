@@ -88,6 +88,71 @@
                     </div>
                 </div>
 
+                {{-- ===== RENT STEPS SECTION ===== --}}
+                <div class="card card-warning card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-road mr-2 text-warning"></i>Rent Steps Section (Better Way to Rent)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-sm mb-3">
+                                    <tr>
+                                        <th style="width:20%">Section Title</th>
+                                        <td>{{ $home->rent_title }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Button Text</th>
+                                        <td>{{ $home->rent_button_text }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Button URL</th>
+                                        <td>{{ $home->rent_button_url }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Step 1 -->
+                            <div class="col-md-4">
+                                <div class="card card-sm">
+                                    <div class="card-header bg-light py-2">
+                                        <h6 class="mb-0">Step 1</h6>
+                                    </div>
+                                    <div class="card-body py-2">
+                                        <p class="mb-1"><strong>Icon:</strong> <code>{{ $home->rent_step_1_icon }}</code></p>
+                                        <p class="mb-0"><strong>Title:</strong> {{ $home->rent_step_1_title }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Step 2 -->
+                            <div class="col-md-4">
+                                <div class="card card-sm">
+                                    <div class="card-header bg-light py-2">
+                                        <h6 class="mb-0">Step 2</h6>
+                                    </div>
+                                    <div class="card-body py-2">
+                                        <p class="mb-1"><strong>Icon:</strong> <code>{{ $home->rent_step_2_icon }}</code></p>
+                                        <p class="mb-0"><strong>Title:</strong> {{ $home->rent_step_2_title }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Step 3 -->
+                            <div class="col-md-4">
+                                <div class="card card-sm">
+                                    <div class="card-header bg-light py-2">
+                                        <h6 class="mb-0">Step 3</h6>
+                                    </div>
+                                    <div class="card-body py-2">
+                                        <p class="mb-1"><strong>Icon:</strong> <code>{{ $home->rent_step_3_icon }}</code></p>
+                                        <p class="mb-0"><strong>Title:</strong> {{ $home->rent_step_3_title }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- ===== ABOUT SECTION ===== --}}
                 <div class="card card-info card-outline">
                     <div class="card-header">

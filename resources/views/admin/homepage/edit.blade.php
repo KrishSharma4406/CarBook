@@ -108,6 +108,125 @@
                     </div>
                 </div>
 
+                 {{-- ===== RENT STEPS SECTION ===== --}}
+                <div class="card card-warning">
+                    <div class="card-header text-white" style="background-color: #ffc107;">
+                        <h3 class="card-title"><i class="fas fa-road mr-2" style="color: #fff;"></i>Rent Steps Section (Better Way to Rent)</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus" style="color: #fff;"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="rent_title">Section Title</label>
+                            <input type="text" name="rent_title" id="rent_title"
+                                class="form-control"
+                                value="{{ old('rent_title', $home->rent_title) }}"
+                                placeholder="e.g. Better Way to Rent Your Perfect Cars">
+                        </div>
+
+                        <div class="row">
+                            <!-- Step 1 -->
+                            <div class="col-md-4">
+                                <div class="card card-outline card-primary">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Step 1</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="rent_step_1_icon">Icon Class</label>
+                                            <input type="text" name="rent_step_1_icon" id="rent_step_1_icon"
+                                                class="form-control"
+                                                value="{{ old('rent_step_1_icon', $home->rent_step_1_icon) }}"
+                                                placeholder="e.g. flaticon-route">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent_step_1_title">Title</label>
+                                            <input type="text" name="rent_step_1_title" id="rent_step_1_title"
+                                                class="form-control"
+                                                value="{{ old('rent_step_1_title', $home->rent_step_1_title) }}"
+                                                placeholder="e.g. Choose Your Pickup Location">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="col-md-4">
+                                <div class="card card-outline card-success">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Step 2</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="rent_step_2_icon">Icon Class</label>
+                                            <input type="text" name="rent_step_2_icon" id="rent_step_2_icon"
+                                                class="form-control"
+                                                value="{{ old('rent_step_2_icon', $home->rent_step_2_icon) }}"
+                                                placeholder="e.g. flaticon-handshake">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent_step_2_title">Title</label>
+                                            <input type="text" name="rent_step_2_title" id="rent_step_2_title"
+                                                class="form-control"
+                                                value="{{ old('rent_step_2_title', $home->rent_step_2_title) }}"
+                                                placeholder="e.g. Select the Best Deal">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="col-md-4">
+                                <div class="card card-outline card-info">
+                                    <div class="card-header">
+                                        <h5 class="card-title">Step 3</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="rent_step_3_icon">Icon Class</label>
+                                            <input type="text" name="rent_step_3_icon" id="rent_step_3_icon"
+                                                class="form-control"
+                                                value="{{ old('rent_step_3_icon', $home->rent_step_3_icon) }}"
+                                                placeholder="e.g. flaticon-rent">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rent_step_3_title">Title</label>
+                                            <input type="text" name="rent_step_3_title" id="rent_step_3_title"
+                                                class="form-control"
+                                                value="{{ old('rent_step_3_title', $home->rent_step_3_title) }}"
+                                                placeholder="e.g. Reserve Your Rental Car">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rent_button_text">Call-To-Action Button Text</label>
+                                    <input type="text" name="rent_button_text" id="rent_button_text"
+                                        class="form-control"
+                                        value="{{ old('rent_button_text', $home->rent_button_text) }}"
+                                        placeholder="e.g. Reserve Your Perfect Car">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="rent_button_url">Call-To-Action Button URL</label>
+                                    <input type="text" name="rent_button_url" id="rent_button_url"
+                                        class="form-control"
+                                        value="{{ old('rent_button_url', $home->rent_button_url) }}"
+                                        placeholder="e.g. #">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- ===== ABOUT SECTION ===== --}}
                 <div class="card card-info">
                     <div class="card-header">

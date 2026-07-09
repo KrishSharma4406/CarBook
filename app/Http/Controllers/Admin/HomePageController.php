@@ -65,6 +65,47 @@ class HomePageController extends Controller
                 'counter_4_number' => 67,
                 'counter_4_label' => 'Total Branches',
             ]);
+        } else {
+            $updated = false;
+            if (is_null($home->rent_title)) {
+                $home->rent_title = 'Better Way to Rent Your Perfect Cars';
+                $updated = true;
+            }
+            if (is_null($home->rent_step_1_icon)) {
+                $home->rent_step_1_icon = 'flaticon-route';
+                $updated = true;
+            }
+            if (is_null($home->rent_step_1_title)) {
+                $home->rent_step_1_title = 'Choose Your Pickup Location';
+                $updated = true;
+            }
+            if (is_null($home->rent_step_2_icon)) {
+                $home->rent_step_2_icon = 'flaticon-handshake';
+                $updated = true;
+            }
+            if (is_null($home->rent_step_2_title)) {
+                $home->rent_step_2_title = 'Select the Best Deal';
+                $updated = true;
+            }
+            if (is_null($home->rent_step_3_icon)) {
+                $home->rent_step_3_icon = 'flaticon-rent';
+                $updated = true;
+            }
+            if (is_null($home->rent_step_3_title)) {
+                $home->rent_step_3_title = 'Reserve Your Rental Car';
+                $updated = true;
+            }
+            if (is_null($home->rent_button_text)) {
+                $home->rent_button_text = 'Reserve Your Perfect Car';
+                $updated = true;
+            }
+            if (is_null($home->rent_button_url)) {
+                $home->rent_button_url = '#';
+                $updated = true;
+            }
+            if ($updated) {
+                $home->save();
+            }
         }
 
         return view('admin.homepage.edit', compact('home'));
@@ -128,6 +169,17 @@ class HomePageController extends Controller
             'counter_3_label' => 'nullable|string|max:255',
             'counter_4_number' => 'nullable|integer',
             'counter_4_label' => 'nullable|string|max:255',
+
+            // Rent Steps
+            'rent_title' => 'nullable|string|max:255',
+            'rent_step_1_icon' => 'nullable|string|max:255',
+            'rent_step_1_title' => 'nullable|string|max:255',
+            'rent_step_2_icon' => 'nullable|string|max:255',
+            'rent_step_2_title' => 'nullable|string|max:255',
+            'rent_step_3_icon' => 'nullable|string|max:255',
+            'rent_step_3_title' => 'nullable|string|max:255',
+            'rent_button_text' => 'nullable|string|max:255',
+            'rent_button_url' => 'nullable|string|max:255',
         ]);
 
         $home = HomePage::first();
