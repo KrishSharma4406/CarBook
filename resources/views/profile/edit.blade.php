@@ -201,7 +201,7 @@
                                                 <div class="col-6">
 
                                                     @can('cars.edit')
-                                                        <a href="{{ route('car.edit') }}" class="btn btn-primary btn-block">
+                                                        <a href="{{ route('car.edit.single', $car->id) }}" class="btn btn-primary btn-block">
 
                                                             <i class="fa fa-edit"></i>
 

@@ -46,17 +46,29 @@ class CarController extends Controller
             'transmission' => 'required',
             'color' => 'required',
             'rent_per_day' => 'required|numeric',
+            'pickup_location' => 'required|string|max:255',
+            'destination' => 'required|string|max:255',
+            'travel_date' => 'required|date',
+            'travel_time' => 'required',
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $car = new Car();
+        $carId = $request->input('car_id');
+        if ($carId) {
+            $car = Car::where('user_id', Auth::id())->findOrFail($carId);
+        } else {
+            $car = new Car();
+            $car->user_id = Auth::id();
+        }
 
-        $car->user_id = Auth::id();
-
-        $car->fill($request->except('image'));
+        $car->fill($request->except(['image', 'car_id', 'pickup_location', 'destination', 'travel_date', 'travel_time']));
 
         if ($request->hasFile('image')) {
+            // Delete old image if updating and new image uploaded
+            if ($car->image && file_exists(public_path('uploads/cars/' . $car->image))) {
+                unlink(public_path('uploads/cars/' . $car->image));
+            }
 
             $imageName = time() . '.' . $request->image->extension();
 
@@ -66,6 +78,23 @@ class CarController extends Controller
         }
 
         $car->save();
+
+        // Create or update corresponding active ride
+        \App\Models\Ride::updateOrCreate(
+            ['car_id' => $car->id],
+            [
+                'user_id' => $car->user_id,
+                'pickup_location' => $request->pickup_location,
+                'destination' => $request->destination,
+                'travel_date' => $request->travel_date,
+                'travel_time' => $request->travel_time,
+                'available_seats' => 4,
+                'fare' => $car->rent_per_day,
+                'vehicle_name' => $car->brand . ' ' . $car->model,
+                'vehicle_number' => $car->registration_number,
+                'status' => 'active'
+            ]
+        );
 
         return redirect()
             ->route('profile.edit')
@@ -81,7 +110,7 @@ class CarController extends Controller
 
     public function create()
     {
-        return view('profile.add-car');
+        return view('profile.car');
     }
 
     public function editCar(Car $car)
@@ -90,7 +119,7 @@ class CarController extends Controller
             abort(403);
         }
 
-        return view('profile.edit-car', compact('car'));
+        return view('profile.car', compact('car'));
     }
 
     public function destroy(Car $car)

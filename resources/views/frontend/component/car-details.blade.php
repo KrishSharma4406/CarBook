@@ -133,21 +133,20 @@
 
 				</div>
 
-				<div class="mt-4">
-
-					<strong>Fuel Surcharge :</strong>
-
-					₹{{ number_format($car->fuel_surcharge,2) }}
-
-				</div>
-
+                @php
+                    $ride = \App\Models\Ride::where('car_id', $car->id)->first();
+                @endphp
 				<div class="mt-5">
-
-					<a href="{{ route('booking.summary', $car->id) }}"
-						class="btn btn-primary py-3 px-5">
-						Book Now
-					</a>
-
+                    @if($ride)
+                        <a href="{{ route('booking.summary', $ride->id) }}"
+                            class="btn btn-primary py-3 px-5">
+                            Book Now
+                        </a>
+                    @else
+                        <button class="btn btn-primary py-3 px-5" disabled>
+                            Not Available for Booking
+                        </button>
+                    @endif
 				</div>
 
 			</div>

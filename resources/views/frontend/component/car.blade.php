@@ -90,12 +90,19 @@
 
 						</p>
 
+                        @php
+                            $ride = \App\Models\Ride::where('car_id', $car->id)->first();
+                        @endphp
 						<p class="d-flex mb-0 d-block">
-
-							<a href="{{ route('car.show', $car->id) }}"
-								class="btn btn-primary py-2 mr-1">
-								Book Now
-							</a>
+                            @if($ride)
+                                <a href="{{ route('booking.summary', $ride->id) }}" class="btn btn-primary py-2 mr-1">
+                                    Book Now
+                                </a>
+                            @else
+                                <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="pointer-events: none; opacity: 0.6;">
+                                    Book Now
+                                </a>
+                            @endif
 
 							<a href="{{ route('car.show',$car->id) }}"
 								class="btn btn-secondary py-2 ml-1">
