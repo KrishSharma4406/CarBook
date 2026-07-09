@@ -1,6 +1,4 @@
-@extends('frontend.layout.app')
 
-@section('content')
 
 <section class="hero-wrap hero-wrap-2"
     style="background-image:url('{{ asset('UI/images/bg_3.jpg') }}')">
@@ -226,5 +224,3 @@
     </div>
 
 </section>
-
-@endsection

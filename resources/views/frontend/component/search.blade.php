@@ -1,6 +1,4 @@
-@extends('frontend.layout.app')
 
-@section('content')
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');"
     data-stellar-background-ratio="0.5">
@@ -227,5 +225,3 @@
     </div>
 
 </section>
-
-@endsection
