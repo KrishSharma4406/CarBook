@@ -39,32 +39,39 @@
                             </div>
                         @endif
 
+                        @php
+                            $ride = isset($car) ? \App\Models\Ride::where('car_id', $car->id)->first() : null;
+                        @endphp
                         <form action="{{ route('car.save') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @if(isset($car))
+                                <input type="hidden" name="car_id" value="{{ $car->id }}">
+                            @endif
+
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label>Car Name</label>
-                                    <input type="text" name="car_name" class="form-control" value="{{ old('car_name', $car->car_name ?? '') }}">
+                                    <input type="text" name="car_name" class="form-control" value="{{ old('car_name', $car->car_name ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Brand</label>
-                                    <input type="text" name="brand" class="form-control" value="{{ old('brand', $car->brand ?? '') }}">
+                                    <input type="text" name="brand" class="form-control" value="{{ old('brand', $car->brand ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Model</label>
-                                    <input type="text" name="model" class="form-control" value="{{ old('model', $car->model ?? '') }}">
+                                    <input type="text" name="model" class="form-control" value="{{ old('model', $car->model ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Registration No.</label>
-                                    <input type="text" name="registration_number" class="form-control" value="{{ old('registration_number', $car->registration_number ?? '') }}">
+                                    <input type="text" name="registration_number" class="form-control" value="{{ old('registration_number', $car->registration_number ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Manufacturing Year</label>
-                                    <input type="number" name="manufacturing_year" class="form-control" value="{{ old('manufacturing_year', $car->manufacturing_year ?? '') }}">
+                                    <input type="number" name="manufacturing_year" class="form-control" value="{{ old('manufacturing_year', $car->manufacturing_year ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Color</label>
-                                    <input type="text" name="color" class="form-control" value="{{ old('color', $car->color ?? '') }}">
+                                    <input type="text" name="color" class="form-control" value="{{ old('color', $car->color ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Fuel Type</label>
@@ -84,12 +91,31 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Rent Per Day (₹)</label>
-                                    <input type="number" name="rent_per_day" class="form-control" value="{{ old('rent_per_day', $car->rent_per_day ?? '') }}">
+                                    <input type="number" name="rent_per_day" class="form-control" value="{{ old('rent_per_day', $car->rent_per_day ?? '') }}" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label>Car Image</label>
                                     <input type="file" name="image" class="form-control">
                                 </div>
+
+                                <!-- Ride specific fields -->
+                                <div class="col-md-6 mb-3">
+                                    <label>Pickup Location</label>
+                                    <input type="text" name="pickup_location" class="form-control" value="{{ old('pickup_location', $ride->pickup_location ?? '') }}" placeholder="e.g. Airport, City Center" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Destination</label>
+                                    <input type="text" name="destination" class="form-control" value="{{ old('destination', $ride->destination ?? '') }}" placeholder="e.g. Downtown, Hotel" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Travel Date</label>
+                                    <input type="date" name="travel_date" class="form-control" value="{{ old('travel_date', $ride->travel_date ?? '') }}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Travel Time</label>
+                                    <input type="time" name="travel_time" class="form-control" value="{{ old('travel_time', $ride->travel_time ?? '') }}" required>
+                                </div>
+
                                 @if(isset($car) && $car->image)
                                     <div class="col-12 text-center mb-3">
                                         <img src="{{ asset('uploads/cars/'.$car->image) }}" class="img-fluid rounded shadow" style="max-height:220px;">

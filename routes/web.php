@@ -328,13 +328,13 @@ Route::prefix('admin')
             ->name('admin.contact.update');
 
         Route::get('/booking/{car}', [BookingController::class, 'summary'])
-            ->name('booking.summary');
+            ->name('admin.booking.summary');
 
         Route::post('/booking/{car}/confirm', [BookingController::class, 'confirm'])
-            ->name('booking.confirm');
+            ->name('admin.booking.confirm');
 
         Route::get('/booking/success/{booking}', [BookingController::class, 'success'])
-            ->name('booking.success');
+            ->name('admin.booking.success');
     });
 
 Route::get('/cars/{car}', [AdminCarController::class, 'show'])->name('admin.cars.show');
