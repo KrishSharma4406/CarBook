@@ -1,6 +1,4 @@
-@extends('frontend.layout.app')
 
-@section('content')
 
 <style>
 .table th{
@@ -276,5 +274,3 @@ img{
     </div>
 
 </section>
-
-@endsection

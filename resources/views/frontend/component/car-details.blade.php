@@ -1,6 +1,4 @@
-@extends('frontend.layout.app')
 
-@section('content')
 
 <!-- Hero Section -->
 <section class="hero-wrap hero-wrap-2 js-fullheight"
@@ -179,5 +177,3 @@
 
 	</div>
 </section>
-
-@endsection
