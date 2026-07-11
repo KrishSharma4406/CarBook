@@ -216,9 +216,9 @@
                                 @for($i = 1; $i <= 4; $i++)
                                     <div class="row mb-2">
                                         <div class="col-md-4">
-                                            <label>Counter {{ $i }} Number</label>
-                                            <input type="number" name="counter_{{ $i }}_number" class="form-control form-control-sm"
-                                                value="{{ old('counter_'.$i.'_number', $about->{'counter_'.$i.'_number'}) }}">
+                                            <label>Counter {{ $i }} Number <span class="badge badge-info font-weight-normal" style="font-size: 10px;">Auto</span></label>
+                                            <input type="number" name="counter_{{ $i }}_number" class="form-control form-control-sm bg-light"
+                                                value="{{ old('counter_'.$i.'_number', $about->{'counter_'.$i.'_number'}) }}" readonly>
                                         </div>
                                         <div class="col-md-8">
                                             <label>Counter {{ $i }} Label</label>
