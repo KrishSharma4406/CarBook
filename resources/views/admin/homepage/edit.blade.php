@@ -497,11 +497,11 @@
                                     </div>
                                     <div class="card-body py-2">
                                         <div class="form-group mb-2">
-                                            <label>Number</label>
+                                            <label>Number <span class="badge badge-info font-weight-normal" style="font-size: 10px;">Auto-calculated</span></label>
                                             <input type="number" name="counter_{{ $i }}_number"
-                                                class="form-control form-control-sm"
+                                                class="form-control form-control-sm bg-light"
                                                 value="{{ old('counter_'.$i.'_number', $home->{'counter_'.$i.'_number'}) }}"
-                                                placeholder="e.g. 60">
+                                                placeholder="e.g. 60" readonly>
                                         </div>
                                         <div class="form-group mb-0">
                                             <label>Label</label>
