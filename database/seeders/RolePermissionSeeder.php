@@ -45,6 +45,7 @@ class RolePermissionSeeder extends Seeder
             // Pricing
             'pricing.view',
             'pricing.edit',
+            'price.view',
 
             // Contact
             'contact.view',
@@ -65,6 +66,29 @@ class RolePermissionSeeder extends Seeder
             'permissions.create',
             'permissions.edit',
             'permissions.delete',
+
+            // Profile
+            'profile.view',
+            'profile.edit',
+            'profile.delete',
+
+            // Ride Booking
+            'ride-booking.create',
+            'ride-booking.view',
+            'ride-booking.edit',
+            'ride-booking.delete',
+
+            // Booking Summary
+            'booking-summary.view',
+            'booking-summary.create',
+
+            // My Bookings
+            'my-bookings.view',
+            'my-bookings.cancel',
+
+            // Extra Admin Views
+            'forms.view',
+            'tables.view',
         ];
 
         foreach ($permissions as $permission) {
@@ -112,13 +136,46 @@ class RolePermissionSeeder extends Seeder
             'bookings.edit',
 
             'pricing.view',
+            'price.view',
 
             'contact.view',
 
             'feedback.view',
+
+            'forms.view',
+            'tables.view',
         ]);
 
-        // User has no admin permissions
-        $user->syncPermissions([]);
+        // User gets all frontend/interaction permissions
+        $user->syncPermissions([
+            'dashboard.view',
+            
+            'profile.view',
+            'profile.edit',
+            'profile.delete',
+
+            'cars.view',
+            'cars.create',
+            'cars.edit',
+            'cars.delete',
+
+            'rides.view',
+            'rides.create',
+            'rides.edit',
+            'rides.delete',
+
+            'ride-booking.create',
+            'ride-booking.view',
+            'ride-booking.edit',
+            'ride-booking.delete',
+
+            'price.view',
+
+            'booking-summary.view',
+            'booking-summary.create',
+
+            'my-bookings.view',
+            'my-bookings.cancel',
+        ]);
     }
 }

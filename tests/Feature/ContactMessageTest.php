@@ -26,15 +26,16 @@ beforeEach(function () {
         Permission::findOrCreate($permission, 'web');
     }
 
+    // Create Super Admin role
+    $superAdminRole = \Spatie\Permission\Models\Role::findOrCreate('Super Admin', 'web');
+
     // Create an Admin user for auth
     $this->admin = Admin::create([
         'name' => 'Admin User',
         'email' => 'admin_test@example.com',
         'password' => bcrypt('password'),
     ]);
-
-    // Assign permissions to the admin user directly to pass Spatie middleware checks
-    $this->admin->givePermissionTo('contact.view', 'contact.delete');
+    $this->admin->assignRole($superAdminRole);
 });
 
 test('visitors can view contact page', function () {

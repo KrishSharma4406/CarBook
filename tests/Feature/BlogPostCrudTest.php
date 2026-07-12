@@ -33,12 +33,16 @@ beforeEach(function () {
     // Bypass authorization gates during tests
     Gate::before(fn () => true);
 
+    // Create Super Admin role
+    $superAdminRole = \Spatie\Permission\Models\Role::findOrCreate('Super Admin', 'web');
+
     // Create an Admin user for auth
     $this->admin = Admin::create([
         'name' => 'Admin User',
         'email' => 'admin_test@example.com',
         'password' => bcrypt('password'),
     ]);
+    $this->admin->assignRole($superAdminRole);
 });
 
 test('admin can view blog posts index', function () {
