@@ -16,6 +16,19 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            try {
+                if (\Spatie\Permission\Models\Role::where('name', 'User')->exists()) {
+                    $user->assignRole('User');
+                }
+            } catch (\Exception $e) {
+                // Ignore
+            }
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      */

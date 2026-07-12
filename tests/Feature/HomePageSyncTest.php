@@ -7,12 +7,16 @@ use App\Models\BlogPage;
 use App\Models\Admin;
 
 beforeEach(function () {
+    // Create Super Admin role
+    $superAdminRole = \Spatie\Permission\Models\Role::findOrCreate('Super Admin', 'web');
+
     // Create an Admin user for auth
     $this->admin = Admin::create([
         'name' => 'Admin User',
         'email' => 'admin@example.com',
         'password' => bcrypt('password'),
     ]);
+    $this->admin->assignRole($superAdminRole);
 });
 
 test('updating homepage syncs data to other pages', function () {

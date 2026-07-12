@@ -1,6 +1,16 @@
 <?php
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+beforeEach(function () {
+    $userRole = Role::findOrCreate('User', 'web');
+    foreach (['profile.view', 'profile.edit', 'profile.delete'] as $permission) {
+        Permission::findOrCreate($permission, 'web');
+    }
+    $userRole->syncPermissions(['profile.view', 'profile.edit', 'profile.delete']);
+});
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
