@@ -1,9 +1,12 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');"
+	data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
 			<div class="col-md-9 ftco-animate pb-5">
-				<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
+				<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+								class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i
+							class="ion-ios-arrow-forward"></i></span></p>
 				<h1 class="mb-3 bread">Choose Your Car</h1>
 			</div>
 		</div>
@@ -17,143 +20,131 @@
 
 			@forelse($cars as $car)
 
-			<div class="col-md-4">
+				<div class="col-md-4">
 
-				<div class="car-wrap rounded ftco-animate">
+					<div class="car-wrap rounded ftco-animate">
 
-					<div class="img rounded d-flex align-items-end"
-						style="background-image:url('{{ $car->image ? asset('uploads/cars/'.$car->image) : '' }}');">
+						<div class="img rounded d-flex align-items-end"
+							style="background-image:url('{{ $car->image ? asset('uploads/cars/' . $car->image) : '' }}');">
 
-					</div>
+						</div>
 
-					<div class="text">
+						<div class="text">
 
-						<h2 class="mb-0">
+							<h2 class="mb-0">
 
-							<a href="{{ route('car.show',$car->id) }}">
+								<a href="{{ route('car.show', $car->id) }}">
 
-								{{ $car->car_name }}
+									{{ $car->car_name }}
 
-							</a>
+								</a>
 
-						</h2>
+							</h2>
 
-						<div class="d-flex mb-3">
+							<div class="d-flex mb-3">
 
-							<span class="cat">
+								<span class="cat">
 
-								{{ $car->brand }}
+									{{ $car->brand }}
 
-								{{ $car->model }}
+									{{ $car->model }}
 
-							</span>
+								</span>
 
-							<p class="price ml-auto">
+								<p class="price ml-auto">
 
-								₹{{ $car->rent_per_day }}
+									₹{{ $car->rent_per_day }}
 
-								<span>/day</span>
+									<span>/day</span>
+
+								</p>
+
+							</div>
+
+							<p>
+
+								<strong>Owner:</strong>
+
+								{{ $car->user->name }}
+
+							</p>
+
+							<p>
+
+								<strong>Fuel:</strong>
+
+								{{ $car->fuel_type }}
+
+							</p>
+
+							<p>
+
+								<strong>Transmission:</strong>
+
+								{{ $car->transmission }}
+
+							</p>
+
+							<p>
+
+								<strong>Color:</strong>
+
+								{{ $car->color }}
+
+							</p>
+
+							@php
+								$ride = \App\Models\Ride::where('car_id', $car->id)
+									->where('status', 'active')
+									->whereDate('travel_date', '>=', \Carbon\Carbon::today())
+									->first();
+							@endphp
+							<p class="d-flex mb-0 d-block">
+								@if($ride)
+									<a href="{{ route('booking.summary', $ride->id) }}" class="btn btn-primary py-2 mr-1">
+										Book Now
+									</a>
+								@else
+									<a href="#" class="btn btn-primary py-2 mr-1 disabled"
+										style="pointer-events: none; opacity: 0.6;">
+										Book Now
+									</a>
+								@endif
+
+								<a href="{{ route('car.show', $car->id) }}" class="btn btn-secondary py-2 ml-1">
+
+									Details
+
+								</a>
 
 							</p>
 
 						</div>
 
-						<p>
-
-							<strong>Owner:</strong>
-
-							{{ $car->user->name }}
-
-						</p>
-
-						<p>
-
-							<strong>Fuel:</strong>
-
-							{{ $car->fuel_type }}
-
-						</p>
-
-						<p>
-
-							<strong>Transmission:</strong>
-
-							{{ $car->transmission }}
-
-						</p>
-
-						<p>
-
-							<strong>Color:</strong>
-
-							{{ $car->color }}
-
-						</p>
-
-                        @php
-                            $ride = \App\Models\Ride::where('car_id', $car->id)->first();
-                        @endphp
-						<p class="d-flex mb-0 d-block">
-                            @if($ride)
-                                <a href="{{ route('booking.summary', $ride->id) }}" class="btn btn-primary py-2 mr-1">
-                                    Book Now
-                                </a>
-                            @else
-                                <a href="#" class="btn btn-primary py-2 mr-1 disabled" style="pointer-events: none; opacity: 0.6;">
-                                    Book Now
-                                </a>
-                            @endif
-
-							<a href="{{ route('car.show',$car->id) }}"
-								class="btn btn-secondary py-2 ml-1">
-
-								Details
-
-							</a>
-
-						</p>
-
 					</div>
 
 				</div>
 
-			</div>
-
 			@empty
 
-			<div class="col-12 text-center">
+				<div class="col-12 text-center">
 
-				<h3>No Cars Available</h3>
+					<h3>No Cars Available</h3>
 
-			</div>
+				</div>
 
 			@endforelse
 
 		</div>
 
-		<div class="row mt-5">
-
-			<div class="col text-center">
-
-				{{ $cars->links() }}
-
-			</div>
-
-		</div>
-		<div class="row mt-5">
-			<div class="col text-center">
-				<div class="block-27">
-					<ul>
-						<li><a href="#">&lt;</a></li>
-						<li class="active"><span>1</span></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#">&gt;</a></li>
-					</ul>
+		@if($cars->hasPages())
+			<div class="row mt-5">
+				<div class="col text-center">
+					<div class="block-27">
+						{{ $cars->links('pagination::bootstrap-4') }}
+					</div>
 				</div>
 			</div>
-		</div>
+		@endif
 	</div>
 </section>

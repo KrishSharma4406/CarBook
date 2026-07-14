@@ -99,7 +99,7 @@ class RideController extends Controller
     public function index(Request $request)
     {
         $rides = Ride::with('user')
-
+            ->whereDate('travel_date', '>=', \Carbon\Carbon::today())
             ->when($request->pickup_location, function ($q) use ($request) {
 
                 $q->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
@@ -235,7 +235,8 @@ class RideController extends Controller
     public function search(Request $request)
     {
         $query = Ride::with('user')
-            ->where('status', 'active');
+            ->where('status', 'active')
+            ->whereDate('travel_date', '>=', \Carbon\Carbon::today());
 
         if ($request->filled('pickup_location')) {
             $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
@@ -267,7 +268,8 @@ class RideController extends Controller
     public function searchjs(Request $request)
     {
         $query = Ride::with('user')
-            ->where('status', 'active');
+            ->where('status', 'active')
+            ->whereDate('travel_date', '>=', \Carbon\Carbon::today());
 
         if ($request->filled('pickup_location')) {
             $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');

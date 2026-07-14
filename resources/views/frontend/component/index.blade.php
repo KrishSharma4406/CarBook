@@ -166,9 +166,12 @@
     									<li><strong>Owner:</strong> {{ $car->user->name }}</li>
     								</ul>
 
-                                    @php
-                                        $ride = \App\Models\Ride::where('car_id', $car->id)->first();
-                                    @endphp
+                                     @php
+                                         $ride = \App\Models\Ride::where('car_id', $car->id)
+                                             ->where('status', 'active')
+                                             ->whereDate('travel_date', '>=', \Carbon\Carbon::today())
+                                             ->first();
+                                     @endphp
     								<p class="d-flex mb-0">
                                         @if($ride)
                                             <a href="{{ route('booking.summary', $ride->id) }}" class="btn btn-primary py-2 mr-1">
