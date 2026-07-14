@@ -28,7 +28,7 @@
         <div class="card shadow border-0 rounded-lg">
             <div class="card-body py-4">
 
-                <form action="{{ route('rides.index') }}" method="GET">
+                <form id="searchForm">
 
                     <div class="row align-items-end">
 
@@ -40,7 +40,8 @@
 
                             <input
                                 type="text"
-                                name="pickup"
+                                name="pickup_location"
+                                id="pickup_location"
                                 class="form-control"
                                 placeholder="Enter Pickup Location"
                                 value="{{ request('pickup_location') }}">
@@ -55,6 +56,7 @@
                             <input
                                 type="text"
                                 name="destination"
+                                id="destination"
                                 class="form-control"
                                 placeholder="Enter Destination"
                                 value="{{ request('destination') }}">
@@ -69,6 +71,7 @@
                             <input
                                 type="date"
                                 name="travel_date"
+                                id="travel_date"
                                 class="form-control"
                                 value="{{ request('travel_date') }}">
                         </div>
@@ -90,6 +93,7 @@
     </div>
 
     <div class="container">
+    <div id="rideList">
 
         @if($rides->count())
 
@@ -221,6 +225,7 @@
         </div>
 
         @endif
+        </div>
 
     </div>
 

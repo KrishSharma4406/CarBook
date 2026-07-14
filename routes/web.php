@@ -177,6 +177,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/rides/search', [RideController::class, 'search'])
         ->name('rides.search');
 
+    Route::get('/rides/search/js', [RideController::class, 'searchjs'])->name('rides.search.js');
+
     Route::get('/rides/{ride}', [RideController::class, 'show'])
         ->name('rides.show');
 
