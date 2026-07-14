@@ -55,9 +55,25 @@
 
                             </h5>
 
-                            <span class="badge badge-success">
-                                {{ ucfirst($ride->status) }}
-                            </span>
+                            @if($ride->status == 'cancelled')
+                                <span class="badge badge-danger">
+                                    Cancelled
+                                </span>
+                            @elseif(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
+                                @if($ride->bookings()->where('status', 'accepted')->exists())
+                                    <span class="badge badge-info">
+                                        Completed
+                                    </span>
+                                @else
+                                    <span class="badge badge-secondary">
+                                        Ride Not Booked
+                                    </span>
+                                @endif
+                            @else
+                                <span class="badge badge-success">
+                                    {{ ucfirst($ride->status) }}
+                                </span>
+                            @endif
 
                         </div>
 

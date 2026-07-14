@@ -1,9 +1,12 @@
-<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');"
+	data-stellar-background-ratio="0.5">
 	<div class="overlay"></div>
 	<div class="container">
 		<div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
 			<div class="col-md-9 ftco-animate pb-5">
-				<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i class="ion-ios-arrow-forward"></i></span></p>
+				<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+								class="ion-ios-arrow-forward"></i></a></span> <span>Pricing <i
+							class="ion-ios-arrow-forward"></i></span></p>
 				<h1 class="mb-3 bread">
 
 					Rental Pricing
@@ -37,92 +40,90 @@
 
 							@forelse($cars as $car)
 
-							<tr class="text-center">
+										<tr class="text-center">
 
-								<td class="car-image">
-									<div class="img rounded"
-										style="background-image:url('{{ asset('uploads/cars/'.$car->image) }}');
-                    width:180px;
-                    height:120px;
-                    background-size:cover;
-                    background-position:center;">
-									</div>
-								</td>
+											<td class="car-image">
+												<div class="img rounded" style="background-image:url('{{ asset('uploads/cars/' . $car->image) }}');
+								width:180px;
+								height:120px;
+								background-size:cover;
+								background-position:center;">
+												</div>
+											</td>
 
-								<td class="product-name text-left">
+											<td class="product-name text-left">
 
-									<h4 class="mb-2">
-										{{ $car->car_name }}
-									</h4>
+												<h4 class="mb-2">
+													{{ $car->car_name }}
+												</h4>
 
-									<p class="mb-1">
-										<strong>Brand:</strong>
-										{{ $car->brand }}
-									</p>
+												<p class="mb-1">
+													<strong>Brand:</strong>
+													{{ $car->brand }}
+												</p>
 
-									<p class="mb-1">
-										<strong>Model:</strong>
-										{{ $car->model }}
-									</p>
+												<p class="mb-1">
+													<strong>Model:</strong>
+													{{ $car->model }}
+												</p>
 
-									<p class="mb-1">
-										<strong>Fuel:</strong>
-										{{ $car->fuel_type }}
-									</p>
+												<p class="mb-1">
+													<strong>Fuel:</strong>
+													{{ $car->fuel_type }}
+												</p>
 
-									<p class="mb-2">
-										<strong>Transmission:</strong>
-										{{ $car->transmission }}
-									</p>
+												<p class="mb-2">
+													<strong>Transmission:</strong>
+													{{ $car->transmission }}
+												</p>
 
-									<div class="rated">
+												<div class="rated">
 
-										<span class="text-warning">
-											★★★★★
-										</span>
+													<span class="text-warning">
+														★★★★★
+													</span>
 
-									</div>
+												</div>
 
-								</td>
+											</td>
 
-								<td class="price">
+											<td class="price">
 
-									<div class="price-rate mb-3">
+												<div class="price-rate mb-3">
 
-										<h2 class="text-primary">
+													<h2 class="text-primary">
 
-											₹{{ number_format($car->rent_per_day) }}
+														₹{{ number_format($car->rent_per_day) }}
 
-										</h2>
+													</h2>
 
-										<span class="text-muted">
-											Per Day
-										</span>
+													<span class="text-muted">
+														Per Day
+													</span>
 
-									</div>
+												</div>
 
-									<a href="{{ route('car.show',$car->id) }}"
-										class="btn btn-primary px-4 py-2">
+												<a href="{{ route('car.show', $car->id) }}" class="btn btn-primary px-4 py-2">
 
-										Rent Now
+													Rent Now
 
-									</a>
+												</a>
 
-								</td>
+											</td>
 
-							</tr>
+										</tr>
 
 							@empty
 
-							<tr>
+								<tr>
 
-								<td colspan="3" class="text-center py-5">
+									<td colspan="3" class="text-center py-5">
 
-									<h4>No Cars Available</h4>
+										<h4>No Cars Available</h4>
 
-								</td>
+									</td>
 
-							</tr>
+								</tr>
 
 							@endforelse
 

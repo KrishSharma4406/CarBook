@@ -132,7 +132,10 @@
 				</div>
 
                 @php
-                    $ride = \App\Models\Ride::where('car_id', $car->id)->first();
+                    $ride = \App\Models\Ride::where('car_id', $car->id)
+                        ->where('status', 'active')
+                        ->whereDate('travel_date', '>=', \Carbon\Carbon::today())
+                        ->first();
                 @endphp
 				<div class="mt-5">
                     @if($ride)
