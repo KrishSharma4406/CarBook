@@ -23,16 +23,16 @@
         <div class="container-fluid">
 
             @if($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <i class="fas fa-exclamation-circle mr-2"></i>
-                    <strong>Please fix the errors below:</strong>
-                    <ul class="mb-0 mt-2">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-                </div>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <strong>Please fix the errors below:</strong>
+                <ul class="mb-0 mt-2">
+                    @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            </div>
             @endif
 
             <form action="{{ route('admin.about.update') }}" method="POST" enctype="multipart/form-data">
@@ -67,9 +67,9 @@
                                         </div>
                                     </div>
                                     @if($about->hero_background)
-                                        <small class="text-muted mt-1 d-block">
-                                            Current: <a href="{{ asset($about->hero_background) }}" target="_blank">{{ basename($about->hero_background) }}</a>
-                                        </small>
+                                    <small class="text-muted mt-1 d-block">
+                                        Current: <a href="{{ asset($about->hero_background) }}" target="_blank">{{ basename($about->hero_background) }}</a>
+                                    </small>
                                     @endif
                                 </div>
                             </div>
@@ -117,9 +117,9 @@
                                 </div>
                             </div>
                             @if($about->about_image)
-                                <small class="text-muted mt-1 d-block">
-                                    Current: <a href="{{ asset($about->about_image) }}" target="_blank">{{ basename($about->about_image) }}</a>
-                                </small>
+                            <small class="text-muted mt-1 d-block">
+                                Current: <a href="{{ asset($about->about_image) }}" target="_blank">{{ basename($about->about_image) }}</a>
+                            </small>
                             @endif
                         </div>
                     </div>
@@ -167,9 +167,9 @@
                                         </div>
                                     </div>
                                     @if($about->cta_background)
-                                        <small class="text-muted mt-1 d-block">
-                                            Current: <a href="{{ asset($about->cta_background) }}" target="_blank">{{ basename($about->cta_background) }}</a>
-                                        </small>
+                                    <small class="text-muted mt-1 d-block">
+                                        Current: <a href="{{ asset($about->cta_background) }}" target="_blank">{{ basename($about->cta_background) }}</a>
+                                    </small>
                                     @endif
                                 </div>
                             </div>
@@ -215,35 +215,37 @@
                             <div class="card-body">
                                 @for($i = 1; $i <= 4; $i++)
                                     <div class="row mb-2">
-                                        <div class="col-md-4">
-                                            <label>Counter {{ $i }} Number <span class="badge badge-info font-weight-normal" style="font-size: 10px;">Auto</span></label>
-                                            <input type="number" name="counter_{{ $i }}_number" class="form-control form-control-sm bg-light"
-                                                value="{{ old('counter_'.$i.'_number', $about->{'counter_'.$i.'_number'}) }}" readonly>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <label>Counter {{ $i }} Label</label>
-                                            <input type="text" name="counter_{{ $i }}_label" class="form-control form-control-sm"
-                                                value="{{ old('counter_'.$i.'_label', $about->{'counter_'.$i.'_label'}) }}">
-                                        </div>
+                                    <div class="col-md-4">
+                                        <label>Counter {{ $i }} Number <span class="badge badge-info font-weight-normal" style="font-size: 10px;">Auto</span></label>
+                                        <input type="number" name="counter_{{ $i }}_number" class="form-control form-control-sm bg-light"
+                                            step="1"
+                                            min="0"
+                                            value="{{ old('counter_'.$i.'_number', $about->{'counter_'.$i.'_number'}) }}">
                                     </div>
-                                @endfor
+                                    <div class="col-md-8">
+                                        <label>Counter {{ $i }} Label</label>
+                                        <input type="text" name="counter_{{ $i }}_label" class="form-control form-control-sm"
+                                            value="{{ old('counter_'.$i.'_label', $about->{'counter_'.$i.'_label'}) }}">
+                                    </div>
                             </div>
+                            @endfor
                         </div>
                     </div>
                 </div>
-
-                {{-- ===== ACTIONS ===== --}}
-                <div class="card">
-                    <div class="card-body d-flex justify-content-between">
-                        <a href="{{ route('admin.about.index') }}" class="btn btn-default"><i class="fas fa-arrow-left mr-2"></i>Cancel</a>
-                        <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save mr-2"></i>Save Changes</button>
-                    </div>
-                </div>
-
-            </form>
-
         </div>
-    </section>
+
+        {{-- ===== ACTIONS ===== --}}
+        <div class="card">
+            <div class="card-body d-flex justify-content-between">
+                <a href="{{ route('admin.about.index') }}" class="btn btn-default"><i class="fas fa-arrow-left mr-2"></i>Cancel</a>
+                <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save mr-2"></i>Save Changes</button>
+            </div>
+        </div>
+
+        </form>
+
+</div>
+</section>
 </div>
 @endsection
 

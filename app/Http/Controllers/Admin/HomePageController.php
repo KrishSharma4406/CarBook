@@ -161,13 +161,13 @@ class HomePageController extends Controller
             'blog_title' => 'nullable|string|max:255',
 
             // Counters
-            'counter_1_number' => 'nullable|integer',
+            'counter_1_number' => 'nullable|numeric',
             'counter_1_label' => 'nullable|string|max:255',
-            'counter_2_number' => 'nullable|integer',
+            'counter_2_number' => 'nullable|numeric',
             'counter_2_label' => 'nullable|string|max:255',
-            'counter_3_number' => 'nullable|integer',
+            'counter_3_number' => 'nullable|numeric',
             'counter_3_label' => 'nullable|string|max:255',
-            'counter_4_number' => 'nullable|integer',
+            'counter_4_number' => 'nullable|numeric',
             'counter_4_label' => 'nullable|string|max:255',
 
             // Rent Steps
