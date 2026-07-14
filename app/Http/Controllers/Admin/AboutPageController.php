@@ -56,13 +56,13 @@ class AboutPageController extends Controller
             'cta_background'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'testimonial_subtitle' => 'nullable|string|max:255',
             'testimonial_title'    => 'nullable|string|max:255',
-            'counter_1_number'     => 'nullable|integer',
+            'counter_1_number'     => 'nullable|numeric',
             'counter_1_label'      => 'nullable|string|max:255',
-            'counter_2_number'     => 'nullable|integer',
+            'counter_2_number'     => 'nullable|numeric',
             'counter_2_label'      => 'nullable|string|max:255',
-            'counter_3_number'     => 'nullable|integer',
+            'counter_3_number'     => 'nullable|numeric',
             'counter_3_label'      => 'nullable|string|max:255',
-            'counter_4_number'     => 'nullable|integer',
+            'counter_4_number'     => 'nullable|numeric',
             'counter_4_label'      => 'nullable|string|max:255',
         ]);
 

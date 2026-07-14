@@ -146,13 +146,14 @@ class RideController extends Controller
         $completedRides = Ride::where('user_id', $user->id)
             ->where('status', 'completed')
             ->count();
+            $pendingRequests = null;
 
-        $pendingRequests = RideBooking::whereHas('ride', function ($query) use ($user) {
+        // $pendingRequests = RideBooking::whereHas('ride', function ($query) use ($user) {
 
-            $query->where('user_id', $user->id);
-        })
-            ->where('status', 'pending')
-            ->count();
+        //     $query->where('user_id', $user->id);
+        // })
+        //     ->where('status', 'pending')
+        //     ->count();
 
         $recentRides = Ride::where('user_id', $user->id)
             ->latest()
