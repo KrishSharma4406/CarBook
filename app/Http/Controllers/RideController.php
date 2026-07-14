@@ -12,31 +12,31 @@ use App\Models\Car;
 class RideController extends Controller
 {
     public function __construct()
-{
-    $this->middleware('permission:rides.view')->only([
-        'index',
-        'myRides',
-        'show'
-    ]);
+    {
+        $this->middleware('permission:rides.view')->only([
+            'index',
+            'myRides',
+            'show'
+        ]);
 
-    $this->middleware('permission:rides.create')->only([
-        'create',
-        'store'
-    ]);
+        $this->middleware('permission:rides.create')->only([
+            'create',
+            'store'
+        ]);
 
-    $this->middleware('permission:rides.edit')->only([
-        'edit',
-        'update'
-    ]);
+        $this->middleware('permission:rides.edit')->only([
+            'edit',
+            'update'
+        ]);
 
-    $this->middleware('permission:rides.delete')->only([
-        'destroy'
-    ]);
+        $this->middleware('permission:rides.delete')->only([
+            'destroy'
+        ]);
 
-    $this->middleware('permission:dashboard.view')->only([
-        'dashboard'
-    ]);
-}
+        $this->middleware('permission:dashboard.view')->only([
+            'dashboard'
+        ]);
+    }
 
     public function create()
     {
@@ -100,9 +100,9 @@ class RideController extends Controller
     {
         $rides = Ride::with('user')
 
-            ->when($request->pickup, function ($q) use ($request) {
+            ->when($request->pickup_location, function ($q) use ($request) {
 
-                $q->where('pickup_location', 'LIKE', '%' . $request->pickup . '%');
+                $q->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
             })
 
             ->when($request->destination, function ($q) use ($request) {
@@ -121,7 +121,7 @@ class RideController extends Controller
 
             ->get();
 
-        return view('frontend.webviews.view-rides', compact('rides'));
+        return view('frontend.webviews.search', compact('rides'));
     }
 
     public function myRides()
@@ -146,7 +146,7 @@ class RideController extends Controller
         $completedRides = Ride::where('user_id', $user->id)
             ->where('status', 'completed')
             ->count();
-            $pendingRequests = null;
+        $pendingRequests = null;
 
         // $pendingRequests = RideBooking::whereHas('ride', function ($query) use ($user) {
 
@@ -262,5 +262,40 @@ class RideController extends Controller
         $rides = $query->get();
 
         return view('frontend.webviews.search', compact('rides'));
+    }
+
+    public function searchjs(Request $request)
+    {
+        $query = Ride::with('user')
+            ->where('status', 'active');
+
+        if ($request->filled('pickup_location')) {
+            $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
+        }
+
+        if ($request->filled('destination')) {
+            $query->where('destination', 'LIKE', '%' . $request->destination . '%');
+        }
+
+        if ($request->filled('travel_date')) {
+            $date = Carbon::parse($request->travel_date)->format('Y-m-d');
+            $query->whereDate('travel_date', $date);
+        }
+
+        if ($request->filled('travel_time')) {
+            try {
+                $time = Carbon::parse($request->travel_time)->format('H:i:s');
+                $query->whereTime('travel_time', $time);
+            } catch (\Exception $e) {
+                $query->whereTime('travel_time', $request->travel_time);
+            }
+        }
+
+        $rides = $query->latest()->get();
+
+        return response()->json([
+            'status' => true,
+            'rides' => $rides
+        ]);
     }
 }

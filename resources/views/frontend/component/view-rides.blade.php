@@ -45,10 +45,10 @@
 
                     <input
                         type="text"
-                        name="pickup"
+                        name="pickup_location"
                         class="form-control"
                         placeholder="Pickup"
-                        value="{{ request('pickup') }}">
+                        value="{{ request('pickup_location') }}">
 
                 </div>
 
