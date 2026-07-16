@@ -61,6 +61,10 @@
                             `;
                         }
 
+                        let durationHtml = ride.duration 
+                            ? `<span class="badge badge-warning text-dark px-2 py-1 ml-3" style="font-size: 12px; font-weight: 600;"><i class="fa fa-clock-o mr-1"></i>${ride.duration}</span>` 
+                            : '';
+
                         html += `
 <div class="card shadow-lg border-0 rounded mb-4">
     <div class="card-body p-4">
@@ -74,15 +78,20 @@
                 <h6 class="mt-2 mb-0">${ride.user.name}</h6>
             </div>
             <div class="col-md-5">
-                <h5 class="font-weight-bold">
-                    ${ride.pickup_location}
-                    <span class="text-success px-2">→</span>
-                    ${ride.destination}
-                </h5>
-                <p class="mb-1">
-                    <i class="fa fa-calendar text-primary"></i>
-                    ${formattedDate}
-                </p>
+                <div class="route-line mb-3">
+                    <span class="route-city">${ride.pickup_location}</span>
+                    <span class="route-dot"></span>
+                    <span class="route-dash"></span>
+                    <span class="route-dot"></span>
+                    <span class="route-city">${ride.destination}</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span>
+                        <i class="fa fa-calendar text-primary mr-1"></i>
+                        ${formattedDate}
+                    </span>
+                    ${durationHtml}
+                </div>
             </div>
             <div class="col-md-2 text-center">
                 <h4 class="text-success">₹${ride.fare}</h4>
@@ -107,7 +116,6 @@
 
                     html = `
 <div class="text-center py-5">
-    <img src="{{ asset('frontend/images/no-data.png') }}" width="220">
     <h3 class="mt-4">No Rides Found</h3>
     <p class="text-muted">Try changing the pickup, destination or date.</p>
 </div>

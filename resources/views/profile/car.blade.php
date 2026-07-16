@@ -111,6 +111,10 @@
                                     <label>Travel Date</label>
                                     <input type="date" name="travel_date" class="form-control" min="{{ date('Y-m-d') }}" value="{{ old('travel_date', $ride->travel_date ?? '') }}" required>
                                 </div>
+                                <div class="col-md-6 mb-3">
+                                    <label>Duration (e.g., 2h30)</label>
+                                    <input type="text" name="duration" class="form-control" value="{{ old('duration', $ride->duration ?? '') }}" placeholder="e.g. 2h30">
+                                </div>
 
                                 @if(isset($car) && $car->image)
                                     <div class="col-12 text-center mb-3">

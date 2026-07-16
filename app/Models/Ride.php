@@ -22,6 +22,8 @@ class Ride extends Model
 
         'travel_date',
 
+        'duration',
+
         'available_seats',
 
         'fare',
