@@ -61,32 +61,13 @@
                                 @enderror
                             </div>
 
-                            <div class="row">
-
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        <label>Date</label>
-                                        <input type="date"
-                                            name="travel_date"
-                                            class="form-control"
-                                            value="{{ old('travel_date') }}">
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                    <div class="form-group">
-                                        <label>Time</label>
-                                        <input type="time"
-                                            name="travel_time"
-                                            class="form-control"
-                                            value="{{ old('travel_time') }}">
-                                    </div>
-
-                                </div>
-
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date"
+                                    name="travel_date"
+                                    class="form-control"
+                                    min="{{ date('Y-m-d') }}"
+                                    value="{{ old('travel_date') }}">
                             </div>
 
                             <div class="row">

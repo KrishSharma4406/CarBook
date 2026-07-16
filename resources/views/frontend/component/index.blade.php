@@ -50,25 +50,14 @@
     									placeholder="City, Airport, Station, etc">
     							</div>
 
-								<div class="d-flex">
-									<div class="form-group mr-2 w-100">
-										<label class="label">Pick-up date</label>
-										<input type="text"
-											name="travel_date"
-											class="form-control"
-											id="book_pick_date"
-											placeholder="Date">
-									</div>
-									<div class="form-group ml-2 w-100">
-										<label class="label">Pick-up time</label>
-										<input type="text"
-											name="travel_time"
-											class="form-control"
-											id="time_pick"
-											placeholder="Time"
-											required>
-									</div>
-								</div>
+    							<div class="form-group">
+    								<label class="label">Pick-up date</label>
+    								<input type="text"
+    									name="travel_date"
+    									class="form-control"
+    									id="book_pick_date"
+    									placeholder="Date">
+    							</div>
 
 								<div class="form-group">
 									<input type="submit"

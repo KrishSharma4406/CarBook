@@ -36,7 +36,6 @@
                         <th>Passenger</th>
                         <th>Ride</th>
                         <th>Date</th>
-                        <th>Time</th>
                         <th>Seats</th>
                         <th>Status</th>
                         <th width="220">Action</th>
@@ -66,8 +65,6 @@
                         </td>
 
                         <td>{{ $booking->ride->travel_date }}</td>
-
-                        <td>{{ $booking->ride->travel_time }}</td>
 
                         <td>{{ $booking->seats }}</td>
 

@@ -89,15 +89,6 @@
                         </p>
 
                         <p>
-                            <i class="fa fa-clock text-success mr-2"></i>
-
-                            <strong>Time:</strong>
-
-                            {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
-
-                        </p>
-
-                        <p>
                             <i class="fa fa-users text-success mr-2"></i>
 
                             <strong>Seats:</strong>

@@ -49,7 +49,6 @@ class CarController extends Controller
             'pickup_location' => 'required|string|max:255',
             'destination' => 'required|string|max:255',
             'travel_date' => 'required|date',
-            'travel_time' => 'required',
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
@@ -62,7 +61,7 @@ class CarController extends Controller
             $car->user_id = Auth::id();
         }
 
-        $car->fill($request->except(['image', 'car_id', 'pickup_location', 'destination', 'travel_date', 'travel_time']));
+        $car->fill($request->except(['image', 'car_id', 'pickup_location', 'destination', 'travel_date']));
 
         if ($request->hasFile('image')) {
             // Delete old image if updating and new image uploaded
@@ -87,7 +86,6 @@ class CarController extends Controller
                 'pickup_location' => $request->pickup_location,
                 'destination' => $request->destination,
                 'travel_date' => $request->travel_date,
-                'travel_time' => $request->travel_time,
                 'available_seats' => 4,
                 'fare' => $car->rent_per_day,
                 'vehicle_name' => $car->brand . ' ' . $car->model,

@@ -89,14 +89,6 @@ img{
 
                             <div class="col-md-6 mb-3">
 
-                                <strong>Departure Time</strong><br>
-
-                                {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
-
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-
                                 <strong>Seats Available</strong><br>
 
                                 {{ $ride->available_seats }}
@@ -256,12 +248,19 @@ img{
 
                         </p>
 
-                        <a href="{{ route('booking.summary',$ride->id) }}"
-                            class="btn btn-success btn-block btn-lg">
+                        @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
+                            <button class="btn btn-secondary btn-block btn-lg" disabled>
+                                <i class="fa fa-ban mr-1"></i> Ride Expired
+                            </button>
+                            <p class="text-muted mt-2 small">This ride's date has already passed.</p>
+                        @else
+                            <a href="{{ route('booking.summary',$ride->id) }}"
+                                class="btn btn-success btn-block btn-lg">
 
-                            Book This Ride
+                                Book This Ride
 
-                        </a>
+                            </a>
+                        @endif
 
                     </div>
 

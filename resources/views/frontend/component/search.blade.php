@@ -1,5 +1,3 @@
-
-
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');"
     data-stellar-background-ratio="0.5">
 
@@ -73,6 +71,7 @@
                                 name="travel_date"
                                 id="travel_date"
                                 class="form-control"
+                                min="{{ date('Y-m-d') }}"
                                 value="{{ request('travel_date') }}">
                         </div>
 
@@ -93,140 +92,133 @@
     </div>
 
     <div class="container">
-    <div id="rideList">
+        <div id="rideList">
 
-        @if($rides->count())
+            @if($rides->count())
 
-        @foreach($rides as $ride)
+                @foreach($rides as $ride)
 
-        <div class="card shadow-lg border-0 rounded mb-4">
+                    <div class="card shadow-lg border-0 rounded mb-4">
 
-            <div class="card-body p-4">
+                        <div class="card-body p-4">
 
-                <div class="row align-items-center">
+                            <div class="row align-items-center">
 
-                    <div class="col-md-2 text-center">
+                                <div class="col-md-2 text-center">
 
-                        @php
-                        $filename = $ride->user->profile_image ?? 'default.png';
-                        @endphp
+                                    @php
+                                    $filename = $ride->user->profile_image ?? 'default.png';
+                                    @endphp
 
-                        <img src="{{ asset('uploads/profileimages/' . $filename) }}"
-                            alt="{{ $ride->user->name ?? 'User' }}"
-                            class="rounded-circle shadow mb-2"
-                            width="80"
-                            height="80"
-                            style="object-fit:cover;border:2px solid #ddd;">
+                                    <img src="{{ asset('uploads/profileimages/' . $filename) }}"
+                                        alt="{{ $ride->user->name ?? 'User' }}"
+                                        class="rounded-circle shadow mb-2"
+                                        width="80"
+                                        height="80"
+                                        style="object-fit:cover;border:2px solid #ddd;">
 
-                        <h6 class="mt-2 mb-0">
-                            {{ $ride->user->name }}
-                        </h6>
+                                    <h6 class="mt-2 mb-0">
+                                        {{ $ride->user->name }}
+                                    </h6>
+
+                                </div>
+
+                                <div class="col-md-5">
+
+                                    <h5 class="font-weight-bold">
+
+                                        {{ $ride->pickup_location }}
+
+                                        <span class="text-success px-2">
+                                            →
+                                        </span>
+
+                                        {{ $ride->destination }}
+
+                                    </h5>
+
+                                    <p class="mb-1">
+
+                                        <i class="fa fa-calendar text-primary"></i>
+
+                                        {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
+
+                                    </p>
+
+                                </div>
+
+                                <div class="col-md-2 text-center">
+
+                                    <h4 class="text-success">
+
+                                        ₹{{ $ride->fare }}
+
+                                    </h4>
+
+                                    <small>per seat</small>
+
+                                </div>
+
+                                <div class="col-md-1 text-center">
+
+                                    <span class="badge badge-primary p-2">
+
+                                        {{ $ride->available_seats }}
+
+                                        Seats
+
+                                    </span>
+
+                                </div>
+
+                                <div class="col-md-2 text-center">
+
+                                    @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
+                                        <button class="btn btn-secondary btn-block" disabled>
+                                            <i class="fa fa-ban mr-1"></i> Ride Expired
+                                        </button>
+                                    @else
+                                        <a href="{{ route('rides.show', $ride->id) }}" class="btn btn-primary btn-block">
+                                            View Ride
+                                        </a>
+                                    @endif
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-                    <div class="col-md-5">
+                @endforeach
 
-                        <h5 class="font-weight-bold">
+            @else
 
-                            {{ $ride->pickup_location }}
+                <div class="text-center py-5">
 
-                            <span class="text-success px-2">
-                                →
-                            </span>
+                    <h3 class="mt-4">
 
-                            {{ $ride->destination }}
+                        No Rides Found
 
-                        </h5>
+                    </h3>
 
-                        <p class="mb-1">
+                    <p class="text-muted">
 
-                            <i class="fa fa-calendar text-primary"></i>
+                        Try changing the pickup, destination or date.
 
-                            {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
+                    </p>
 
-                        </p>
+                    <a href="{{ route('home') }}" class="btn btn-primary">
 
-                        <p class="mb-1">
+                        Search Again
 
-                            <i class="fa fa-clock text-primary"></i>
-
-                            {{ date('h:i A', strtotime($ride->travel_time)) }}
-
-                        </p>
-
-                    </div>
-
-                    <div class="col-md-2 text-center">
-
-                        <h4 class="text-success">
-
-                            ₹{{ $ride->fare }}
-
-                        </h4>
-
-                        <small>per seat</small>
-
-                    </div>
-
-                    <div class="col-md-1 text-center">
-
-                        <span class="badge badge-primary p-2">
-
-                            {{ $ride->available_seats }}
-
-                            Seats
-
-                        </span>
-
-                    </div>
-
-                    <div class="col-md-2 text-center">
-
-                        <a href="{{ route('rides.show', $ride->id) }}" class="btn btn-primary btn-block">
-
-                            View Ride
-
-                        </a>
-
-                    </div>
+                    </a>
 
                 </div>
 
-            </div>
-
+            @endif
         </div>
-
-        @endforeach
-
-        @else
-
-        <div class="text-center py-5">
-
-            <img src="{{ asset('frontend/images/no-data.png') }}" width="220">
-
-            <h3 class="mt-4">
-
-                No Rides Found
-
-            </h3>
-
-            <p class="text-muted">
-
-                Try changing the pickup, destination or date.
-
-            </p>
-
-            <a href="{{ route('home') }}" class="btn btn-primary">
-
-                Search Again
-
-            </a>
-
-        </div>
-
-        @endif
-        </div>
-
     </div>
 
 </section>

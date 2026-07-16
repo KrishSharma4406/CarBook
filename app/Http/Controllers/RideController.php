@@ -57,9 +57,7 @@ class RideController extends Controller
 
             'destination' => 'required',
 
-            'travel_date' => 'required|date',
-
-            'travel_time' => 'required',
+            'travel_date' => 'required|date|after_or_equal:today',
 
             'available_seats' => 'required|integer|min:1|max:8',
 
@@ -76,7 +74,6 @@ class RideController extends Controller
             'destination' => $request->destination,
 
             'travel_date' => $request->travel_date,
-            'travel_time' => $request->travel_time,
 
             'available_seats' => $request->available_seats,
 
@@ -199,8 +196,7 @@ class RideController extends Controller
         $request->validate([
             'pickup_location' => 'required',
             'destination' => 'required',
-            'travel_date' => 'required|date',
-            'travel_time' => 'required',
+            'travel_date' => 'required|date|after_or_equal:today',
             'available_seats' => 'required|integer|min:1|max:8',
             'fare' => 'required|numeric|min:0',
             'car_id' => 'required|exists:cars,id',
@@ -251,15 +247,6 @@ class RideController extends Controller
             $query->whereDate('travel_date', $date);
         }
 
-        if ($request->filled('travel_time')) {
-            try {
-                $time = Carbon::parse($request->travel_time)->format('H:i:s');
-                $query->whereTime('travel_time', $time);
-            } catch (\Exception $e) {
-                $query->whereTime('travel_time', $request->travel_time);
-            }
-        }
-
         $rides = $query->get();
 
         return view('frontend.webviews.search', compact('rides'));
@@ -282,15 +269,6 @@ class RideController extends Controller
         if ($request->filled('travel_date')) {
             $date = Carbon::parse($request->travel_date)->format('Y-m-d');
             $query->whereDate('travel_date', $date);
-        }
-
-        if ($request->filled('travel_time')) {
-            try {
-                $time = Carbon::parse($request->travel_time)->format('H:i:s');
-                $query->whereTime('travel_time', $time);
-            } catch (\Exception $e) {
-                $query->whereTime('travel_time', $request->travel_time);
-            }
         }
 
         $rides = $query->latest()->get();

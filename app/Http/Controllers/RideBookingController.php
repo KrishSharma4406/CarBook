@@ -41,6 +41,11 @@ class RideBookingController extends Controller
             return back()->with('error', 'You cannot book your own ride.');
         }
 
+        // Ride date must not have passed
+        if (\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today())) {
+            return back()->with('error', 'This ride has already passed and cannot be booked.');
+        }
+
         // Ride must be active
         if ($ride->status != 'active') {
             return back()->with('error', 'This ride is no longer available.');

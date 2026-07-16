@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ride extends Model
 {
+    protected $attributes = [
+        'travel_time' => '00:00:00',
+    ];
+
     protected $fillable = [
 
         'user_id',
@@ -17,8 +21,6 @@ class Ride extends Model
         'destination',
 
         'travel_date',
-
-        'travel_time',
 
         'available_seats',
 
