@@ -63,6 +63,8 @@ class RideController extends Controller
 
             'fare' => 'required|numeric|min:0',
 
+            'duration' => 'nullable|string|max:255',
+
             'description' => 'nullable'
         ]);
 
@@ -78,6 +80,8 @@ class RideController extends Controller
             'available_seats' => $request->available_seats,
 
             'fare' => $request->fare,
+
+            'duration' => $request->duration,
 
             'vehicle_name' => $car->brand . ' ' . $car->model,
 
@@ -200,6 +204,7 @@ class RideController extends Controller
             'available_seats' => 'required|integer|min:1|max:8',
             'fare' => 'required|numeric|min:0',
             'car_id' => 'required|exists:cars,id',
+            'duration' => 'nullable|string|max:255',
             'description' => 'nullable',
         ]);
 

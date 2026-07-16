@@ -61,13 +61,30 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
-                                <label>Date</label>
-                                <input type="date"
-                                    name="travel_date"
-                                    class="form-control"
-                                    min="{{ date('Y-m-d') }}"
-                                    value="{{ old('travel_date') }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Date</label>
+                                        <input type="date"
+                                            name="travel_date"
+                                            class="form-control"
+                                            min="{{ date('Y-m-d') }}"
+                                            value="{{ old('travel_date') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Duration (e.g., 2h30)</label>
+                                        <input type="text"
+                                            name="duration"
+                                            class="form-control"
+                                            value="{{ old('duration') }}"
+                                            placeholder="e.g. 2h30">
+                                        @error('duration')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row">

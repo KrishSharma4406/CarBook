@@ -1,3 +1,35 @@
+<style>
+    .route-line {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .route-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid #1a1a2e;
+        flex-shrink: 0;
+    }
+    .route-dash {
+        flex: 1;
+        height: 2px;
+        background: repeating-linear-gradient(
+            to right,
+            #c0c0c0 0px,
+            #c0c0c0 6px,
+            transparent 6px,
+            transparent 10px
+        );
+        position: relative;
+    }
+    .route-city {
+        font-weight: 700;
+        font-size: 16px;
+        color: #1a1a2e;
+    }
+</style>
+
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('{{ asset('UI') }}/images/bg_3.jpg');"
     data-stellar-background-ratio="0.5">
 
@@ -125,25 +157,26 @@
 
                                 <div class="col-md-5">
 
-                                    <h5 class="font-weight-bold">
+                                    <div class="route-line mb-3">
+                                        <span class="route-city">{{ $ride->pickup_location }}</span>
+                                        <span class="route-dot"></span>
+                                        <span class="route-dash"></span>
+                                        <span class="route-dot"></span>
+                                        <span class="route-city">{{ $ride->destination }}</span>
+                                    </div>
 
-                                        {{ $ride->pickup_location }}
-
-                                        <span class="text-success px-2">
-                                            →
+                                    <div class="d-flex align-items-center">
+                                        <span class="mr-3">
+                                            <i class="fa fa-calendar text-primary mr-1"></i>
+                                            {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
                                         </span>
-
-                                        {{ $ride->destination }}
-
-                                    </h5>
-
-                                    <p class="mb-1">
-
-                                        <i class="fa fa-calendar text-primary"></i>
-
-                                        {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
-
-                                    </p>
+                                        @if($ride->duration)
+                                            <span class="badge badge-warning text-dark px-2 py-1" style="font-size: 12px; font-weight: 600;">
+                                                <i class="fa fa-clock-o mr-1"></i>
+                                                {{ $ride->duration }}
+                                            </span>
+                                        @endif
+                                    </div>
 
                                 </div>
 
