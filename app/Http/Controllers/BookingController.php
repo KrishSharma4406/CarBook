@@ -34,6 +34,11 @@ class BookingController extends Controller
      */
     public function summary(Ride $ride)
     {
+        // Block booking if the ride date has passed
+        if (\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today())) {
+            return back()->with('error', 'This ride has already passed and cannot be booked.');
+        }
+
         if ($ride->user_id == auth()->id()) {
             return back()->with('error', 'You cannot book your own ride.');
         }

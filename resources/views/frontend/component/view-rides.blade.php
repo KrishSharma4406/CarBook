@@ -69,6 +69,7 @@
                         type="date"
                         name="travel_date"
                         class="form-control"
+                        min="{{ date('Y-m-d') }}"
                         value="{{ request('travel_date') }}">
 
                 </div>
@@ -127,14 +128,6 @@
 
                         <p>
 
-                            <strong>Time:</strong>
-
-                            {{ $ride->travel_time }}
-
-                        </p>
-
-                        <p>
-
                             <strong>Vehicle:</strong>
 
                             {{ $ride->vehicle_name }}
@@ -177,12 +170,18 @@
 
                         @endif
 
-                        <a href="{{ route('booking.summary', $ride->id) }}"
-                            class="btn btn-success btn-block">
+                        @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
+                            <button class="btn btn-secondary btn-block" disabled>
+                                <i class="fa fa-ban mr-1"></i> Ride Expired
+                            </button>
+                        @else
+                            <a href="{{ route('booking.summary', $ride->id) }}"
+                                class="btn btn-success btn-block">
 
-                            Book This Ride
+                                Book This Ride
 
-                        </a>
+                            </a>
+                        @endif
 
                     </div>
 

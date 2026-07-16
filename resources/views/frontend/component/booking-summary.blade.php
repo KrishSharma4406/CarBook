@@ -110,20 +110,6 @@
 
                                 <p>
 
-                                    <strong>Departure Time</strong>
-
-                                    <br>
-
-                                    {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
-
-                                </p>
-
-                            </div>
-
-                            <div class="col-md-6">
-
-                                <p>
-
                                     <strong>Available Seats</strong>
 
                                     <br>
@@ -198,6 +184,14 @@
 
                     <div class="card-body">
 
+                        @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
+                            <div class="text-center py-4">
+                                <i class="fa fa-ban fa-3x text-danger mb-3"></i>
+                                <h5 class="text-danger">Ride Expired</h5>
+                                <p class="text-muted">This ride's date has already passed and cannot be booked.</p>
+                                <a href="{{ route('rides.index') }}" class="btn btn-primary">Browse Available Rides</a>
+                            </div>
+                        @else
                         <form action="{{ route('booking.confirm',$ride->id) }}" method="POST">
 
                             @csrf
@@ -246,6 +240,7 @@
                             </button>
 
                         </form>
+                        @endif
 
                     </div>
 

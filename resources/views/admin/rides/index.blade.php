@@ -70,8 +70,6 @@
 
                                 <th>Date</th>
 
-                                <th>Time</th>
-
                                 <th>Fare</th>
 
                                 <th>Seats</th>
@@ -160,11 +158,6 @@
 
                                 </td>
 
-                                <td>
-
-                                    {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
-
-                                </td>
 
                                 <td>
 

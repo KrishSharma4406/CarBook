@@ -197,18 +197,6 @@
 
                                         </tr>
 
-                                        <tr>
-
-                                            <th>Time</th>
-
-                                            <td>
-
-                                                {{ \Carbon\Carbon::parse($ride->travel_time)->format('h:i A') }}
-
-                                            </td>
-
-                                        </tr>
-
                                     </table>
 
                                 </div>

@@ -308,18 +308,6 @@
 
                                         </tr>
 
-                                        <tr>
-
-                                            <th>Time</th>
-
-                                            <td>
-
-                                                {{ \Carbon\Carbon::parse($booking->ride->travel_time)->format('h:i A') }}
-
-                                            </td>
-
-                                        </tr>
-
                                     </table>
 
                                 </div>
