@@ -46,10 +46,6 @@ class CarController extends Controller
             'transmission' => 'required',
             'color' => 'required',
             'rent_per_day' => 'required|numeric',
-            'pickup_location' => 'required|string|max:255',
-            'destination' => 'required|string|max:255',
-            'travel_date' => 'required|date',
-            'duration' => 'nullable|string|max:255',
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
@@ -62,7 +58,7 @@ class CarController extends Controller
             $car->user_id = Auth::id();
         }
 
-        $car->fill($request->except(['image', 'car_id', 'pickup_location', 'destination', 'travel_date', 'duration']));
+        $car->fill($request->except(['image', 'car_id']));
 
         if ($request->hasFile('image')) {
             // Delete old image if updating and new image uploaded
@@ -79,22 +75,14 @@ class CarController extends Controller
 
         $car->save();
 
-        // Create or update corresponding active ride
-        \App\Models\Ride::updateOrCreate(
-            ['car_id' => $car->id],
-            [
-                'user_id' => $car->user_id,
-                'pickup_location' => $request->pickup_location,
-                'destination' => $request->destination,
-                'travel_date' => $request->travel_date,
-                'duration' => $request->duration,
-                'available_seats' => 4,
+        // If there are existing rides for this car, sync the vehicle details
+        if ($carId) {
+            \App\Models\Ride::where('car_id', $car->id)->update([
                 'fare' => $car->rent_per_day,
                 'vehicle_name' => $car->brand . ' ' . $car->model,
                 'vehicle_number' => $car->registration_number,
-                'status' => 'active'
-            ]
-        );
+            ]);
+        }
 
         return redirect()
             ->route('profile.edit')
