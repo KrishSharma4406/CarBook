@@ -39,9 +39,6 @@
                             </div>
                         @endif
 
-                        @php
-                            $ride = isset($car) ? \App\Models\Ride::where('car_id', $car->id)->first() : null;
-                        @endphp
                         <form action="{{ route('car.save') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @if(isset($car))
@@ -96,24 +93,6 @@
                                 <div class="col-md-6 mb-3">
                                     <label>Car Image</label>
                                     <input type="file" name="image" class="form-control">
-                                </div>
-
-                                <!-- Ride specific fields -->
-                                <div class="col-md-6 mb-3">
-                                    <label>Pickup Location</label>
-                                    <input type="text" name="pickup_location" class="form-control" value="{{ old('pickup_location', $ride->pickup_location ?? '') }}" placeholder="e.g. Airport, City Center" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Destination</label>
-                                    <input type="text" name="destination" class="form-control" value="{{ old('destination', $ride->destination ?? '') }}" placeholder="e.g. Downtown, Hotel" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Travel Date</label>
-                                    <input type="date" name="travel_date" class="form-control" min="{{ date('Y-m-d') }}" value="{{ old('travel_date', $ride->travel_date ?? '') }}" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label>Duration (e.g., 2h30)</label>
-                                    <input type="text" name="duration" class="form-control" value="{{ old('duration', $ride->duration ?? '') }}" placeholder="e.g. 2h30">
                                 </div>
 
                                 @if(isset($car) && $car->image)
