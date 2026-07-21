@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Ride;
 use App\Models\RideBooking;
+use App\Models\ChatConversation;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -96,5 +97,25 @@ public function rideBookings()
         }
 
         return '/UI/images/person_1.jpg';
+    }
+
+    public function chatConversations()
+    {
+        return ChatConversation::where('offerer_id', $this->id)
+            ->orWhere('booker_id', $this->id);
+    }
+
+    public function unreadChatCount()
+    {
+        $conversations = ChatConversation::where('offerer_id', $this->id)
+            ->orWhere('booker_id', $this->id)
+            ->get();
+
+        $count = 0;
+        foreach ($conversations as $conversation) {
+            $count += $conversation->unreadCount($this->id);
+        }
+
+        return $count;
     }
 }

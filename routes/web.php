@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\AboutPageController;
 use App\Http\Controllers\Admin\ServicesPageController;
 use App\Http\Controllers\Admin\BlogPageController;
 use App\Http\Controllers\Admin\ContactPageController;
+use App\Http\Controllers\ChatController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -200,6 +201,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking/{booking}/cancel',[BookingController::class, 'cancel']
     )
         ->name('booking.cancel');
+
+    // Chat Routes
+    Route::get('/chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat/start/{rideBooking}', [ChatController::class, 'startConversation'])->name('chat.start');
+    Route::get('/chat/search', [ChatController::class, 'searchConversations'])->name('chat.search');
+    Route::get('/chat/unread-count', [ChatController::class, 'unreadCount'])->name('chat.unread');
+    Route::get('/chat/{conversation}', [ChatController::class, 'show'])->name('chat.show');
+    Route::post('/chat/{conversation}/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    Route::get('/chat/{conversation}/messages', [ChatController::class, 'fetchMessages'])->name('chat.messages');
+    Route::post('/chat/{conversation}/read', [ChatController::class, 'markAsRead'])->name('chat.read');
+    Route::delete('/chat/message/{message}', [ChatController::class, 'deleteMessage'])->name('chat.message.delete');
+    Route::post('/chat/{conversation}/upload', [ChatController::class, 'uploadAttachment'])->name('chat.upload');
 });
 
 

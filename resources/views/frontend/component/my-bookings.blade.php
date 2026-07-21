@@ -124,7 +124,7 @@
 
                             <form
                                 action="{{ route('booking.cancel',$booking->id) }}"
-                                method="POST">
+                                method="POST" class="d-inline">
 
                                 @csrf
 
@@ -137,10 +137,17 @@
 
                             </form>
 
+                            @endif
+
+                            @if(in_array($booking->booking_status, ['pending', 'accepted']))
+                                <form action="{{ route('chat.start', $booking->id) }}" method="POST" class="d-inline mt-1">
+                                    @csrf
+                                    <button class="btn btn-info btn-sm" title="Chat with Driver">
+                                        💬 Chat
+                                    </button>
+                                </form>
                             @else
-
-                            -
-
+                                -
                             @endif
 
                         </td>
