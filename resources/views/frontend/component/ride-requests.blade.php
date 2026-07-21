@@ -127,7 +127,7 @@
                                 <form action="{{ route('chat.start', $booking->id) }}" method="POST">
                                     @csrf
                                     <button class="btn btn-info btn-sm" title="Chat with Passenger">
-                                        💬 Chat
+                                        Chat
                                     </button>
                                 </form>
 
@@ -138,7 +138,7 @@
                             <form action="{{ route('chat.start', $booking->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button class="btn btn-info btn-sm" title="Chat with Passenger">
-                                    💬 Chat
+                                    Chat
                                 </button>
                             </form>
 

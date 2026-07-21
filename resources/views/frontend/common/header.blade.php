@@ -119,7 +119,7 @@
 
                             <a class="dropdown-item d-flex justify-content-between align-items-center"
                                 href="{{ route('chat.index') }}">
-                                <span class="ml-2">💬 Chat</span>
+                                <span class="ml-2">Chat</span>
                                 @if(isset($unreadChatCount) && $unreadChatCount > 0)
                                     <span class="badge badge-pill badge-danger"
                                         style="background-color: #00a884; color: white; font-weight: bold; font-size: 10px; padding: 3px 6px;">{{ $unreadChatCount }}</span>
