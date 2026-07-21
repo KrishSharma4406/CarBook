@@ -96,11 +96,10 @@
 
                             @if($booking->status=='pending')
 
-                            <div class="d-flex">
+                            <div class="d-flex flex-wrap" style="gap:4px;">
 
                                 <form action="{{ route('booking.accept',$booking->id) }}"
-                                    method="POST"
-                                    class="mr-2">
+                                    method="POST">
 
                                     @csrf
 
@@ -125,13 +124,23 @@
 
                                 </form>
 
+                                <form action="{{ route('chat.start', $booking->id) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-info btn-sm" title="Chat with Passenger">
+                                        💬 Chat
+                                    </button>
+                                </form>
+
                             </div>
 
                             @else
 
-                            <span class="text-muted">
-                                No Action
-                            </span>
+                            <form action="{{ route('chat.start', $booking->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button class="btn btn-info btn-sm" title="Chat with Passenger">
+                                    💬 Chat
+                                </button>
+                            </form>
 
                             @endif
 

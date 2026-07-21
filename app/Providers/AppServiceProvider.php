@@ -58,11 +58,14 @@ class AppServiceProvider extends ServiceProvider
                     ->where('is_read', false)
                     ->count();
 
-                $totalUnreadCount = $unreadBookingsCount + $unreadRequestsCount;
+                $unreadChatCount = Auth::user()->unreadChatCount();
+
+                $totalUnreadCount = $unreadBookingsCount + $unreadRequestsCount + $unreadChatCount;
 
                 $view->with([
                     'unreadBookingsCount' => $unreadBookingsCount,
                     'unreadRequestsCount' => $unreadRequestsCount,
+                    'unreadChatCount' => $unreadChatCount,
                     'totalUnreadCount' => $totalUnreadCount,
                 ]);
             }

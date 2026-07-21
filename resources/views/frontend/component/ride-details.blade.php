@@ -262,6 +262,23 @@ img{
                             </a>
                         @endif
 
+                        @auth
+                            @php
+                                $myBooking = \App\Models\RideBooking::where('ride_id', $ride->id)
+                                    ->where('user_id', Auth::id())
+                                    ->whereIn('status', ['pending', 'accepted'])
+                                    ->first();
+                            @endphp
+                            @if($myBooking)
+                                <form action="{{ route('chat.start', $myBooking->id) }}" method="POST" class="mt-2">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-success btn-block btn-lg">
+                                        Chat with Driver
+                                    </button>
+                                </form>
+                            @endif
+                        @endauth
+
                     </div>
 
                 </div>
