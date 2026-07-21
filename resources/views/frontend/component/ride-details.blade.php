@@ -266,7 +266,7 @@ img{
                             @php
                                 $myBooking = \App\Models\RideBooking::where('ride_id', $ride->id)
                                     ->where('user_id', Auth::id())
-                                    ->whereIn('status', ['pending', 'accepted'])
+                                    ->whereIn('booking_status', ['pending', 'accepted'])
                                     ->first();
                             @endphp
                             @if($myBooking)

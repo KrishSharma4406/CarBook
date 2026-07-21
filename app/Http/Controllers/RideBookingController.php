@@ -59,7 +59,7 @@ class RideBookingController extends Controller
         // Already booked?
         $alreadyBooked = RideBooking::where('ride_id', $ride->id)
             ->where('user_id', Auth::id())
-            ->whereIn('status', ['pending', 'accepted'])
+            ->whereIn('booking_status', ['pending', 'accepted'])
             ->exists();
 
         if ($alreadyBooked) {
@@ -67,10 +67,10 @@ class RideBookingController extends Controller
         }
 
         $booking = RideBooking::create([
-            'ride_id' => $ride->id,
-            'user_id' => Auth::id(),
-            'seats'   => 1,
-            'status'  => 'pending'
+            'ride_id'        => $ride->id,
+            'user_id'        => Auth::id(),
+            'seats'          => 1,
+            'booking_status' => 'pending'
         ]);
 
         Notification::create([
@@ -112,8 +112,7 @@ class RideBookingController extends Controller
     public function accept(RideBooking $booking)
     {
         $booking->update([
-            'booking_status' => 'accepted',
-            'status' => 'accepted'
+            'booking_status' => 'accepted'
         ]);
 
         $booking->ride->decrement('available_seats');
@@ -141,8 +140,7 @@ class RideBookingController extends Controller
         }
 
         $booking->update([
-            'booking_status' => 'rejected',
-            'status' => 'rejected'
+            'booking_status' => 'rejected'
         ]);
 
         Notification::create([
