@@ -73,7 +73,6 @@ class BookingController extends Controller
             'user_id' => auth()->id(),
             'seats' => $request->seats,
             'booking_status' => 'pending',
-            'status' => 'pending'
         ]);
 
         Notification::create([

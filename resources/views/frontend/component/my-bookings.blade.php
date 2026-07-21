@@ -143,7 +143,7 @@
                                 <form action="{{ route('chat.start', $booking->id) }}" method="POST" class="d-inline mt-1">
                                     @csrf
                                     <button class="btn btn-info btn-sm" title="Chat with Driver">
-                                        💬 Chat
+                                        Chat
                                     </button>
                                 </form>
                             @else

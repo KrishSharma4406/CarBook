@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class RideBooking extends Model
 {
     protected $fillable = [
-    'ride_id',
-    'user_id',
-    'seats',
-    'booking_status',
-    'status'
-];
+        'ride_id',
+        'user_id',
+        'seats',
+        'booking_status',
+    ];
 
     protected $casts = [
         'amount' => 'decimal:2',
