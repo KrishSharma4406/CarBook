@@ -60,7 +60,7 @@
                                     Cancelled
                                 </span>
                             @elseif(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
-                                @if($ride->bookings()->where('status', 'accepted')->exists())
+                                @if($ride->bookings()->where('booking_status', 'approved')->exists())
                                     <span class="badge badge-info">
                                         Completed
                                     </span>
