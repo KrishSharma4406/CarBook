@@ -4,6 +4,7 @@
         align-items: center;
         gap: 12px;
     }
+
     .route-dot {
         width: 10px;
         height: 10px;
@@ -11,18 +12,18 @@
         border: 2px solid #1a1a2e;
         flex-shrink: 0;
     }
+
     .route-dash {
         flex: 1;
         height: 2px;
-        background: repeating-linear-gradient(
-            to right,
-            #c0c0c0 0px,
-            #c0c0c0 6px,
-            transparent 6px,
-            transparent 10px
-        );
+        background: repeating-linear-gradient(to right,
+                #c0c0c0 0px,
+                #c0c0c0 6px,
+                transparent 6px,
+                transparent 10px);
         position: relative;
     }
+
     .route-city {
         font-weight: 700;
         font-size: 16px;
@@ -84,7 +85,7 @@
 
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
 
                     <input
                         type="text"
@@ -106,7 +107,7 @@
 
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-2">
 
                     <button class="btn btn-success btn-block">
 
@@ -211,16 +212,16 @@
                         @endif
 
                         @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
-                            <button class="btn btn-secondary btn-block" disabled>
-                                <i class="fa fa-ban mr-1"></i> Ride Expired
-                            </button>
+                        <button class="btn btn-secondary btn-block" disabled>
+                            <i class="fa fa-ban mr-1"></i> Ride Expired
+                        </button>
                         @else
-                            <a href="{{ route('booking.summary', $ride->id) }}"
-                                class="btn btn-success btn-block">
+                        <a href="{{ route('booking.summary', $ride->id) }}"
+                            class="btn btn-success btn-block">
 
-                                Book This Ride
+                            Book This Ride
 
-                            </a>
+                        </a>
                         @endif
 
                     </div>
