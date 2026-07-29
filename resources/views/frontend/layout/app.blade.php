@@ -41,6 +41,8 @@
 
     @include('frontend.common.footer')
 
+    @include('frontend.common.ai-chat-widget')
+
     @include('frontend.common.footerScript')
     @yield('script')
 </body>
