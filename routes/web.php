@@ -24,6 +24,10 @@ use App\Http\Controllers\Admin\ServicesPageController;
 use App\Http\Controllers\Admin\BlogPageController;
 use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\AiChatController;
+
+// AI Chat (Ollama)
+Route::post('/ai/chat', [AiChatController::class, 'chat'])->name('ai.chat');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
