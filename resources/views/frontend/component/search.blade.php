@@ -4,6 +4,7 @@
         align-items: center;
         gap: 12px;
     }
+
     .route-dot {
         width: 10px;
         height: 10px;
@@ -11,18 +12,18 @@
         border: 2px solid #1a1a2e;
         flex-shrink: 0;
     }
+
     .route-dash {
         flex: 1;
         height: 2px;
-        background: repeating-linear-gradient(
-            to right,
-            #c0c0c0 0px,
-            #c0c0c0 6px,
-            transparent 6px,
-            transparent 10px
-        );
+        background: repeating-linear-gradient(to right,
+                #c0c0c0 0px,
+                #c0c0c0 6px,
+                transparent 6px,
+                transparent 10px);
         position: relative;
     }
+
     .route-city {
         font-weight: 700;
         font-size: 16px;
@@ -77,7 +78,7 @@
                                 value="{{ request('pickup_location') }}">
                         </div>
 
-                        <div class="col-lg-4 col-md-6 mb-3">
+                        <div class="col-lg-3 col-md-6 mb-3">
                             <label class="font-weight-bold">
                                 <i class="fa fa-location-arrow text-danger"></i>
                                 Destination
@@ -107,7 +108,7 @@
                                 value="{{ request('travel_date') }}">
                         </div>
 
-                        <div class="col-lg-1 col-md-6 mb-3">
+                        <div class="col-lg-2 col-md-6 mb-3">
                             <button type="submit"
                                 class="btn btn-success btn-block w-9 py-10">Search
                                 <i class="fa fa-search"></i>
@@ -128,127 +129,127 @@
 
             @if($rides->count())
 
-                @foreach($rides as $ride)
+            @foreach($rides as $ride)
 
-                    <div class="card shadow-lg border-0 rounded mb-4">
+            <div class="card shadow-lg border-0 rounded mb-4">
 
-                        <div class="card-body p-4">
+                <div class="card-body p-4">
 
-                            <div class="row align-items-center">
+                    <div class="row align-items-center">
 
-                                <div class="col-md-2 text-center">
+                        <div class="col-md-2 text-center">
 
-                                    @php
-                                    $filename = $ride->user->profile_image ?? 'default.png';
-                                    @endphp
+                            @php
+                            $filename = $ride->user->profile_image ?? 'default.png';
+                            @endphp
 
-                                    <img src="{{ asset('uploads/profileimages/' . $filename) }}"
-                                        alt="{{ $ride->user->name ?? 'User' }}"
-                                        class="rounded-circle shadow mb-2"
-                                        width="80"
-                                        height="80"
-                                        style="object-fit:cover;border:2px solid #ddd;">
+                            <img src="{{ asset('uploads/profileimages/' . $filename) }}"
+                                alt="{{ $ride->user->name ?? 'User' }}"
+                                class="rounded-circle shadow mb-2"
+                                width="80"
+                                height="80"
+                                style="object-fit:cover;border:2px solid #ddd;">
 
-                                    <h6 class="mt-2 mb-0">
-                                        {{ $ride->user->name }}
-                                    </h6>
+                            <h6 class="mt-2 mb-0">
+                                {{ $ride->user->name }}
+                            </h6>
 
-                                </div>
+                        </div>
 
-                                <div class="col-md-5">
+                        <div class="col-md-5">
 
-                                    <div class="route-line mb-3">
-                                        <span class="route-city">{{ $ride->pickup_location }}</span>
-                                        <span class="route-dot"></span>
-                                        <span class="route-dash"></span>
-                                        <span class="route-dot"></span>
-                                        <span class="route-city">{{ $ride->destination }}</span>
-                                    </div>
-
-                                    <div class="d-flex align-items-center">
-                                        <span class="mr-3">
-                                            <i class="fa fa-calendar text-primary mr-1"></i>
-                                            {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
-                                        </span>
-                                        @if($ride->duration)
-                                            <span class="badge badge-warning text-dark px-2 py-1" style="font-size: 12px; font-weight: 600;">
-                                                <i class="fa fa-clock-o mr-1"></i>
-                                                {{ $ride->duration }}
-                                            </span>
-                                        @endif
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-2 text-center">
-
-                                    <h4 class="text-success">
-
-                                        ₹{{ $ride->fare }}
-
-                                    </h4>
-
-                                    <small>per seat</small>
-
-                                </div>
-
-                                <div class="col-md-1 text-center">
-
-                                    <span class="badge badge-primary p-2">
-
-                                        {{ $ride->available_seats }}
-
-                                        Seats
-
-                                    </span>
-
-                                </div>
-
-                                <div class="col-md-2 text-center">
-
-                                    @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
-                                        <button class="btn btn-secondary btn-block" disabled>
-                                            <i class="fa fa-ban mr-1"></i> Ride Expired
-                                        </button>
-                                    @else
-                                        <a href="{{ route('rides.show', $ride->id) }}" class="btn btn-primary btn-block">
-                                            View Ride
-                                        </a>
-                                    @endif
-
-                                </div>
-
+                            <div class="route-line mb-3">
+                                <span class="route-city">{{ $ride->pickup_location }}</span>
+                                <span class="route-dot"></span>
+                                <span class="route-dash"></span>
+                                <span class="route-dot"></span>
+                                <span class="route-city">{{ $ride->destination }}</span>
                             </div>
+
+                            <div class="d-flex align-items-center">
+                                <span class="mr-3">
+                                    <i class="fa fa-calendar text-primary mr-1"></i>
+                                    {{ \Carbon\Carbon::parse($ride->travel_date)->format('d M Y') }}
+                                </span>
+                                @if($ride->duration)
+                                <span class="badge badge-warning text-dark px-2 py-1" style="font-size: 12px; font-weight: 600;">
+                                    <i class="fa fa-clock-o mr-1"></i>
+                                    {{ $ride->duration }}
+                                </span>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-2 text-center">
+
+                            <h4 class="text-success">
+
+                                ₹{{ $ride->fare }}
+
+                            </h4>
+
+                            <small>per seat</small>
+
+                        </div>
+
+                        <div class="col-md-1 text-center">
+
+                            <span class="badge badge-primary p-2">
+
+                                {{ $ride->available_seats }}
+
+                                Seats
+
+                            </span>
+
+                        </div>
+
+                        <div class="col-md-2 text-center">
+
+                            @if(\Carbon\Carbon::parse($ride->travel_date)->lt(\Carbon\Carbon::today()))
+                            <button class="btn btn-secondary btn-block" disabled>
+                                <i class="fa fa-ban mr-1"></i> Ride Expired
+                            </button>
+                            @else
+                            <a href="{{ route('rides.show', $ride->id) }}" class="btn btn-primary btn-block">
+                                View Ride
+                            </a>
+                            @endif
 
                         </div>
 
                     </div>
 
-                @endforeach
+                </div>
+
+            </div>
+
+            @endforeach
 
             @else
 
-                <div class="text-center py-5">
+            <div class="text-center py-5">
 
-                    <h3 class="mt-4">
+                <h3 class="mt-4">
 
-                        No Rides Found
+                    No Rides Found
 
-                    </h3>
+                </h3>
 
-                    <p class="text-muted">
+                <p class="text-muted">
 
-                        Try changing the pickup, destination or date.
+                    Try changing the pickup, destination or date.
 
-                    </p>
+                </p>
 
-                    <a href="{{ route('home') }}" class="btn btn-primary">
+                <a href="{{ route('home') }}" class="btn btn-primary">
 
-                        Search Again
+                    Search Again
 
-                    </a>
+                </a>
 
-                </div>
+            </div>
 
             @endif
         </div>
