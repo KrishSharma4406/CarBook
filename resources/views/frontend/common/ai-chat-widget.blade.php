@@ -3,7 +3,7 @@
 /* ── Floating Button ── */
 .ai-fab {
     position: fixed;
-    bottom: 28px;
+    bottom: 56px;
     right: 28px;
     z-index: 99999;
     width: 56px;
@@ -45,7 +45,7 @@
 
 .ai-fab-label {
     position: fixed;
-    bottom: 92px;
+    bottom: 120px;
     right: 28px;
     z-index: 99998;
     background: #343a40;
@@ -75,7 +75,7 @@
 /* ── Chat Window ── */
 .ai-chat-window {
     position: fixed;
-    bottom: 96px;
+    bottom: 124px;
     right: 28px;
     z-index: 99999;
     width: 380px;
@@ -273,8 +273,8 @@
         width: calc(100vw - 16px);
         height: calc(100vh - 120px);
     }
-    .ai-fab { bottom: 16px; right: 16px; }
-    .ai-fab-label { bottom: 80px; right: 16px; }
+    .ai-fab { bottom: 52px; right: 16px; }
+    .ai-fab-label { bottom: 116px; right: 16px; }
 }
 </style>
 
@@ -354,7 +354,7 @@
             }
         } else {
             win.classList.remove('open');
-            fabIcon.textContent = 'AI Assistent';
+            fabIcon.textContent = 'AI';
         }
     };
 
