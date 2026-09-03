@@ -34,7 +34,7 @@ return new class extends Migration
 
             $table->text('description')->nullable();
 
-            $table->enum('status',['active','completed','cancelled'])
+            $table->enum('status',['active','completed','cancelled','expired'])
                 ->default('active');
 
             $table->timestamps();

@@ -199,6 +199,13 @@
 
                                     </span>
 
+                                    @elseif($ride->status=="expired")
+
+                                    <span class="badge badge-secondary">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        Expired
+                                    </span>
+
                                     @else
 
                                     <span class="badge badge-danger">
