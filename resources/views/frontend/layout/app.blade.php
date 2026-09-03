@@ -41,6 +41,10 @@
 
     @include('frontend.common.footer')
 
+    @auth
+        @include('frontend.common.floating-chat-dock')
+    @endauth
+
     @include('frontend.common.ai-chat-widget')
 
     @include('frontend.common.footerScript')

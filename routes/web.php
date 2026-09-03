@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\HomePageController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AboutPageController;
 use App\Http\Controllers\Admin\ServicesPageController;
 use App\Http\Controllers\Admin\BlogPageController;
@@ -225,9 +226,11 @@ Route::prefix('admin')
     ->middleware(['auth:admin'])
     ->group(function () {
 
-        Route::get('/home', function () {
-            return view('admin.frontend.webview.home');
-        })->name('admin.home');
+        Route::get('/home', [DashboardController::class, 'index'])
+            ->name('admin.home');
+
+        Route::get('/dashboard/stats', [DashboardController::class, 'stats'])
+            ->name('admin.dashboard.stats');
 
         Route::get('/tables', [HomeController::class, 'admintabels'])
             ->middleware('permission:tables.view')
