@@ -100,26 +100,17 @@ class RideController extends Controller
     public function index(Request $request)
     {
         $rides = Ride::with('user')
-            ->whereDate('travel_date', '>=', \Carbon\Carbon::today())
+            ->upcoming()
             ->when($request->pickup_location, function ($q) use ($request) {
-
                 $q->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
             })
-
             ->when($request->destination, function ($q) use ($request) {
-
                 $q->where('destination', 'LIKE', '%' . $request->destination . '%');
             })
-
             ->when($request->travel_date, function ($q) use ($request) {
-
                 $q->where('travel_date', $request->travel_date);
             })
-
-            ->where('status', 'active')
-
             ->latest()
-
             ->get();
 
         return view('frontend.webviews.search', compact('rides'));
@@ -127,11 +118,28 @@ class RideController extends Controller
 
     public function myRides()
     {
-        $rides = Ride::where('user_id', Auth::id())
+        $upcomingRides = Ride::where('user_id', Auth::id())
+            ->where('status', 'active')
+            ->whereDate('travel_date', '>=', Carbon::today())
             ->latest()
             ->get();
 
-        return view('frontend.webviews.my-rides', compact('rides'));
+        $expiredRides = Ride::where('user_id', Auth::id())
+            ->where(function ($q) {
+                $q->where('status', 'expired')
+                  ->orWhere('status', 'cancelled')
+                  ->orWhere('status', 'completed')
+                  ->orWhere(function ($q2) {
+                      $q2->whereDate('travel_date', '<', Carbon::today());
+                  });
+            })
+            ->latest()
+            ->get();
+
+        // Keep backward compatibility — merge all for the view
+        $rides = $upcomingRides->merge($expiredRides);
+
+        return view('frontend.webviews.my-rides', compact('rides', 'upcomingRides', 'expiredRides'));
     }
 
     public function dashboard()
@@ -142,19 +150,18 @@ class RideController extends Controller
 
         $activeRides = Ride::where('user_id', $user->id)
             ->where('status', 'active')
+            ->whereDate('travel_date', '>=', Carbon::today())
             ->count();
 
         $completedRides = Ride::where('user_id', $user->id)
             ->where('status', 'completed')
             ->count();
+
+        $expiredRides = Ride::where('user_id', $user->id)
+            ->where('status', 'expired')
+            ->count();
+
         $pendingRequests = null;
-
-        // $pendingRequests = RideBooking::whereHas('ride', function ($query) use ($user) {
-
-        //     $query->where('user_id', $user->id);
-        // })
-        //     ->where('status', 'pending')
-        //     ->count();
 
         $recentRides = Ride::where('user_id', $user->id)
             ->latest()
@@ -175,6 +182,7 @@ class RideController extends Controller
             'totalRides',
             'activeRides',
             'completedRides',
+            'expiredRides',
             'pendingRequests',
             'recentRides',
             'recentRequests'
@@ -235,9 +243,7 @@ class RideController extends Controller
 
     public function search(Request $request)
     {
-        $query = Ride::with('user')
-            ->where('status', 'active')
-            ->whereDate('travel_date', '>=', \Carbon\Carbon::today());
+        $query = Ride::with('user')->upcoming();
 
         if ($request->filled('pickup_location')) {
             $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');
@@ -259,9 +265,7 @@ class RideController extends Controller
 
     public function searchjs(Request $request)
     {
-        $query = Ride::with('user')
-            ->where('status', 'active')
-            ->whereDate('travel_date', '>=', \Carbon\Carbon::today());
+        $query = Ride::with('user')->upcoming();
 
         if ($request->filled('pickup_location')) {
             $query->where('pickup_location', 'LIKE', '%' . $request->pickup_location . '%');

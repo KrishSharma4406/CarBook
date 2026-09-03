@@ -74,6 +74,16 @@
                         </div>
                     </div>
 
+                    <div class="col-lg-3 col-md-6 col-6 mb-3">
+                        <div class="card border-0 shadow-sm h-100 text-center" style="border-top: 4px solid #6c757d !important;">
+                            <div class="card-body py-4">
+                                <i class="fa fa-history d-block mb-2" style="font-size:28px; color:#6c757d;"></i>
+                                <h2 class="mb-1" style="font-weight:700;">{{ $expiredRides }}</h2>
+                                <small class="text-muted text-uppercase" style="letter-spacing:.5px; font-weight:600; font-size:11px;">Expired</small>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -132,6 +142,8 @@
                                         <span class="badge badge-info">Completed</span>
                                     @elseif($ride->status == 'cancelled')
                                         <span class="badge badge-danger">Cancelled</span>
+                                    @elseif($ride->status == 'expired')
+                                        <span class="badge badge-secondary"><i class="fa fa-clock-o mr-1"></i>Expired</span>
                                     @else
                                         <span class="badge badge-warning">{{ ucfirst($ride->status) }}</span>
                                     @endif
