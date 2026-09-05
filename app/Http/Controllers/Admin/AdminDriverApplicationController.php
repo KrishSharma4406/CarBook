@@ -14,7 +14,7 @@ class AdminDriverApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $query = DriverApplication::with('user')->latest();
+        $query = DriverApplication::with(['user', 'messages'])->latest();
 
         // Status Filter
         if ($request->filled('status') && $request->status !== 'all') {
@@ -53,7 +53,13 @@ class AdminDriverApplicationController extends Controller
      */
     public function show(DriverApplication $driverApplication)
     {
-        $driverApplication->load('user');
+        $driverApplication->load(['user', 'messages.admin', 'messages.user']);
+
+        // Mark incoming driver messages as read
+        $driverApplication->messages()
+            ->where('sender_type', 'driver')
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
 
         // Clean phone number for WhatsApp link (strip non-digit characters)
         $cleanPhone = preg_replace('/[^0-9]/', '', $driverApplication->phone);
@@ -63,6 +69,35 @@ class AdminDriverApplicationController extends Controller
         }
 
         return view('admin.driver-applications.show', compact('driverApplication', 'cleanPhone'));
+    }
+
+    /**
+     * Send direct message from admin to the driver.
+     */
+    public function sendMessage(Request $request, DriverApplication $driverApplication)
+    {
+        $request->validate([
+            'message' => 'required|string|max:5000',
+        ]);
+
+        $driverApplication->messages()->create([
+            'sender_type' => 'admin',
+            'admin_id'    => auth('admin')->id(),
+            'message'     => $request->message,
+            'is_read'     => false,
+        ]);
+
+        // Automatically update status to 'contacted' if still pending
+        if ($driverApplication->status === 'pending') {
+            $driverApplication->status = 'contacted';
+        }
+        if (!$driverApplication->contacted_at) {
+            $driverApplication->contacted_at = now();
+        }
+        $driverApplication->save();
+
+        return redirect()->to(route('driver-applications.show', $driverApplication->id) . '#messages-card')
+            ->with('success', 'Message sent to the driver successfully.');
     }
 
     /**

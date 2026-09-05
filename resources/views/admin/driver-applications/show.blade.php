@@ -83,6 +83,76 @@
                 {{-- Left Column: Applicant Information --}}
                 <div class="col-lg-8">
 
+                    {{-- Direct In-Website Messaging Card --}}
+                    <div class="card card-outline card-primary mb-4" id="messages-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="card-title font-weight-bold mb-0">
+                                <i class="fas fa-comments text-primary mr-2"></i> Direct In-Website Messages with Driver
+                            </h3>
+                            <span class="badge badge-primary px-2 py-1">
+                                {{ $driverApplication->messages->count() }} {{ Str::plural('Message', $driverApplication->messages->count()) }}
+                            </span>
+                        </div>
+                        <div class="card-body p-3" style="background-color: #f8fafc;">
+                            {{-- Message Thread List --}}
+                            <div class="direct-chat-messages" style="max-height: 380px; overflow-y: auto; padding: 10px;">
+                                @forelse($driverApplication->messages as $msg)
+                                    @if($msg->sender_type === 'admin')
+                                        {{-- Admin Message (Right) --}}
+                                        <div class="d-flex justify-content-end mb-3">
+                                            <div style="max-width: 75%;">
+                                                <div class="d-flex align-items-center justify-content-end mb-1">
+                                                    <span class="badge badge-primary mr-2">You (Admin)</span>
+                                                    <small class="text-muted">{{ $msg->created_at->format('M d, h:i A') }}</small>
+                                                </div>
+                                                <div class="p-3 rounded text-white shadow-sm" style="background-color: #007bff; border-radius: 12px 12px 2px 12px !important;">
+                                                    <p class="mb-0" style="white-space: pre-wrap; font-size: 14px;">{{ $msg->message }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        {{-- Driver Message (Left) --}}
+                                        <div class="d-flex justify-content-start mb-3">
+                                            <div style="max-width: 75%;">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <span class="badge badge-secondary mr-2">{{ $driverApplication->name }} (Driver)</span>
+                                                    <small class="text-muted">{{ $msg->created_at->format('M d, h:i A') }}</small>
+                                                </div>
+                                                <div class="p-3 rounded bg-white shadow-sm border" style="border-radius: 12px 12px 12px 2px !important; color: #2d3748;">
+                                                    <p class="mb-0" style="white-space: pre-wrap; font-size: 14px;">{{ $msg->message }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @empty
+                                    <div class="text-center py-4 text-muted">
+                                        <i class="fas fa-comment-dots fa-3x mb-2 d-block text-secondary"></i>
+                                        <p class="mb-1 font-weight-bold">No in-website messages exchanged yet.</p>
+                                        <small>Send a message below to contact the driver directly inside the website!</small>
+                                    </div>
+                                @endforelse
+                            </div>
+
+                            {{-- Send Message Form --}}
+                            <form action="{{ route('admin.driver-applications.message', $driverApplication->id) }}" method="POST" class="mt-3 pt-3 border-top">
+                                @csrf
+                                <div class="input-group">
+                                    <input type="text" name="message" class="form-control form-control-lg" 
+                                           placeholder="Type a direct message to {{ $driverApplication->name }} on the website..." 
+                                           required autocomplete="off">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary px-4 font-weight-bold">
+                                            <i class="fas fa-paper-plane mr-1"></i> Send to Driver
+                                        </button>
+                                    </div>
+                                </div>
+                                <small class="text-muted mt-2 d-block">
+                                    <i class="fas fa-info-circle mr-1 text-primary"></i> The driver will instantly see this message when they view their application status on the CarBook website.
+                                </small>
+                            </form>
+                        </div>
+                    </div>
+
                     {{-- 1. Personal & Contact Card --}}
                     <div class="card card-primary card-outline mb-4">
                         <div class="card-header">

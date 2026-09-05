@@ -59,4 +59,20 @@ class DriverApplication extends Model
             default => 'badge-secondary',
         };
     }
+
+    public function messages()
+    {
+        return $this->hasMany(DriverApplicationMessage::class, 'driver_application_id')->oldest();
+    }
+
+    public function unreadMessagesForAdmin()
+    {
+        return $this->messages()->where('sender_type', 'driver')->where('is_read', false)->count();
+    }
+
+    public function unreadMessagesForDriver()
+    {
+        return $this->messages()->where('sender_type', 'admin')->where('is_read', false)->count();
+    }
 }
+
