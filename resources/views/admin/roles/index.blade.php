@@ -1,4 +1,4 @@
-@extends('admin.frontend.webview.home')
+@extends('admin.frontend.layout.app')
 
 @section('content')
 
