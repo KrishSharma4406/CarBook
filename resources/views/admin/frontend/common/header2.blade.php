@@ -67,13 +67,13 @@
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
-        <img src="{{ $admin->profile_image
+        <img src="{{ !empty($admin?->profile_image)
   ? asset('uploads/adminimg/' . $admin->profile_image)
   : asset('UI/admin/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" width="120" height="120"
           style="object-fit:cover;">
       </div>
       <div class="info">
-        <a href="#" class="d-block">{{ $admin->name }}</a>
+        <a href="#" class="d-block">{{ $admin->name ?? 'Administrator' }}</a>
       </div>
     </div>
 
@@ -225,6 +225,22 @@
             </a>
           </li>
         @endcan
+
+        <li class="nav-item">
+          <a href="{{ route('driver-applications.index') }}" 
+             class="nav-link {{ request()->routeIs('driver-applications.*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-id-card"></i>
+            <p>
+              Driver Applications
+              @php
+                $pendingDriversCount = \App\Models\DriverApplication::where('status', 'pending')->count();
+              @endphp
+              @if($pendingDriversCount > 0)
+                <span class="badge badge-warning right">{{ $pendingDriversCount }}</span>
+              @endif
+            </p>
+          </a>
+        </li>
 
         <a href="{{ route('admin.profile.index') }}" class="btn btn-sm btn-primary btn-block mb-2">
           <i class="fas fa-user"></i>

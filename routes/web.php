@@ -26,6 +26,8 @@ use App\Http\Controllers\Admin\BlogPageController;
 use App\Http\Controllers\Admin\ContactPageController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AiChatController;
+use App\Http\Controllers\UI\BecomeDriverController;
+use App\Http\Controllers\Admin\AdminDriverApplicationController;
 
 // AI Chat (Ollama)
 Route::post('/ai/chat', [AiChatController::class, 'chat'])->name('ai.chat');
@@ -38,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/', [App\Http\Controllers\UI\HomeController::class, 'index'])->name('home');
 route::get('/about', [App\Http\Controllers\UI\HomeController::class, 'about'])->name('about');
+route::get('/become-driver', [BecomeDriverController::class, 'create'])->name('become.driver');
+route::post('/become-driver', [BecomeDriverController::class, 'store'])->name('become.driver.store');
 route::get('/contact', [App\Http\Controllers\UI\HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [App\Http\Controllers\UI\ContactMessageController::class, 'store'])->name('contact.store');
 route::get('/blog', [App\Http\Controllers\UI\HomeController::class, 'blog'])->name('blog');
@@ -348,6 +352,9 @@ Route::prefix('admin')
             ->name('admin.contact.edit');
         Route::put('/contact-page/update', [ContactPageController::class, 'update'])
             ->name('admin.contact.update');
+
+        // Driver Applications Management
+        Route::resource('driver-applications', AdminDriverApplicationController::class)->except(['create', 'store', 'edit']);
 
         Route::get('/booking/{car}', [BookingController::class, 'summary'])
             ->name('admin.booking.summary');
