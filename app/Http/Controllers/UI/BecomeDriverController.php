@@ -21,11 +21,45 @@ class BecomeDriverController extends Controller
         $existingApplication = null;
         if ($user) {
             $existingApplication = DriverApplication::where('user_id', $user->id)
+                ->with(['messages.admin', 'messages.user'])
                 ->latest()
                 ->first();
+
+            if ($existingApplication) {
+                // Mark messages from admin as read
+                $existingApplication->messages()
+                    ->where('sender_type', 'admin')
+                    ->where('is_read', false)
+                    ->update(['is_read' => true]);
+            }
         }
 
         return view('frontend.webviews.become-driver', compact('user', 'existingApplication'));
+    }
+
+    /**
+     * Driver reply to admin message.
+     */
+    public function replyMessage(Request $request, DriverApplication $driverApplication)
+    {
+        $request->validate([
+            'message' => 'required|string|max:5000',
+        ]);
+
+        // Security check: if logged in, ensure application belongs to user
+        if (Auth::check() && $driverApplication->user_id && $driverApplication->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $driverApplication->messages()->create([
+            'sender_type' => 'driver',
+            'user_id'     => Auth::id(),
+            'message'     => $request->message,
+            'is_read'     => false,
+        ]);
+
+        return redirect()->to(route('become.driver') . '#chat-box')
+            ->with('success', 'Your message has been sent to the CarBook admin team.');
     }
 
     /**

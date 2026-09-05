@@ -171,6 +171,15 @@
                                         @else
                                             <span class="badge badge-light border text-muted">Guest</span>
                                         @endif
+                                        @if($app->unreadMessagesForAdmin() > 0)
+                                            <span class="badge badge-danger ml-1" title="Unread driver messages">
+                                                <i class="fas fa-comment-dots mr-1"></i> {{ $app->unreadMessagesForAdmin() }} new
+                                            </span>
+                                        @elseif($app->messages->count() > 0)
+                                            <span class="badge badge-secondary ml-1" title="Total messages">
+                                                <i class="fas fa-comment mr-1"></i> {{ $app->messages->count() }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td>
                                         <div>

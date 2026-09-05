@@ -94,6 +94,75 @@
                                 @endif
                             </div>
                         </div>
+
+                        {{-- Direct Messaging Thread with Admin --}}
+                        <div class="card mb-4 border" id="chat-box" style="border-radius: 10px; overflow: hidden;">
+                            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3 border-bottom">
+                                <div>
+                                    <h5 class="mb-0 font-weight-bold text-primary">
+                                        <i class="ion-ios-chatbubbles mr-2"></i> Messages with CarBook Admin
+                                    </h5>
+                                    <small class="text-muted">Direct messaging channel between you and the administration team.</small>
+                                </div>
+                                <span class="badge badge-pill badge-primary py-2 px-3">
+                                    {{ $existingApplication->messages->count() }} {{ Str::plural('Message', $existingApplication->messages->count()) }}
+                                </span>
+                            </div>
+
+                            <div class="card-body p-3" style="background: #f8fafc; max-height: 350px; overflow-y: auto;">
+                                @forelse($existingApplication->messages as $msg)
+                                    @if($msg->sender_type === 'admin')
+                                        {{-- Message from Admin (Left) --}}
+                                        <div class="d-flex justify-content-start mb-3">
+                                            <div style="max-width: 80%;">
+                                                <div class="d-flex align-items-center mb-1">
+                                                    <span class="badge badge-primary mr-2"><i class="ion-ios-shield mr-1"></i> CarBook Admin</span>
+                                                    <small class="text-muted">{{ $msg->created_at->format('M d, h:i A') }}</small>
+                                                </div>
+                                                <div class="p-3 shadow-sm" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 4px 12px 12px 12px; color: #1e293b;">
+                                                    <p class="mb-0" style="white-space: pre-wrap; font-size: 14.5px;">{{ $msg->message }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        {{-- Reply from Driver (Right) --}}
+                                        <div class="d-flex justify-content-end mb-3">
+                                            <div style="max-width: 80%;">
+                                                <div class="d-flex align-items-center justify-content-end mb-1">
+                                                    <span class="badge badge-info mr-2">You</span>
+                                                    <small class="text-muted">{{ $msg->created_at->format('M d, h:i A') }}</small>
+                                                </div>
+                                                <div class="p-3 shadow-sm text-white" style="background: #1089ff; border-radius: 12px 12px 4px 12px;">
+                                                    <p class="mb-0" style="white-space: pre-wrap; font-size: 14.5px;">{{ $msg->message }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @empty
+                                    <div class="text-center py-4 text-muted">
+                                        <i class="ion-ios-mail text-muted mb-2" style="font-size: 40px; display: block;"></i>
+                                        <p class="mb-1 font-weight-bold">No in-website messages yet.</p>
+                                        <small>When the admin contacts you via the website, their message will appear right here.</small>
+                                    </div>
+                                @endforelse
+                            </div>
+
+                            <div class="card-footer bg-white p-3 border-top">
+                                <form action="{{ route('become.driver.reply', $existingApplication->id) }}" method="POST">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="text" name="message" class="form-control" 
+                                               placeholder="Type your reply to the admin here..." required autocomplete="off"
+                                               style="height: 46px; border-radius: 6px 0 0 6px;">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary px-4 font-weight-bold" style="border-radius: 0 6px 6px 0;">
+                                                <i class="ion-ios-send mr-1"></i> Send Reply
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     @endif
 
                     {{-- Flash Errors --}}

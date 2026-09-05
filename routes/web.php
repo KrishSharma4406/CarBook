@@ -42,6 +42,7 @@ Route::get('/', [App\Http\Controllers\UI\HomeController::class, 'index'])->name(
 route::get('/about', [App\Http\Controllers\UI\HomeController::class, 'about'])->name('about');
 route::get('/become-driver', [BecomeDriverController::class, 'create'])->name('become.driver');
 route::post('/become-driver', [BecomeDriverController::class, 'store'])->name('become.driver.store');
+route::post('/become-driver/{driver_application}/reply', [BecomeDriverController::class, 'replyMessage'])->name('become.driver.reply');
 route::get('/contact', [App\Http\Controllers\UI\HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [App\Http\Controllers\UI\ContactMessageController::class, 'store'])->name('contact.store');
 route::get('/blog', [App\Http\Controllers\UI\HomeController::class, 'blog'])->name('blog');
@@ -354,6 +355,8 @@ Route::prefix('admin')
             ->name('admin.contact.update');
 
         // Driver Applications Management
+        Route::post('driver-applications/{driver_application}/messages', [AdminDriverApplicationController::class, 'sendMessage'])
+            ->name('admin.driver-applications.message');
         Route::resource('driver-applications', AdminDriverApplicationController::class)->except(['create', 'store', 'edit']);
 
         Route::get('/booking/{car}', [BookingController::class, 'summary'])
