@@ -8,13 +8,14 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="{{url('/')}}" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="{{route('about')}}" class="nav-link">About</a></li>
-                <li class="nav-item"><a href="{{route('service')}}" class="nav-link">Services</a></li>
-                <li class="nav-item"><a href="{{route('price')}}" class="nav-link">Pricing</a></li>
-                <li class="nav-item"><a href="{{route('car')}}" class="nav-link">Cars</a></li>
-                <li class="nav-item"><a href="{{route('blog')}}" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="{{route('contact')}}" class="nav-link">Contact</a></li>
+                <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{url('/')}}" class="nav-link">Home</a></li>
+                <li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}"><a href="{{route('about')}}" class="nav-link">About</a></li>
+                <li class="nav-item {{ request()->routeIs('service') ? 'active' : '' }}"><a href="{{route('service')}}" class="nav-link">Services</a></li>
+                <li class="nav-item {{ request()->routeIs('price') ? 'active' : '' }}"><a href="{{route('price')}}" class="nav-link">Pricing</a></li>
+                <li class="nav-item {{ request()->routeIs('car') ? 'active' : '' }}"><a href="{{route('car')}}" class="nav-link">Cars</a></li>
+                <li class="nav-item {{ request()->routeIs('blog*') ? 'active' : '' }}"><a href="{{route('blog')}}" class="nav-link">Blog</a></li>
+                <li class="nav-item {{ request()->routeIs('contact') ? 'active' : '' }}"><a href="{{route('contact')}}" class="nav-link">Contact</a></li>
+                <li class="nav-item {{ request()->routeIs('become.driver') ? 'active' : '' }}"><a href="{{route('become.driver')}}" class="nav-link">Become a Driver</a></li>
             </ul>
             <ul class="navbar-nav ml-auto">
 

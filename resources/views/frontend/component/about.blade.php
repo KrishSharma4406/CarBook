@@ -38,7 +38,7 @@
 		<div class="row justify-content-end">
 			<div class="col-md-6 heading-section heading-section-white ftco-animate">
 				<h2 class="mb-3">{{ $about->cta_title ?? '' }}</h2>
-				<a href="{{ $about->cta_button_url ?? '#' }}" class="btn btn-primary btn-lg">{{ $about->cta_button_text ?? '' }}</a>
+				<a href="{{ ($about->cta_button_url && $about->cta_button_url !== '#' && $about->cta_button_url !== 'javascript:void(0)') ? $about->cta_button_url : route('become.driver') }}" class="btn btn-primary btn-lg">{{ $about->cta_button_text ?? 'Become A Driver' }}</a>
 			</div>
 		</div>
 	</div>
